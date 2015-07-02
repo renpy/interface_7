@@ -2,5 +2,4 @@
 *.rpyc
 black
 game/cache
-game/images
 game/saves

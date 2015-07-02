@@ -10,8 +10,7 @@ define e = Character('Eileen', color="#c8ffc8")
 # The game starts here.
 label start:
 
-    e "You've created a new Ren'Py game."
-
-    e "Once you add a story, pictures, and music, you can release it to the world!"
+    show expression Transform("main_menu.png", size=(1280, 720))
+    pause
 
     return
