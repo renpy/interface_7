@@ -10,7 +10,8 @@ define e = Character('Eileen', color="#c8ffc8")
 # The game starts here.
 label start:
 
-    show expression Transform("main_menu.png", size=(1280, 720))
+    show expression "game_menu.png"
+    # show expression Transform("main_menu.png", size=(1280, 720))
     pause
 
     return
