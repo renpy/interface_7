@@ -80,8 +80,16 @@ style label_text:
     color ACCENT_COLOR
     yalign 1.0
 
-
 style interface_frame is default
+
+style bar:
+    ysize 3 * SCALE
+    left_bar Solid(SELECTED_COLOR)
+    right_bar Solid(IDLE_COLOR)
+    hover_left_bar Solid(ACCENT_COLOR)
+    hover_right_bar Solid(IDLE_COLOR)
+
+style slider is bar
 
 ################################################################################
 # Derived constants.
@@ -268,38 +276,42 @@ screen preferences:
 
             grid 2 1:
                 xfill True
-                spacing 10
 
                 vbox:
-                    spacing 10
 
                     label _("Text Speed")
 
-                    add mybar
+                    bar value Preference("text speed")
 
-                    null height SCALE
+                    label _("Auto-Forward Time")
 
-                    label _("Auto Forward Speed")
-
-                    add mybar
+                    bar value Preference("auto-forward time")
 
                 vbox:
-                    first_spacing 10
-                    spacing 20
 
-                    label _("Text Speed")
+                    label _("Music Volume")
 
-                    add mybar
+                    bar value Preference("music volume")
 
-                    add mybar
+                    label _("Sound Volume")
 
-                    add mybar
+                    bar value Preference("sound volume")
+
+                    label _("Voice Volume")
+
+                    bar value Preference("voice volume")
 
 
 
     add "game_menu.png" alpha .1
 
 style preferences_frame is interface_frame
+
+style preferences_vbox:
+    spacing SCALE
+
+style preferences_slider:
+    xsize .75
 
 style preferences_button:
     size_group "preferences"
