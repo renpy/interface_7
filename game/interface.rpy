@@ -27,9 +27,9 @@ define SCALE = 10
 
 # An accent color used throughout the interface.
 define ACCENT_COLOR = "#00b8c3"
-
-# The color used for a text button while it is focused.
-define HOVER_COLOR = ACCENT_COLOR
+define HOVER_COLOR = "#00cad6"
+define MUTED_COLOR = "#00373a"
+define HOVER_MUTED_COLOR = "#00494e"
 
 # The color used for a text button when it is selected but not focused.
 # A button is selected if it is the current screen or preference value
@@ -84,10 +84,10 @@ style interface_frame is default
 
 style bar:
     ysize 3 * SCALE
-    left_bar Solid(SELECTED_COLOR)
-    right_bar Solid(IDLE_COLOR)
-    hover_left_bar Solid(ACCENT_COLOR)
-    hover_right_bar Solid(IDLE_COLOR)
+    left_bar Solid(ACCENT_COLOR)
+    right_bar Solid(MUTED_COLOR)
+    hover_left_bar Solid(HOVER_COLOR)
+    hover_right_bar Solid(HOVER_MUTED_COLOR)
 
 style slider is bar
 
@@ -133,6 +133,7 @@ screen navigation():
         textbutton _("Help") action Help()
 
         textbutton _("Quit") action Quit(confirm=not main_menu)
+
 
 style nav_button_text:
     size LARGE_SIZE
@@ -209,6 +210,13 @@ screen game_menu(title):
 
     use navigation
 
+    textbutton _("Return"):
+        style "nav_button"
+        action Return()
+        xpos 5 * SCALE
+        ypos config.screen_height - 3 * SCALE
+        yanchor 1.0
+
 
 screen save:
 
@@ -231,7 +239,7 @@ screen preferences:
 
     use game_menu(_("Preferences")):
         frame:
-            style_group "preferences"
+            style "preference_frame"
 
             left_padding 5 * SCALE
             right_padding 2 * SCALE
@@ -240,41 +248,33 @@ screen preferences:
             has vbox
 
             grid 4 1:
+                style_group "choice_preference"
                 xfill True
 
                 vbox:
-                    spacing SCALE
-
                     label _("Display")
                     textbutton _("Window") action Preference("display", "window")
                     textbutton _("Fullscreen") action Preference("display", "fullscreen")
 
                 vbox:
-                    spacing SCALE
-
                     label _("Transitions")
                     textbutton _("All") action Preference("transitions", "all")
                     textbutton _("None") action Preference("transitions", "none")
 
                 vbox:
-                    spacing SCALE
-
                     label _("Skip")
                     textbutton _("Seen Messages") action Preference("skip", "seen")
                     textbutton _("All Messages") action Preference("skip", "all")
 
                 vbox:
-                    spacing SCALE
-
                     label _("After Choices")
                     textbutton _("Stop Skipping") action Preference("after choices", "stop")
                     textbutton _("Keep Skipping") action Preference("after choices", "skip")
 
-            null height 8 * SCALE
-
-            default mybar = Solid(ACCENT_COLOR, ysize=3 * SCALE)
+            null height 5 * SCALE
 
             grid 2 1:
+                style_group "bar_preference"
                 xfill True
 
                 vbox:
@@ -288,35 +288,64 @@ screen preferences:
                     bar value Preference("auto-forward time")
 
                 vbox:
+                    style_group "bar_preference"
 
-                    label _("Music Volume")
+                    if config.has_music:
+                        label _("Music Volume")
 
-                    bar value Preference("music volume")
+                        hbox:
+                            bar value Preference("music volume")
 
-                    label _("Sound Volume")
+                    if config.has_sound:
 
-                    bar value Preference("sound volume")
+                        label _("Sound Volume")
 
-                    label _("Voice Volume")
+                        hbox:
+                            bar value Preference("sound volume")
 
-                    bar value Preference("voice volume")
+                            if config.sample_sound:
+                                textbutton _("Test") action Play("sound", config.sample_sound)
 
 
+                    if config.has_voice:
+                        label _("Voice Volume")
 
-    add "game_menu.png" alpha .1
+                        hbox:
+                            bar value Preference("voice volume")
+
+                            if config.sample_voice:
+                                textbutton _("Test") action Play("voice", config.sample_voice)
+
+                    textbutton _("Mute All"):
+                        action Preference("all mute", "toggle")
+                        style "mute_preference_button"
+
+
+    # add "game_menu.png" alpha .1
 
 style preferences_frame is interface_frame
 
-style preferences_vbox:
-    spacing SCALE
-
-style preferences_slider:
-    xsize .75
-
-style preferences_button:
-    size_group "preferences"
+style preference_button:
     left_padding 2 * SCALE
-    selected_background WIDE_LINE
+    selected_background Solid(ACCENT_COLOR, xsize=SCALE // 2)
+    selected_hover_background Solid(HOVER_COLOR, xsize=SCALE // 2)
     xoffset 2
 
+style choice_preference_button:
+    top_margin SCALE
 
+style choice_preference_button:
+    size_group "preferences"
+
+style bar_preference_slider:
+    xsize .75
+
+style bar_preference_label:
+    top_margin int(1.5 * SCALE)
+    bottom_margin SCALE / 2
+
+style bar_preference_button:
+    yalign 1.0
+
+style mute_preference_button:
+    top_margin int(1.5 * SCALE)

@@ -113,7 +113,7 @@ init -1 python hide:
 
     ## Set this to True if the game has voicing.
 
-    config.has_voice = False
+    config.has_voice = True
 
     ## Sounds that are used when button and imagemaps are clicked.
 
