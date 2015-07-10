@@ -12,13 +12,14 @@ init python:
     config.screen_width = 1280
     config.screen_height = 720
 
-# The size of text in text buttons and labels.
-define HUGE_SIZE = 50
-define LARGE_SIZE = 24
-define NORMAL_SIZE = 22
+# Scale factor for various sizes. 1.0 is the default size
+define gui.SCALE_FACTOR = config.screen_width / 1280.0
 
-# Scale factor for various sizes.
-define SCALE = 10
+# The size of text in text buttons and labels.
+define gui.HUGE_SIZE = gui.scale(50)
+define gui.LARGE_SIZE = gui.scale(24)
+define gui.NORMAL_SIZE = gui.scale(22)
+
 
 ################################################################################
 # Colors
@@ -26,74 +27,74 @@ define SCALE = 10
 # The colors of various aspects of the interface.
 
 # An accent color used throughout the interface.
-define ACCENT_COLOR = "#00b8c3"
-define HOVER_COLOR = "#00cad6"
-define MUTED_COLOR = "#00373a"
-define HOVER_MUTED_COLOR = "#00494e"
+define gui.ACCENT_COLOR = "#00b8c3"
+define gui.HOVER_COLOR = "#00cad6"
+define gui.MUTED_COLOR = "#00373a"
+define gui.HOVER_MUTED_COLOR = "#00494e"
 
 # The color used for a text button when it is selected but not focused.
 # A button is selected if it is the current screen or preference value
-define SELECTED_COLOR = "#ffffff"
+define gui.SELECTED_COLOR = "#ffffff"
 
 # The color used for a text button when it is neither selected nor hovered.
-define IDLE_COLOR = "#555555"
+define gui.IDLE_COLOR = "#555555"
 
 # The color used for a text button when it cannot be selected.
-define INSENSITIVE_COLOR = "#55555580"
+define gui.INSENSITIVE_COLOR = "#55555580"
 
 
 ################################################################################
 # Window, Frame, Pane, and Menu backgrounds
 
 # The background of the main menu and game menu.
-define MAIN_MENU_BACKGROUND = "images/main menu.jpg"
-define GAME_MENU_BACKGROUND = "images/game menu.jpg"
+define gui.MAIN_MENU_BACKGROUND = "images/main menu.jpg"
+define gui.GAME_MENU_BACKGROUND = "images/game menu.jpg"
 
 # Solid colors that are overlaid on those backgrounds to darken or lighten
 # them.
-define MAIN_MENU_DARKEN = "#000000cc"
-define GAME_MENU_DARKEN = "#000000cc"
+define gui.MAIN_MENU_DARKEN = "#000000cc"
+define gui.GAME_MENU_DARKEN = "#000000cc"
 
 # The background of the window containing dialogue from characters.
-define WINDOW_BACKGROUND = "#000000cc"
+define gui.WINDOW_BACKGROUND = "#000000cc"
 
 # Vertical lines made up of the accent color.
-define NARROW_LINE = Solid(ACCENT_COLOR, xsize=SCALE // 3)
-define WIDE_LINE = Solid(ACCENT_COLOR, xsize=SCALE // 2)
+define gui.VERTICAL_SEPARATOR = Solid(gui.ACCENT_COLOR, xsize=gui.scale(3))
+define gui.WIDE_VLINE = Solid(gui.ACCENT_COLOR, xsize=gui.scale(5))
 
 ################################################################################
 # Style common user interface components.
 
 style button_text:
-    size NORMAL_SIZE
-    color IDLE_COLOR
-    insensitive_color INSENSITIVE_COLOR
-    selected_color SELECTED_COLOR
-    hover_color HOVER_COLOR
-    selected_hover_color HOVER_COLOR
+    size gui.NORMAL_SIZE
+    color gui.IDLE_COLOR
+    insensitive_color gui.INSENSITIVE_COLOR
+    selected_color gui.SELECTED_COLOR
+    hover_color gui.HOVER_COLOR
+    selected_hover_color gui.HOVER_COLOR
 
 style label:
-    ysize 3 * SCALE
+    ysize gui.scale(30)
 
 style label_text:
-    size LARGE_SIZE
-    color ACCENT_COLOR
+    size gui.LARGE_SIZE
+    color gui.ACCENT_COLOR
     yalign 1.0
 
 style interface_frame is default
 
 style bar:
-    ysize 3 * SCALE
-    left_bar Solid(ACCENT_COLOR)
-    right_bar Solid(MUTED_COLOR)
-    hover_left_bar Solid(HOVER_COLOR)
-    hover_right_bar Solid(HOVER_MUTED_COLOR)
+    ysize gui.scale(30)
+    left_bar Solid(gui.ACCENT_COLOR)
+    right_bar Solid(gui.MUTED_COLOR)
+    hover_left_bar Solid(gui.HOVER_COLOR)
+    hover_right_bar Solid(gui.HOVER_MUTED_COLOR)
 
 style slider is bar
 
 ################################################################################
 # Derived constants.
-define PANE_WIDTH = 28 * SCALE
+define gui.PANE_WIDTH = gui.scale(280)
 
 ################################################################################
 # Navigation
@@ -107,11 +108,11 @@ screen navigation():
     vbox:
         style_group "nav"
 
-        xpos 5 * SCALE
-        xmaximum PANE_WIDTH - 5 * SCALE
+        xpos gui.scale(50)
+        xmaximum gui.PANE_WIDTH - gui.scale(50)
 
         yalign 0.5
-        spacing LARGE_SIZE // 2
+        spacing gui.LARGE_SIZE // 2
 
 
         if main_menu:
@@ -136,7 +137,7 @@ screen navigation():
 
 
 style nav_button_text:
-    size LARGE_SIZE
+    size gui.LARGE_SIZE
 
 
 ##############################################################################
@@ -153,17 +154,17 @@ screen main_menu():
     # This ensures that any other menu screen is replaced.
     tag menu
 
-    add MAIN_MENU_BACKGROUND
+    add gui.MAIN_MENU_BACKGROUND
 
     hbox:
         style_group "interface"
 
         frame:
-            background MAIN_MENU_DARKEN
-            xsize PANE_WIDTH
+            background gui.MAIN_MENU_DARKEN
+            xsize gui.PANE_WIDTH
             yfill True
 
-        add NARROW_LINE
+        add gui.VERTICAL_SEPARATOR
 
     use navigation
 
@@ -179,32 +180,36 @@ screen main_menu():
 screen game_menu(title):
 
     # Add the backgrounds.
-    add GAME_MENU_BACKGROUND
-    add GAME_MENU_DARKEN
+    if main_menu:
+        add gui.MAIN_MENU_BACKGROUND
+    else:
+        add gui.GAME_MENU_BACKGROUND
+
+    add gui.GAME_MENU_DARKEN
 
     vbox:
         style_group "interface"
 
         label title:
             # position the title.
-            xpos 5 * SCALE
-            ysize 12 * SCALE
+            xpos gui.scale(50)
+            ysize gui.scale(120)
 
             # text_ properties are used to style the text.
-            text_size HUGE_SIZE
-            text_color ACCENT_COLOR
+            text_size gui.HUGE_SIZE
+            text_color gui.ACCENT_COLOR
             text_yalign 0.5
 
         frame:
             style "interface_frame"
 
-            bottom_margin 3 * SCALE
+            bottom_margin gui.scale(30)
 
             hbox:
 
                 # Reserve space for the navigation section.
-                null width PANE_WIDTH
-                add NARROW_LINE
+                null width gui.PANE_WIDTH
+                add gui.VERTICAL_SEPARATOR
 
                 transclude
 
@@ -213,8 +218,8 @@ screen game_menu(title):
     textbutton _("Return"):
         style "nav_button"
         action Return()
-        xpos 5 * SCALE
-        ypos config.screen_height - 3 * SCALE
+        xpos gui.scale(50)
+        ypos config.screen_height - gui.scale(30)
         yanchor 1.0
 
 
@@ -241,9 +246,9 @@ screen preferences:
         frame:
             style "preference_frame"
 
-            left_padding 5 * SCALE
-            right_padding 2 * SCALE
-            top_padding 2 * SCALE
+            left_padding gui.scale(50)
+            right_padding gui.scale(20)
+            top_padding gui.scale(20)
 
             has vbox
 
@@ -271,7 +276,7 @@ screen preferences:
                     textbutton _("Stop Skipping") action Preference("after choices", "stop")
                     textbutton _("Keep Skipping") action Preference("after choices", "skip")
 
-            null height 5 * SCALE
+            null height gui.scale(50)
 
             grid 2 1:
                 style_group "bar_preference"
@@ -321,18 +326,16 @@ screen preferences:
                         style "mute_preference_button"
 
 
-    # add "game_menu.png" alpha .1
-
 style preferences_frame is interface_frame
 
 style preference_button:
-    left_padding 2 * SCALE
-    selected_background Solid(ACCENT_COLOR, xsize=SCALE // 2)
-    selected_hover_background Solid(HOVER_COLOR, xsize=SCALE // 2)
-    xoffset 2
+    left_padding gui.scale(20)
+    selected_background Solid(gui.ACCENT_COLOR, xsize=gui.scale(5))
+    selected_hover_background Solid(gui.HOVER_COLOR, xsize=gui.scale(5))
+    xoffset gui.scale(2)
 
 style choice_preference_button:
-    top_margin SCALE
+    top_margin gui.scale(10)
 
 style choice_preference_button:
     size_group "preferences"
@@ -341,11 +344,28 @@ style bar_preference_slider:
     xsize .75
 
 style bar_preference_label:
-    top_margin int(1.5 * SCALE)
-    bottom_margin SCALE / 2
+    top_margin gui.scale(15)
+    bottom_margin gui.scale(5)
 
 style bar_preference_button:
     yalign 1.0
 
 style mute_preference_button:
-    top_margin int(1.5 * SCALE)
+    top_margin gui.scale(15)
+
+
+
+################################################################################
+# Utility Functions
+#
+# This code is run at -1, to ensure it's run before the code above.
+
+init -1 python in gui:
+
+    def scale(n):
+        """
+        Returns `n` scaled by gui.SCALE_FACTOR, rounded to the next-lowest
+        integer.
+        """
+
+        return int(n * SCALE_FACTOR)
