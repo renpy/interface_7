@@ -276,7 +276,12 @@ screen preferences:
                     textbutton _("Stop Skipping") action Preference("after choices", "stop")
                     textbutton _("Keep Skipping") action Preference("after choices", "skip")
 
-            null height gui.scale(50)
+            null height gui.scale(25)
+
+            # If a second row of preferences is desired, the preferences can
+            # be added here.
+
+            null height gui.scale(25)
 
             grid 2 1:
                 style_group "bar_preference"
@@ -344,8 +349,8 @@ style bar_preference_slider:
     xsize .75
 
 style bar_preference_label:
-    top_margin gui.scale(15)
-    bottom_margin gui.scale(5)
+    top_margin gui.scale(10)
+    bottom_margin gui.scale(3)
 
 style bar_preference_button:
     yalign 1.0
