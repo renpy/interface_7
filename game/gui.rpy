@@ -8,9 +8,8 @@
 # to click "Window" in preferences to ensure the window itself is resized.
 
 # The width and height of the screen.
-init python:
-    config.screen_width = 1280
-    config.screen_height = 720
+define config.screen_width = 1280
+define config.screen_height = 720
 
 # Scale factor for various sizes. 1.0 is the default size
 define gui.SCALE_FACTOR = config.screen_width / 1280.0
