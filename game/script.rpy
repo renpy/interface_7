@@ -6,12 +6,14 @@
 # Declare characters used by this game.
 define e = Character('Eileen', color="#c8ffc8")
 
+label main_menu:
+    return
+
 
 # The game starts here.
 label start:
+    e "Hello, world.\nHello, world."
 
-    show expression "game_menu.png"
-    # show expression Transform("main_menu.png", size=(1280, 720))
+
+    show expression Transform("dialogue.png", size=(1280, 720))
     pause
-
-    return
