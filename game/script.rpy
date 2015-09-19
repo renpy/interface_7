@@ -14,6 +14,8 @@ label main_menu:
 label start:
     e "Hello, world.\nHello, world."
 
+    e "At that time it was quite clear in my own mind that the Thing had come from the planet Mars, but I judged it improbable that it contained any living creature. I thought the unscrewing might be automatic."
 
     show expression Transform("dialogue.png", size=(1280, 720))
-    pause
+
+    e "At that time it was quite clear in my own mind that the Thing had come from the planet Mars, but I judged it improbable that it contained any living creature. I thought the unscrewing might be automatic."

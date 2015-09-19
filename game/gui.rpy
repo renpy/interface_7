@@ -16,6 +16,7 @@ define gui.SCALE_FACTOR = config.screen_width / 1280.0
 
 # The size of text in text buttons and labels.
 define gui.HUGE_SIZE = gui.scale(50)
+define gui.XLARGE_SIZE = gui.scale(28)
 define gui.LARGE_SIZE = gui.scale(24)
 define gui.NORMAL_SIZE = gui.scale(22)
 
@@ -104,41 +105,22 @@ define gui.PANE_WIDTH = gui.scale(280)
 
 screen say(who, what, side_image=None, two_window=False):
 
-    # Decide if we want to use the one-window or two-window variant.
-    if not two_window:
+    window:
+        id "window"
 
-        # The one window variant.
-        window:
-            id "window"
+        has vbox:
+            style "say_vbox"
 
-            has vbox:
-                style "say_vbox"
+        frame:
+            style "say_who_frame"
 
             if who:
+                background Solid(gui.who_color(), xsize=gui.scale(6))
                 text who id "who"
+            else:
+                text " " id "who"
 
-            text what id "what"
-
-    else:
-
-        # The two window variant.
-        vbox:
-            style "say_two_window_vbox"
-
-            if who:
-                window:
-                    style "say_who_window"
-
-                    text who:
-                        id "who"
-
-            window:
-                id "window"
-
-                has vbox:
-                    style "say_vbox"
-
-                text what id "what"
+        text what id "what"
 
     # If there's a side image, display it above the text.
     if side_image:
@@ -150,9 +132,20 @@ screen say(who, what, side_image=None, two_window=False):
     # use quick_menu
 
 style window:
-    background Frame("textbox.png", 0, 0, 0, 0)
-    yminimum gui.scale(190)
+    background "textbox.png"
+    ysize gui.scale(190)
+    xpadding gui.scale(268)
+    top_padding gui.scale(30)
 
+style say_who_frame is default:
+    xpadding gui.scale(20)
+
+style say_label:
+    size gui.scale(28)
+    bold False
+
+style say_dialogue:
+    xpos gui.scale(20)
 
 
 ################################################################################
@@ -433,3 +426,13 @@ init -1 python in gui:
         """
 
         return int(n * SCALE_FACTOR)
+
+
+    def who_color():
+        """
+        Returns the text color used for the name of the speaking character,
+        or the accent color if this hasn't been set.
+        """
+
+        return renpy.get_widget_properties("who").get("color", ACCENT_COLOR)
+
