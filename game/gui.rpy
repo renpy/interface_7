@@ -107,20 +107,27 @@ screen say(who, what, side_image=None, two_window=False):
 
     window:
         id "window"
+        yminimum 190
 
-        has vbox:
-            style "say_vbox"
+        fixed:
+            fit_first "height"
 
-        frame:
-            style "say_who_frame"
+            vbox:
+                xsize gui.scale(744)
+                xpos gui.scale(268)
 
-            if who:
-                background Solid(gui.who_color(), xsize=gui.scale(6))
-                text who id "who"
-            else:
-                text " " id "who"
+                null height gui.scale(20)
 
-        text what id "what"
+                if who:
+                    text who id "who"
+                else:
+                    text " " id "who"
+
+                null height gui.scale(10)
+
+                text what id "what"
+
+            text "Quick Menu" xalign 1.0
 
     # If there's a side image, display it above the text.
     if side_image:
@@ -132,20 +139,13 @@ screen say(who, what, side_image=None, two_window=False):
     # use quick_menu
 
 style window:
-    background "textbox.png"
-    ysize gui.scale(190)
-    xpadding gui.scale(268)
-    top_padding gui.scale(30)
-
-style say_who_frame is default:
-    xpadding gui.scale(20)
+    background Frame("textbox.png", 0, 0)
+    yminimum gui.scale(190)
 
 style say_label:
     size gui.scale(28)
     bold False
 
-style say_dialogue:
-    xpos gui.scale(20)
 
 
 ################################################################################
@@ -426,13 +426,3 @@ init -1 python in gui:
         """
 
         return int(n * SCALE_FACTOR)
-
-
-    def who_color():
-        """
-        Returns the text color used for the name of the speaking character,
-        or the accent color if this hasn't been set.
-        """
-
-        return renpy.get_widget_properties("who").get("color", ACCENT_COLOR)
-
