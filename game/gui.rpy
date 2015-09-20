@@ -19,6 +19,7 @@ define gui.HUGE_SIZE = gui.scale(50)
 define gui.XLARGE_SIZE = gui.scale(28)
 define gui.LARGE_SIZE = gui.scale(24)
 define gui.NORMAL_SIZE = gui.scale(22)
+define gui.SMALL_SIZE = gui.scale(18)
 
 
 ################################################################################
@@ -46,7 +47,6 @@ define gui.IDLE_COLOR = "#555555"
 
 # The color used for a text button when it cannot be selected.
 define gui.INSENSITIVE_COLOR = "#55555580"
-
 
 ################################################################################
 # Window, Frame, Pane, and Menu backgrounds
@@ -127,7 +127,7 @@ screen say(who, what, side_image=None, two_window=False):
 
                 text what id "what"
 
-            text "Quick Menu" xalign 1.0
+            use quick_menu
 
     # If there's a side image, display it above the text.
     if side_image:
@@ -135,18 +135,43 @@ screen say(who, what, side_image=None, two_window=False):
     else:
         add SideImage() xalign 0.0 yalign 1.0
 
-    # Use the quick menu.
-    # use quick_menu
-
 style window:
-    background Frame("textbox.png", 0, 0)
+    background None # Frame("textbox.png", 0, 0)
     yminimum gui.scale(190)
 
 style say_label:
     size gui.scale(28)
     bold False
 
+screen quick_menu():
+    hbox:
+        xalign 1.0
+        ypos gui.scale(7)
+        xpos 1058
 
+        iconbutton "save" caption _("Save") action ShowMenu("save")
+
+style iconbutton:
+    xsize gui.scale(25)
+    ysize gui.scale(47)
+
+style iconbutton_text:
+    xalign 0.5
+    size 15
+    color "#0000"
+    selected_idle_color gui.SELECTED_COLOR
+    hover_color gui.ACCENT_COLOR
+    selected_hover_color gui.SELECTED_COLOR
+    insensitive_color gui.INSENSITIVE_COLOR
+
+style iconbutton_icon:
+    color gui.IDLE_COLOR
+    selected_color gui.SELECTED_COLOR
+    hover_color gui.ACCENT_COLOR
+    selected_hover_color gui.ACCENT_COLOR
+    insensitive_color gui.INSENSITIVE_COLOR
+
+    yalign 1.0
 
 ################################################################################
 # Navigation
