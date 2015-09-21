@@ -136,24 +136,60 @@ screen say(who, what, side_image=None, two_window=False):
         add SideImage() xalign 0.0 yalign 1.0
 
 style window:
-    background None # Frame("textbox.png", 0, 0)
+    background Frame("textbox.png", 0, 0)
     yminimum gui.scale(190)
 
 style say_label:
-    size gui.scale(28)
+    size gui.scale(30)
     bold False
 
 screen quick_menu():
     hbox:
         xalign 1.0
         ypos gui.scale(7)
-        xpos 1058
+        spacing gui.scale(20)
 
-        iconbutton "save" caption _("Save") action ShowMenu("save")
+        iconbutton "rollback":
+            caption _("rollback")
+            action Rollback()
+
+        iconbutton "skip":
+            caption _("skip")
+            action Skip()
+            alternate Skip(fast=True, confirm=True)
+
+        iconbutton "auto":
+            caption _("auto")
+            action Preference("auto-forward", "toggle")
+
+        iconbutton "save":
+            caption _("save")
+            action ShowMenu("save")
+            alternate QuickSave()
+
+        iconbutton "load":
+            caption _("load")
+            action ShowMenu("load")
+            alternate QuickLoad()
+
+        iconbutton "preferences":
+            caption _("preferences")
+            action ShowMenu("preferences")
+
+        iconbutton "history":
+            caption _("history")
+
+        iconbutton "menu":
+            caption _("menu")
+            action ShowMenu()
+
+        # This has been added to ensure there's spacing between the
+        # last icon and the right end of the game.
+        null
 
 style iconbutton:
     xsize gui.scale(25)
-    ysize gui.scale(47)
+    ysize gui.scale(42)
 
 style iconbutton_text:
     xalign 0.5
@@ -162,7 +198,6 @@ style iconbutton_text:
     selected_idle_color gui.SELECTED_COLOR
     hover_color gui.ACCENT_COLOR
     selected_hover_color gui.SELECTED_COLOR
-    insensitive_color gui.INSENSITIVE_COLOR
 
 style iconbutton_icon:
     color gui.IDLE_COLOR
