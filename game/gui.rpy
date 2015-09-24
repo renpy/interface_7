@@ -148,11 +148,12 @@ style say_label:
     size gui.scale(30)
     bold False
 
-screen quick_menu():
+screen quick_menu(**properties):
     hbox:
         xalign 1.0
         ypos gui.scale(7)
         spacing gui.scale(20)
+        properties properties
 
         iconbutton "rollback":
             caption _("rollback")
@@ -228,7 +229,10 @@ screen choice(items):
         for caption, action, chosen in items:
             textbutton caption action action
 
-    # TODO: Show the quick menu if necessary.
+    # If the say screen is not showing, show the quick menu at the bottom
+    # of the screen.
+    if not renpy.get_screen("say"):
+        use quick_menu(yalign=1.0)
 
 # Use the narrator to speak menu captions.
 define config.narrator_menu = True
