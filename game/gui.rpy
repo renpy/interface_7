@@ -21,6 +21,7 @@ define gui.LARGE_SIZE = gui.scale(24)
 define gui.NORMAL_SIZE = gui.scale(22)
 define gui.SMALL_SIZE = gui.scale(18)
 
+define gui.WINDOW_HEIGHT = gui.scale(268)
 
 ################################################################################
 # Colors
@@ -47,6 +48,9 @@ define gui.IDLE_COLOR = "#555555"
 
 # The color used for a text button when it cannot be selected.
 define gui.INSENSITIVE_COLOR = "#55555580"
+
+# The color used for dialogue and menu choice text.
+define gui.TEXT_COLOR = "#ffffff"
 
 ################################################################################
 # Window, Frame, Pane, and Menu backgrounds
@@ -104,6 +108,7 @@ define gui.PANE_WIDTH = gui.scale(280)
 
 
 screen say(who, what, side_image=None, two_window=False):
+    style_group "say"
 
     window:
         id "window"
@@ -114,7 +119,7 @@ screen say(who, what, side_image=None, two_window=False):
 
             vbox:
                 xsize gui.scale(744)
-                xpos gui.scale(268)
+                xpos gui.WINDOW_HEIGHT
 
                 null height gui.scale(20)
 
@@ -207,6 +212,56 @@ style iconbutton_icon:
     insensitive_color gui.INSENSITIVE_COLOR
 
     yalign 1.0
+
+
+
+ ##############################################################################
+ # Choice
+ #
+ # Screen that's used to display in-game menus.
+ # http://www.renpy.org/doc/html/screen_special.html#choice
+
+screen choice(items):
+    style_group "choice"
+
+    vbox:
+        for caption, action, chosen in items:
+            textbutton caption action action
+
+    # TODO: Show the quick menu if necessary.
+
+# Use the narrator to speak menu captions.
+define config.narrator_menu = True
+
+style choice_vbox:
+
+    # Center the choices horizontally, then offset them a bit.
+    xalign 0.5
+    xoffset gui.scale(10)
+
+    # Center the choices vertically in the area above the text window.
+    ypos gui.scale(270)
+    yanchor 0.5
+
+
+    # Add some space between choices.
+    spacing gui.NORMAL_SIZE
+
+
+style choice_button is default:
+    background Frame("choice.png", 35, 0)
+    hover_foreground Solid(gui.ACCENT_COLOR, xsize=gui.scale(8))
+
+    xsize gui.scale(765)
+    xpadding gui.scale(25)
+
+    ypadding gui.NORMAL_SIZE / 2
+
+style choice_button_text:
+    color gui.TEXT_COLOR
+    hover_color gui.HOVER_COLOR
+    insensitive_color gui.INSENSITIVE_COLOR
+
 
 ################################################################################
 # Navigation
