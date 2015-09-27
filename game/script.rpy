@@ -13,16 +13,20 @@ label main_menu:
 # The game starts here.
 label start:
 
-    scene expression "main menu.jpg"
+    scene bg lwa desk
+
+    show screen skip_indicator
 
     menu:
-        "This is choice 1.1":
+        e "I made it back to what I can only assume is my dorm room. What should I be doing for the rest of the night?"
+
+        "Cleaning my desk.":
             pass
 
-        "This is choice 1.2":
+        "Reading the Lemma Soft Forums.":
             pass
 
-        "This is choice 1.3":
+        "Figuring out why I'm trapped in a fantasy anime.":
             pass
 
     show expression Transform("dialogue.png", size=(1280, 720))
@@ -46,3 +50,4 @@ label start:
     show expression Transform("dialogue.png", size=(1280, 720))
 
     e "At that time it was quite clear in my own mind that the Thing had come from the planet Mars, but I judged it improbable that it contained any living creature. I thought the unscrewing might be automatic."
+

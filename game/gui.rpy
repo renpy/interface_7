@@ -19,7 +19,7 @@ define gui.HUGE_SIZE = gui.scale(50)
 define gui.XLARGE_SIZE = gui.scale(28)
 define gui.LARGE_SIZE = gui.scale(24)
 define gui.NORMAL_SIZE = gui.scale(22)
-define gui.SMALL_SIZE = gui.scale(18)
+define gui.SMALL_SIZE = gui.scale(16)
 
 define gui.WINDOW_HEIGHT = gui.scale(268)
 
@@ -51,13 +51,14 @@ define gui.INSENSITIVE_COLOR = "#55555580"
 
 # The color used for dialogue and menu choice text.
 define gui.TEXT_COLOR = "#ffffff"
+define gui.CHOICE_COLOR = "#cccccc"
 
 ################################################################################
 # Window, Frame, Pane, and Menu backgrounds
 
 # The background of the main menu and game menu.
-define gui.MAIN_MENU_BACKGROUND = "images/main menu.jpg"
-define gui.GAME_MENU_BACKGROUND = "images/game menu.jpg"
+define gui.MAIN_MENU_BACKGROUND = "main menu.jpg"
+define gui.GAME_MENU_BACKGROUND = "game menu.jpg"
 
 # Solid colors that are overlaid on those backgrounds to darken or lighten
 # them.
@@ -67,9 +68,13 @@ define gui.GAME_MENU_DARKEN = "#000000cc"
 # The background of the window containing dialogue from characters.
 define gui.WINDOW_BACKGROUND = "#000000cc"
 
+define gui.CHOICE_BACKGROUND = Frame("choice.png", gui.scale(35), gui.scale(0))
+define gui.CHOICE_HOVER_BACKGROUND = Frame(gui.recolor("choice.png", gui.ACCENT_COLOR), gui.scale(35), gui.scale(0))
+
+define gui.SKIPPING_BACKGROUND = Frame(gui.recolor("skipping.png", gui.ACCENT_COLOR), gui.scale(35), gui.scale(0))
+
 # Vertical lines made up of the accent color.
-define gui.VERTICAL_SEPARATOR = Solid(gui.ACCENT_COLOR, xsize=gui.scale(3))
-define gui.WIDE_VLINE = Solid(gui.ACCENT_COLOR, xsize=gui.scale(5))
+define gui.VERTICAL_SEPARATOR = gui.vline(gui.ACCENT_COLOR, 3)
 
 ################################################################################
 # Style common user interface components.
@@ -144,6 +149,9 @@ style window:
     background Frame("textbox.png", 0, 0)
     yminimum gui.scale(190)
 
+style say_vbox:
+    spacing 0
+
 style say_label:
     size gui.scale(30)
     bold False
@@ -199,7 +207,7 @@ style iconbutton:
 
 style iconbutton_text:
     xalign 0.5
-    size 15
+    size gui.SMALL_SIZE
     color "#0000"
     selected_idle_color gui.SELECTED_COLOR
     hover_color gui.ACCENT_COLOR
@@ -251,10 +259,10 @@ style choice_vbox:
     # Add some space between choices.
     spacing gui.NORMAL_SIZE
 
-
 style choice_button is default:
-    background Frame("choice.png", 35, 0)
-    hover_foreground Solid(gui.ACCENT_COLOR, xsize=gui.scale(8))
+    background gui.CHOICE_BACKGROUND
+    hover_background gui.CHOICE_HOVER_BACKGROUND
+    hover_foreground gui.vline(gui.TEXT_COLOR, 8)
 
     xsize gui.scale(765)
     xpadding gui.scale(25)
@@ -262,9 +270,42 @@ style choice_button is default:
     ypadding gui.NORMAL_SIZE / 2
 
 style choice_button_text:
-    color gui.TEXT_COLOR
-    hover_color gui.HOVER_COLOR
-    insensitive_color gui.INSENSITIVE_COLOR
+    color gui.CHOICE_COLOR
+    hover_color gui.TEXT_COLOR
+
+
+
+screen skip_indicator:
+    frame:
+        ypos gui.scale(10)
+        background gui.SKIPPING_BACKGROUND
+        ypadding gui.SMALL_SIZE / 3
+        left_padding gui.SMALL_SIZE
+        right_padding gui.scale(50)
+
+        has hbox:
+            spacing gui.scale(6)
+
+        text _("Skipping") size gui.SMALL_SIZE
+
+        add skip_triangle(0)
+        add skip_triangle(.2)
+        add skip_triangle(.4)
+
+transform skip_triangle(delay):
+    gui.recolor("skip triangle.png", gui.TEXT_COLOR)
+    zoom .66 * gui.SCALE_FACTOR
+    ypos gui.scale(4)
+    alpha .5
+
+    pause delay
+
+    block:
+        linear .2 alpha 1.0
+        pause .2
+        linear .2 alpha 0.5
+        pause 1.0
+        repeat
 
 
 ################################################################################
@@ -538,6 +579,8 @@ style mute_preference_button:
 
 init -1 python in gui:
 
+    from store import im, Solid
+
     def scale(n):
         """
         Returns `n` scaled by gui.SCALE_FACTOR, rounded to the next-lowest
@@ -545,3 +588,9 @@ init -1 python in gui:
         """
 
         return int(n * SCALE_FACTOR)
+
+    def recolor(image, color):
+        return im.MatrixColor(image, im.matrix.colorize(color, color))
+
+    def vline(color, width):
+        return Solid(color, xsize=scale(width))
