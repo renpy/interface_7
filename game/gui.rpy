@@ -87,13 +87,8 @@ style button_text:
     hover_color gui.HOVER_COLOR
     selected_hover_color gui.HOVER_COLOR
 
-style label:
-    ysize gui.scale(30)
-
 style label_text:
-    size gui.LARGE_SIZE
     color gui.ACCENT_COLOR
-    yalign 1.0
 
 style interface_frame is default
 
@@ -343,7 +338,7 @@ screen navigation():
 
         textbutton _("About") action ShowMenu("about")
 
-        textbutton _("Help") action Help()
+        textbutton _("Help") action ShowMenu("help")
 
         textbutton _("Quit") action Quit(confirm=not main_menu)
 
@@ -456,7 +451,7 @@ screen preferences:
 
     use game_menu(_("Preferences")):
         frame:
-            style "preference_frame"
+            style "interface_frame"
 
             left_padding gui.scale(50)
             right_padding gui.scale(20)
@@ -543,7 +538,13 @@ screen preferences:
                         style "mute_preference_button"
 
 
-style preferences_frame is interface_frame
+style choice_preference_label:
+    ysize gui.scale(30)
+
+style choice_preference_label_text:
+    size gui.LARGE_SIZE
+    yalign 1.0
+
 
 style preference_button:
     left_padding gui.scale(20)
@@ -563,6 +564,11 @@ style bar_preference_slider:
 style bar_preference_label:
     top_margin gui.scale(10)
     bottom_margin gui.scale(3)
+    ysize gui.scale(30)
+
+style bar_preference_label_text:
+    size gui.LARGE_SIZE
+    yalign 1.0
 
 style bar_preference_button:
     yalign 1.0
@@ -570,6 +576,41 @@ style bar_preference_button:
 style mute_preference_button:
     top_margin gui.scale(15)
 
+################################################################################
+# Help
+
+screen help_entry(entry, mouse=None, key=None, touch=None, gamepad=None):
+
+    python:
+        help = [ ]
+
+        if mouse:
+            help.append(mouse)
+        if key:
+            help.append(key)
+        if touch:
+            help.append(touch)
+        if gamepad:
+            help.append(gamepad)
+
+        help_text = __("{#help}, ").join(__(i) for i in help)
+
+    if help:
+        hbox:
+            label entry
+            text help_text
+
+screen help():
+    tag menu
+
+    use game_menu(_("Help")):
+
+        frame:
+            style "interface_frame"
+
+            has vbox
+
+            use help_entry(_("Advance:"), _("Left-click"), _("Enter, Space"), _("Touch"), _("Gamepad A"))
 
 
 ################################################################################

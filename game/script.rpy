@@ -15,7 +15,12 @@ label start:
 
     scene bg lwa desk
 
-    show screen skip_indicator
+label loop:
+    "A"
+    "B"
+    "C"
+    "D"
+    jump loop
 
     menu:
         e "I made it back to what I can only assume is my dorm room. What should I be doing for the rest of the night?"
