@@ -15,6 +15,10 @@ label start:
 
     scene bg lwa desk
 
+    "A"
+
+    $ renpy.input("Hello, how are you?")
+
 label loop:
     "A"
     "B"

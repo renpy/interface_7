@@ -71,6 +71,8 @@ define gui.WINDOW_BACKGROUND = "#000000cc"
 define gui.CHOICE_BACKGROUND = Frame("choice.png", gui.scale(35), gui.scale(0))
 define gui.CHOICE_HOVER_BACKGROUND = Frame(gui.recolor("choice.png", gui.ACCENT_COLOR), gui.scale(35), gui.scale(0))
 
+define gui.INPUT_BACKGROUND = Frame("input.png", gui.scale(35), gui.scale(0))
+
 define gui.SKIPPING_BACKGROUND = Frame(gui.recolor("skipping.png", gui.ACCENT_COLOR), gui.scale(35), gui.scale(0))
 
 # Vertical lines made up of the accent color.
@@ -268,8 +270,6 @@ style choice_button_text:
     color gui.CHOICE_COLOR
     hover_color gui.TEXT_COLOR
 
-
-
 screen skip_indicator:
     frame:
         ypos gui.scale(10)
@@ -301,6 +301,50 @@ transform skip_triangle(delay):
         linear .2 alpha 0.5
         pause 1.0
         repeat
+
+##############################################################################
+# Input
+#
+# Screen that's used to prompt for text input, inside and outside the game.
+
+screen input(prompt):
+
+    window style "input_window":
+        has vbox
+
+        text prompt style "input_prompt"
+
+        null height (gui.NORMAL_SIZE / 2)
+
+        input id "input" style "input_text"
+
+style input_window is default:
+    clear
+
+    # Center the choices horizontally, then offset them a bit.
+    xalign 0.5
+    xoffset gui.scale(10)
+
+    # Center the choices vertically in the area above the text window.
+    ypos gui.scale(270)
+    yanchor 0.5
+
+    background gui.INPUT_BACKGROUND
+    hover_foreground gui.vline(gui.TEXT_COLOR, 8)
+
+    xsize gui.scale(765)
+    xpadding gui.scale(25)
+
+    ypadding gui.NORMAL_SIZE
+
+style input_prompt is default:
+    clear
+
+style input_text is default:
+    clear
+
+    color gui.ACCENT_COLOR
+    adjust_spacing False
 
 
 ################################################################################
