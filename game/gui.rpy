@@ -116,25 +116,20 @@ screen say(who, what, side_image=None, two_window=False):
         id "window"
         yminimum 190
 
-        fixed:
-            fit_first "height"
+        vbox:
+            xsize gui.scale(744)
+            xpos gui.WINDOW_HEIGHT
 
-            vbox:
-                xsize gui.scale(744)
-                xpos gui.WINDOW_HEIGHT
+            null height gui.scale(10)
 
-                null height gui.scale(20)
+            if who:
+                text who id "who" xoffset gui.scale(-10)
+            else:
+                text " " id "who"
 
-                if who:
-                    text who id "who"
-                else:
-                    text " " id "who"
+            null height gui.scale(5)
 
-                null height gui.scale(10)
-
-                text what id "what"
-
-            use quick_menu
+            text what id "what"
 
     # If there's a side image, display it above the text.
     if side_image:
@@ -142,9 +137,12 @@ screen say(who, what, side_image=None, two_window=False):
     else:
         add SideImage() xalign 0.0 yalign 1.0
 
+    use quick_menu
+
 style window:
-    background Frame("textbox.png", 0, 0)
-    yminimum gui.scale(190)
+    # background "#000000c0" #  " Frame("textbox.png", 0, 0)
+    background "tb2.png"
+    yminimum gui.scale(150)
 
 style say_vbox:
     spacing 0
@@ -153,50 +151,7 @@ style say_label:
     size gui.scale(30)
     bold False
 
-screen quick_menu(**properties):
-    hbox:
-        xalign 1.0
-        ypos gui.scale(7)
-        spacing gui.scale(20)
-        properties properties
 
-        iconbutton "rollback":
-            caption _("rollback")
-            action Rollback()
-
-        iconbutton "skip":
-            caption _("skip")
-            action Skip()
-            alternate Skip(fast=True, confirm=True)
-
-        iconbutton "auto":
-            caption _("auto")
-            action Preference("auto-forward", "toggle")
-
-        iconbutton "save":
-            caption _("save")
-            action ShowMenu("save")
-            alternate QuickSave()
-
-        iconbutton "load":
-            caption _("load")
-            action ShowMenu("load")
-            alternate QuickLoad()
-
-        iconbutton "preferences":
-            caption _("preferences")
-            action ShowMenu("preferences")
-
-        iconbutton "history":
-            caption _("history")
-
-        iconbutton "menu":
-            caption _("menu")
-            action ShowMenu()
-
-        # This has been added to ensure there's spacing between the
-        # last icon and the right end of the game.
-        null
 
 style iconbutton:
     xsize gui.scale(25)
@@ -219,6 +174,35 @@ style iconbutton_icon:
 
     yalign 1.0
 
+screen quick_menu():
+
+    # Add an in-game quick menu.
+    hbox:
+        style_group "quick"
+
+        xalign 0.5
+        yalign 1.0
+
+        textbutton _("Back") action Rollback()
+        textbutton _("Log")
+        textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
+        textbutton _("Auto") action Preference("auto-forward", "toggle")
+        textbutton _("Save") action ShowMenu('save')
+        textbutton _("Q.Save") action QuickSave()
+        textbutton _("Q.Load") action QuickLoad()
+        textbutton _("Prefs") action ShowMenu('preferences')
+
+style quick_button:
+    background None
+    xpadding 10
+
+style quick_button_text:
+    size gui.scale(14)
+#     idle_color "#8888"
+#     hover_color "#ccc"
+#     selected_idle_color "#cc08"
+#     selected_hover_color "#cc0"
+#     insensitive_color "#4448"
 
 
  ##############################################################################
