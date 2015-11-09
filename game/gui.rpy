@@ -114,13 +114,13 @@ screen say(who, what, side_image=None, two_window=False):
 
     window:
         id "window"
-        yminimum 190
+        ysize 185
 
         vbox:
             xsize gui.scale(744)
             xpos gui.WINDOW_HEIGHT
 
-            null height gui.scale(10)
+            null height gui.scale(5)
 
             if who:
                 text who id "who" xoffset gui.scale(-10)

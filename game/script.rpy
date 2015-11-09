@@ -9,13 +9,17 @@ define e = Character('Eileen', color="#c8ffc8")
 label main_menu:
     return
 
-
 # The game starts here.
 label start:
 
-    scene bg lwa desk
+    # scene bg lwa desk
+    scene bg mugen
 
     e "Is this particularly hard to read? No, I don't think so. Do you? But what happens when I add a lot more text to it - to the point where it wraps not once, not twice, but three times - leading to four lines in all. With more text like this."
+
+    scene expression "#ccc"
+
+    "..."
 
     $ renpy.input("Hello, how are you?")
 
