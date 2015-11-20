@@ -14,6 +14,15 @@ label start:
 
     scene bg mugen
 
+    menu:
+        "This is a choice."
+
+        "This is the first choice.":
+            pass
+
+        "This is the second choice. It's much longer, probably long enough to be split to multiple lines.":
+            pass
+
     e "Is this particularly hard to read? No, I don't think so. Do you? But what happens when I add a lot more text to it - to the point where it wraps not once, not twice, but three times - leading to four lines in all. With more text like this."
 
     scene bg lwa desk

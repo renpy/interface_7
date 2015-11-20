@@ -109,6 +109,51 @@ style say_label:
     size gui.scale(30)
     bold False
 
+##############################################################################
+# Choice
+#
+# Screen that's used to display in-game menus.
+# http://www.renpy.org/doc/html/screen_special.html#choice
+
+screen choice(items):
+    style_group "choice"
+
+    vbox:
+        for caption, action, chosen in items:
+            textbutton caption action action
+
+# Use the narrator to speak menu captions.
+define config.narrator_menu = True
+
+style choice_vbox:
+
+    # Center the choices horizontally, then offset them a bit.
+    xalign 0.5
+
+    # Center the choices vertically in the area above the text window.
+    ypos gui.scale(270)
+    yanchor 0.5
+
+    # Add some space between choices.
+    spacing gui.scale(22)
+
+style choice_button is default:
+    background Frame("gui/choice_button.png", 0, 5)
+    hover_background Frame("gui/hover_choice_button.png", 0, 5)
+
+    xsize gui.scale(790)
+    xpadding gui.scale(100)
+
+    ypadding gui.scale(11) / 2
+
+style choice_button_text:
+    color gui.CHOICE_COLOR
+    hover_color gui.TEXT_COLOR
+
+    # Center the text.
+    xalign 0.5
+    text_align 0.5
+    layout "subtitle"
 
 ################################################################################
 # Quick Menu

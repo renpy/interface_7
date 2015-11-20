@@ -3,6 +3,8 @@
 import math
 import random
 
+from renpy.store import Color
+
 # The target widths used in templates.
 WIDTH = 1280
 HEIGHT = 720
@@ -20,6 +22,8 @@ class ImageGenerator(object):
 
         self.scale = 1.0 * height / HEIGHT
 
+        self.accent_color = Color("#00b8c3")
+        self.boring_color = Color("#000000")
 
     def rescale_template(self, t):
 
@@ -94,17 +98,14 @@ class ImageGenerator(object):
 
         XSIZE = WIDTH
         XINSIDE = (XSIZE - 744) // 2
-        XOUTSIDE = 0 # XINSIDE - 20
 
         YSIZE = 185
         YBORDER = 5
 
         X = [
             (0, 0.0),
-            (XOUTSIDE, 0.0),
-            (XINSIDE, .8),
-            (XSIZE - XINSIDE, .8),
-            (XSIZE - XOUTSIDE, 0.0),
+            (XINSIDE, 1.0),
+            (XSIZE - XINSIDE, 1.0),
             (XSIZE, 0.0),
             ]
 
@@ -114,10 +115,36 @@ class ImageGenerator(object):
             (YSIZE, 1.0),
             ]
 
-        self.generate_image("textbox", X, Y)
+        self.generate_image("textbox", X, Y, self.boring_color.opacity(.8))
+
+    def generate_choice_button(self):
+        XSIZE = 790
+        XINSIDE = 100
+
+        YSIZE = 30
+        YBORDER = 3
+
+        X = [
+            (0, 0.0),
+            (XINSIDE, 1.0),
+            (XSIZE - XINSIDE, 1.0),
+            (XSIZE, 0.0),
+            ]
+
+        Y = [
+            (0, 0.0),
+            (YBORDER, 1.0),
+            (YSIZE - YBORDER, 1.0),
+            (YSIZE, 0.0),
+            ]
+
+        self.generate_image("choice_button", X, Y, self.boring_color.opacity(.8))
+        self.generate_image("hover_choice_button", X, Y, self.accent_color.opacity(.95))
+
 
     def generate_all(self):
         self.generate_textbox()
+        self.generate_choice_button()
 
 
 if __name__ == "__main__":
