@@ -102,12 +102,42 @@ style window:
     background "gui/textbox.png"
     ysize gui.scale(185)
 
-style say_vbox:
-    spacing 0
-
 style say_label:
     size gui.scale(30)
     bold False
+
+# It'll probably be better to fix this up in the legacy style system.
+style say_vbox:
+    spacing 0
+
+
+################################################################################
+# Input
+#
+# Screen that's used to display renpy.input()
+# http://www.renpy.org/doc/html/screen_special.html#input
+screen input(prompt):
+    style_group "input"
+
+    window:
+
+        vbox:
+            xsize gui.scale(744)
+            xalign 0.5
+
+            null height gui.scale(5)
+
+            text " " style "say_label"
+
+            null height gui.scale(5)
+
+            text prompt style "input_prompt"
+
+            input id "input"
+
+style input:
+    color gui.ACCENT_COLOR
+
 
 ##############################################################################
 # Choice

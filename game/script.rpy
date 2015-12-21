@@ -14,6 +14,10 @@ label start:
 
     scene bg mugen
 
+    e "Let me ask you a question."
+
+    $ renpy.input("Are you a turtle?", default="You bet your sweet ass I am.")
+
     menu:
         "This is a choice."
 
