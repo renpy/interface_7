@@ -39,6 +39,10 @@ define gui.INSENSITIVE_COLOR = "#55555580"
 define gui.TEXT_COLOR = "#ffffff"
 define gui.CHOICE_COLOR = "#cccccc"
 
+# The images used for the main and game menus.
+define gui.MAIN_MENU_BACKGROUND = "gui/main_menu.jpg"
+define gui.GAME_MENU_BACKGROUND = "gui/game_menu.jpg"
+
 
 ################################################################################
 # Style common user interface components.
@@ -218,3 +222,127 @@ style quick_button_text:
 
 init python:
     config.overlay_screens.append("quick_menu")
+
+
+################################################################################
+# Navigation
+#
+# This screen serves to navigate within the main and game menus.
+
+screen navigation():
+
+    vbox:
+        style_group "nav"
+
+        xpos gui.scale(50)
+        xmaximum gui.scale(230)
+
+        yalign 0.5
+        spacing gui.scale(12)
+
+
+        if main_menu:
+            textbutton _("Start") action Start()
+        else:
+            textbutton _("Save") action ShowMenu("save")
+
+        textbutton _("Load") action ShowMenu("load")
+
+        textbutton _("Preferences") action ShowMenu("preferences")
+
+        if main_menu:
+            textbutton _("Extras") action ShowMenu("extras")
+        else:
+            textbutton _("Main Menu") action MainMenu()
+
+        textbutton _("About") action ShowMenu("about")
+
+        textbutton _("Help") action ShowMenu("help")
+
+        textbutton _("Quit") action Quit(confirm=not main_menu)
+
+
+style nav_button:
+    xfill True
+
+style nav_button_text:
+    size gui.scale(24)
+
+
+##############################################################################
+# Main Menu
+#
+# Used to display the main menu when Ren'Py starts.
+# http://www.renpy.org/doc/html/screen_special.html#main-menu
+#
+# This lays out the main menu and its backgrounds, but uses the navigation
+# screen to actually supply the main menu buttons.
+
+screen main_menu():
+
+    # This ensures that any other menu screen is replaced.
+    tag menu
+
+    add gui.MAIN_MENU_BACKGROUND
+    add "gui/main_menu_darken.png"
+
+    # The actual contents of the main menu are in the navigation screen, above.
+    use navigation
+
+
+##############################################################################
+# Game Menu
+#
+# This lays out the basic common structure of a game menu screen. It's called
+# with the screen title, and displays the background, title, and navigation.
+# When used with children (the expected case), it transcludes those children
+# in an hbox after the space reserved for navigation.
+
+screen game_menu(title):
+
+    # Add the backgrounds.
+    if main_menu:
+        add gui.MAIN_MENU_BACKGROUND
+    else:
+        add gui.GAME_MENU_BACKGROUND
+
+    add "gui/game_menu_darken.png"
+
+    vbox:
+        style_group "interface"
+
+        label title:
+            # position the title.
+            xpos gui.scale(50)
+            ysize gui.scale(120)
+
+            # text_ properties are used to style the text.
+            text_size gui.scale(50)
+            text_color gui.ACCENT_COLOR
+            text_yalign 0.5
+
+        frame:
+            style "interface_frame"
+
+            bottom_margin gui.scale(30)
+
+            hbox:
+
+                # Reserve space for the navigation section.
+                null width gui.scale(280)
+
+                # add gui.VERTICAL_SEPARATOR
+
+                transclude
+
+    use navigation
+
+    textbutton _("Return"):
+        style "nav_button"
+        action Return()
+        xpos gui.scale(50)
+        ypos config.screen_height - gui.scale(30)
+        yanchor 1.0
+
+
+

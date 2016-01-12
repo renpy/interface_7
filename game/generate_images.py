@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
-import math
-import random
+import pygame_sdl2
 
 from renpy.store import Color
 
@@ -12,7 +11,6 @@ HEIGHT = 720
 class ImageGenerator(object):
 
     def __init__(self, prefix, width, height):
-        import pygame_sdl2
         pygame_sdl2.image.init()
 
         self.prefix = prefix
@@ -24,6 +22,14 @@ class ImageGenerator(object):
 
         self.accent_color = Color("#00b8c3")
         self.boring_color = Color("#000000")
+
+    def scale_int(self, n):
+        rv = int(n * self.scale)
+
+        if rv < 1:
+            rv = 1
+
+        return rv
 
     def rescale_template(self, t):
 
@@ -71,6 +77,12 @@ class ImageGenerator(object):
 
         return line[start:start + size ]
 
+    def save(self, s, filename):
+        pygame_sdl2.image.save(s, self.prefix + filename + ".png")
+
+    def make_surface(self, width, height):
+        return pygame_sdl2.Surface((width, height), pygame_sdl2.SRCALPHA)
+
     def generate_image(self, filename, xtmpl, ytmpl, color=(0, 0, 0, 255)):
 
         r, g, b, a = color
@@ -84,15 +96,14 @@ class ImageGenerator(object):
         xline = self.crop_line(xline, self.width)
         yline = self.crop_line(yline, self.height)
 
-        import pygame_sdl2
-        s = pygame_sdl2.Surface((len(xline), len(yline)), pygame_sdl2.SRCALPHA)
+        s = self.make_surface(len(xline), len(yline))
 
         for x, xv in enumerate(xline):
             for y, yv in enumerate(yline):
                 v = xv * yv
                 s.set_at((x, y), (r, g, b, int(a * v)))
 
-        pygame_sdl2.image.save(s, self.prefix + filename + ".png")
+        self.save(s, filename)
 
     def generate_textbox(self):
 
@@ -141,10 +152,27 @@ class ImageGenerator(object):
         self.generate_image("choice_button", X, Y, self.boring_color.opacity(.8))
         self.generate_image("hover_choice_button", X, Y, self.accent_color.opacity(.95))
 
+    def generate_darken(self):
+
+        width = self.scale_int(283)
+        line_width = self.scale_int(3)
+
+        # Main menu.
+        mm = self.make_surface(width, self.height)
+        mm.fill(self.boring_color.opacity(.8))
+        mm.subsurface((width - line_width, 0, line_width, self.height)).fill(self.accent_color)
+        self.save(mm, "main_menu_darken")
+
+
+        gm = self.make_surface(width, self.height)
+        gm.fill(self.boring_color.opacity(.8))
+        self.save(gm, "game_menu_darken")
+
 
     def generate_all(self):
         self.generate_textbox()
         self.generate_choice_button()
+        self.generate_darken()
 
 
 if __name__ == "__main__":

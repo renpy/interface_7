@@ -6,8 +6,8 @@
 # Declare characters used by this game.
 define e = Character('Eileen', color="#c8ffc8")
 
-label main_menu:
-    return
+# label main_menu:
+#     return
 
 # The game starts here.
 label start:
