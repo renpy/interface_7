@@ -67,7 +67,6 @@ style bar:
 
 style slider is bar
 
-
 # ...
 style interface_frame is default
 
@@ -346,3 +345,131 @@ screen game_menu(title):
 
 
 
+screen preferences:
+
+    tag menu
+
+    use game_menu(_("Preferences")):
+        frame:
+            style "interface_frame"
+
+            left_padding gui.scale(50)
+            right_padding gui.scale(20)
+            top_padding gui.scale(20)
+
+            has vbox
+
+            grid 4 1:
+                style_group "choice_preference"
+                xfill True
+
+                vbox:
+                    label _("Display")
+                    textbutton _("Window") action Preference("display", "window")
+                    textbutton _("Fullscreen") action Preference("display", "fullscreen")
+
+                vbox:
+                    label _("Transitions")
+                    textbutton _("All") action Preference("transitions", "all")
+                    textbutton _("None") action Preference("transitions", "none")
+
+                vbox:
+                    label _("Skip")
+                    textbutton _("Seen Messages") action Preference("skip", "seen")
+                    textbutton _("All Messages") action Preference("skip", "all")
+
+                vbox:
+                    label _("After Choices")
+                    textbutton _("Stop Skipping") action Preference("after choices", "stop")
+                    textbutton _("Keep Skipping") action Preference("after choices", "skip")
+
+            null height gui.scale(25)
+
+            # If a second row of preferences is desired, the preferences can
+            # be added here.
+
+            null height gui.scale(25)
+
+            grid 2 1:
+                style_group "bar_preference"
+                xfill True
+
+                vbox:
+
+                    label _("Text Speed")
+
+                    bar value Preference("text speed")
+
+                    label _("Auto-Forward Time")
+
+                    bar value Preference("auto-forward time")
+
+                vbox:
+                    style_group "bar_preference"
+
+                    if config.has_music:
+                        label _("Music Volume")
+
+                        hbox:
+                            bar value Preference("music volume")
+
+                    if config.has_sound:
+
+                        label _("Sound Volume")
+
+                        hbox:
+                            bar value Preference("sound volume")
+
+                            if config.sample_sound:
+                                textbutton _("Test") action Play("sound", config.sample_sound)
+
+
+                    if config.has_voice:
+                        label _("Voice Volume")
+
+                        hbox:
+                            bar value Preference("voice volume")
+
+                            if config.sample_voice:
+                                textbutton _("Test") action Play("voice", config.sample_voice)
+
+                    textbutton _("Mute All"):
+                        action Preference("all mute", "toggle")
+                        style "mute_preference_button"
+
+style choice_preference_label:
+    ysize gui.scale(30)
+
+style choice_preference_label_text:
+    size gui.scale(24)
+    yalign 1.0
+
+style preference_button:
+    left_padding gui.scale(20)
+    selected_background Solid(gui.ACCENT_COLOR, xsize=gui.scale(5))
+    selected_hover_background Solid(gui.HOVER_COLOR, xsize=gui.scale(5))
+    xoffset gui.scale(2)
+
+style choice_preference_button:
+    top_margin gui.scale(10)
+
+style choice_preference_button:
+    size_group "preferences"
+
+style bar_preference_slider:
+    xsize .75
+
+style bar_preference_label:
+    top_margin gui.scale(10)
+    bottom_margin gui.scale(3)
+    ysize gui.scale(30)
+
+style bar_preference_label_text:
+    size gui.scale(24)
+    yalign 1.0
+
+style bar_preference_button:
+    yalign 1.0
+
+style mute_preference_button:
+    top_margin gui.scale(15)

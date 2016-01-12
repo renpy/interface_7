@@ -164,7 +164,7 @@ class ImageGenerator(object):
         self.save(mm, "main_menu_darken")
 
 
-        gm = self.make_surface(width, self.height)
+        gm = self.make_surface(self.width, self.height)
         gm.fill(self.boring_color.opacity(.8))
         self.save(gm, "game_menu_darken")
 
