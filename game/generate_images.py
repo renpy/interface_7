@@ -168,11 +168,20 @@ class ImageGenerator(object):
         gm.fill(self.boring_color.opacity(.8))
         self.save(gm, "game_menu_darken")
 
+    def generate_separator(self):
+
+        vwidth = self.scale_int(3)
+        vheight = self.scale_int(570)
+
+        v = self.make_surface(vwidth, vheight)
+        v.fill(self.accent_color)
+        self.save(v, "vertical_separator")
 
     def generate_all(self):
         self.generate_textbox()
         self.generate_choice_button()
         self.generate_darken()
+        self.generate_separator()
 
 
 if __name__ == "__main__":

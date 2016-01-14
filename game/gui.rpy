@@ -330,7 +330,7 @@ screen game_menu(title):
                 # Reserve space for the navigation section.
                 null width gui.scale(280)
 
-                # add gui.VERTICAL_SEPARATOR
+                add "gui/vertical_separator.png"
 
                 transclude
 
