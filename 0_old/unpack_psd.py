@@ -1,3 +1,4 @@
+#@PydevCodeAnalysisIgnore
 from __future__ import unicode_literals, division, absolute_import, print_function
 
 from psd_tools import PSDImage, Group, Layer

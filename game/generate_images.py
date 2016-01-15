@@ -154,7 +154,7 @@ class ImageGenerator(object):
 
     def generate_darken(self):
 
-        width = self.scale_int(283)
+        width = self.scale_int(280)
         line_width = self.scale_int(3)
 
         # Main menu.
@@ -177,11 +177,38 @@ class ImageGenerator(object):
         v.fill(self.accent_color)
         self.save(v, "vertical_separator")
 
+    def generate_file_slot(self):
+
+        width = self.scale_int(276)
+        height = self.scale_int(216)
+
+        bar_width = self.scale_int(6)
+        shot_width = self.scale_int(256)
+        shot_offset = self.scale_int(10)
+
+        top_y = self.scale_int(10)
+        top_height = self.scale_int(144)
+
+        s = self.make_surface(width, height)
+        # s.subsurface((0, top_y, bar_width, top_height)).fill(self.accent_color)
+        s.subsurface((shot_offset, top_y, shot_width, top_height)).fill(self.accent_color.shade(.33))
+        self.save(s, "idle_file_slot")
+
+        s = self.make_surface(width, height)
+        s.subsurface((0, top_y, bar_width, top_height)).fill(self.accent_color)
+        s.subsurface((shot_offset, top_y, shot_width, top_height)).fill(self.accent_color.shade(.5))
+        self.save(s, "hover_file_slot")
+
+
+
+
+
     def generate_all(self):
         self.generate_textbox()
         self.generate_choice_button()
         self.generate_darken()
         self.generate_separator()
+        self.generate_file_slot()
 
 
 if __name__ == "__main__":

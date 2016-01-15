@@ -234,11 +234,10 @@ screen navigation():
         style_group "nav"
 
         xpos gui.scale(50)
-        xmaximum gui.scale(230)
+        xmaximum gui.scale(227)
 
         yalign 0.5
         spacing gui.scale(12)
-
 
         if main_menu:
             textbutton _("Start") action Start()
@@ -328,7 +327,7 @@ screen game_menu(title):
             hbox:
 
                 # Reserve space for the navigation section.
-                null width gui.scale(280)
+                null width gui.scale(277)
 
                 add "gui/vertical_separator.png"
 
@@ -342,6 +341,46 @@ screen game_menu(title):
         xpos gui.scale(50)
         ypos config.screen_height - gui.scale(30)
         yanchor 1.0
+
+screen file_picker(title):
+
+    use game_menu(title):
+
+        fixed:
+            grid 3 2:
+                xalign 0.5
+                yalign 0.5
+
+                for i in range(6):
+                    button:
+                        action FileAction(i)
+
+                        background "gui/idle_file_slot.png"
+                        hover_background "gui/hover_file_slot.png"
+
+                        xpadding 10
+                        ypadding 10
+
+                        xmargin 10
+                        ymargin 5
+
+                        vbox:
+                            add Solid("#0000", xysize=(256, 144))
+                            null height gui.scale(4)
+                            text "Line 1\nLine 2" size 20
+
+screen load():
+
+    tag menu
+
+    use file_picker(_("Load"))
+
+screen save():
+
+    tag menu
+
+    use file_picker(_("Save"))
+
 
 
 
