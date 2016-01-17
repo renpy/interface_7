@@ -358,16 +358,28 @@ screen file_picker(title):
                         background "gui/idle_file_slot.png"
                         hover_background "gui/hover_file_slot.png"
 
-                        xpadding 10
-                        ypadding 10
+                        # This include margins.
+                        xsize gui.scale(296)
+                        ysize gui.scale(226)
 
-                        xmargin 10
-                        ymargin 5
+                        xpadding gui.scale(10)
+                        ypadding gui.scale(10)
 
-                        vbox:
-                            add Solid("#0000", xysize=(256, 144))
-                            null height gui.scale(4)
-                            text "Line 1\nLine 2" size 20
+                        xmargin gui.scale(10)
+                        ymargin gui.scale(5)
+
+                        add FileScreenshot(i)
+
+                        text FileTime(i, empty="Empty slot"):
+                            ypos 146
+                            xalign 0.5
+                            size 20
+
+                        text "Test!":
+                            ypos 170
+                            xalign 0.5
+                            size 20
+
 
 screen load():
 
@@ -382,6 +394,8 @@ screen save():
     use file_picker(_("Save"))
 
 
+define config.thumbnail_width = gui.scale(256)
+define config.thumbnail_height = gui.scale(144)
 
 
 screen preferences:
