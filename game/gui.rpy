@@ -370,10 +370,10 @@ screen file_picker(title):
 
                         add FileScreenshot(i)
 
-                        text FileTime(i, empty="Empty slot"):
+                        text FileTime(i, format=_("{#file_time}%A, %B %d %Y, %H:%M"), empty="Empty slot"):
                             ypos 146
                             xalign 0.5
-                            size 20
+                            size 14
 
                         text "Test!":
                             ypos 170
