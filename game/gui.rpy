@@ -250,6 +250,8 @@ screen navigation():
 
         if main_menu:
             textbutton _("Extras") action ShowMenu("extras")
+        elif _in_replay:
+            textbutton _("End Replay") action EndReplay(confirm=True)
         else:
             textbutton _("Main Menu") action MainMenu()
 

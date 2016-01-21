@@ -9,12 +9,20 @@ define e = Character('Eileen', color="#c8ffc8")
 # label main_menu:
 #     return
 
+label replay:
+
+    "Test"
+
+    $ renpy.end_replay()
+
 # The game starts here.
 label start:
 
     scene bg mugen
 
     e "Let me ask you a question."
+
+    $ renpy.run(Replay("replay", locked=False))
 
     $ renpy.input("Are you a turtle?", default="You bet your sweet ass I am.")
 
