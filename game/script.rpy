@@ -18,6 +18,8 @@ label replay:
 # The game starts here.
 label start:
 
+    $ save_name = "Chapter 1: The chaptering, brought to you by the chapter."
+
     scene bg mugen
 
     e "Let me ask you a question."

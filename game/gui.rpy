@@ -377,10 +377,12 @@ screen file_picker(title):
                             xalign 0.5
                             size 14
 
-                        text "Test!":
-                            ypos 170
+                        text FileSaveName(i):
+                            ypos 164
                             xalign 0.5
-                            size 20
+                            layout "subtitle"
+                            size 14
+                            text_align 0.5
 
 
 screen load():
