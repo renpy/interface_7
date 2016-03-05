@@ -341,6 +341,7 @@ screen game_menu(title):
         style "nav_button"
         action Return()
         xpos gui.scale(50)
+        xmaximum gui.scale(227)
         ypos config.screen_height - gui.scale(30)
         yanchor 1.0
 
