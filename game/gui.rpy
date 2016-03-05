@@ -346,9 +346,21 @@ screen game_menu(title):
 
 screen file_picker(title):
 
+    default page_name_value = FilePageNameInputValue()
+
     use game_menu(title):
 
+
         fixed:
+
+            button:
+                key_events True
+                xfill True
+                action page_name_value.Toggle()
+
+                input value page_name_value
+
+
             grid 3 2:
                 xalign 0.5
                 yalign 0.5
@@ -383,6 +395,14 @@ screen file_picker(title):
                             layout "subtitle"
                             size 14
                             text_align 0.5
+
+            hbox:
+                xalign 0.5
+                yalign .15
+
+                textbutton "1" action FilePage(1)
+                textbutton "2" action FilePage(2)
+                textbutton "3" action FilePage(3)
 
 
 screen load():
