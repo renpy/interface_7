@@ -351,16 +351,20 @@ screen file_picker(title):
 
     use game_menu(title):
 
-
         fixed:
 
             button:
                 key_events True
-                xfill True
+                xalign 0.5
+                xpadding gui.scale(50)
+                ypadding gui.scale(3)
                 action page_name_value.Toggle()
 
-                input value page_name_value
-
+                input:
+                    value page_name_value
+                    size gui.scale(24)
+                    color gui.ACCENT_COLOR
+                    hover_color gui.HOVER_COLOR
 
             grid 3 2:
                 xalign 0.5
@@ -398,12 +402,21 @@ screen file_picker(title):
                             text_align 0.5
 
             hbox:
-                xalign 0.5
-                yalign .15
+                style_group "file_page"
 
-                textbutton "1" action FilePage(1)
-                textbutton "2" action FilePage(2)
-                textbutton "3" action FilePage(3)
+                xalign 0.5
+                yalign 1.0
+
+                textbutton _("<") action FilePagePrevious()
+
+                for page in range(1, 10):
+                    textbutton "[page]" action FilePage(page)
+
+                textbutton _(">") action FilePageNext()
+
+style file_page_button:
+    xpadding gui.scale(7)
+    ypadding gui.scale(3)
 
 
 screen load():
