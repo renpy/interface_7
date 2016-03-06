@@ -353,6 +353,11 @@ screen file_picker(title):
 
         fixed:
 
+            # This ensures the input will get the enter event before
+            # any of the buttons do.
+            order_reverse True
+
+            # The page name, which can be edited by clicking on a button.
             button:
                 key_events True
                 xalign 0.5
@@ -366,6 +371,8 @@ screen file_picker(title):
                     color gui.ACCENT_COLOR
                     hover_color gui.HOVER_COLOR
 
+
+            # The grid of file slots.
             grid 3 2:
                 xalign 0.5
                 yalign 0.5
@@ -401,6 +408,7 @@ screen file_picker(title):
                             size 14
                             text_align 0.5
 
+            # Buttons to access other pages.
             hbox:
                 style_group "file_page"
 
@@ -409,10 +417,12 @@ screen file_picker(title):
 
                 textbutton _("<") action FilePagePrevious()
 
+                # range(1, 10) gives the numbers from 1 to 9.
                 for page in range(1, 10):
                     textbutton "[page]" action FilePage(page)
 
                 textbutton _(">") action FilePageNext()
+
 
 style file_page_button:
     xpadding gui.scale(7)
