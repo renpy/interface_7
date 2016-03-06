@@ -367,10 +367,12 @@ screen file_picker(title):
 
                 input:
                     value page_name_value
+
                     size gui.scale(24)
+                    text_align 0.5
+                    layout "subtitle"
                     color gui.ACCENT_COLOR
                     hover_color gui.HOVER_COLOR
-
 
             # The grid of file slots.
             grid 3 2:
@@ -407,6 +409,8 @@ screen file_picker(title):
                             layout "subtitle"
                             size 14
                             text_align 0.5
+
+                        key "save_delete" action FileDelete(i)
 
             # Buttons to access other pages.
             hbox:
