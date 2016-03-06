@@ -59,13 +59,63 @@ style label_text:
     color gui.ACCENT_COLOR
 
 style bar:
+    clear
+
     ysize gui.scale(30)
+
     left_bar Solid(gui.ACCENT_COLOR)
     right_bar Solid(gui.MUTED_COLOR)
+
     hover_left_bar Solid(gui.HOVER_COLOR)
     hover_right_bar Solid(gui.HOVER_MUTED_COLOR)
 
-style slider is bar
+style slider is bar:
+    clear
+
+style scrollbar:
+    clear
+
+    ysize gui.scale(15)
+
+    left_bar Solid(gui.MUTED_COLOR)
+    thumb Solid(gui.ACCENT_COLOR)
+    right_bar Solid(gui.MUTED_COLOR)
+
+    hover_left_bar Solid(gui.HOVER_MUTED_COLOR)
+    hover_thumb Solid(gui.HOVER_COLOR)
+    hover_right_bar Solid(gui.HOVER_MUTED_COLOR)
+
+style vbar:
+    clear
+
+    xsize gui.scale(30)
+    bar_vertical True
+
+    bottom_bar Solid(gui.ACCENT_COLOR)
+    top_bar Solid(gui.MUTED_COLOR)
+
+    hover_bottom_bar Solid(gui.HOVER_COLOR)
+    hover_top_bar Solid(gui.HOVER_MUTED_COLOR)
+
+style vslider is vbar:
+    clear
+
+style vscrollbar:
+    clear
+
+    xsize gui.scale(15)
+    bar_vertical True
+    bar_invert True
+
+    left_bar Solid(gui.MUTED_COLOR)
+    thumb Solid(gui.ACCENT_COLOR)
+    right_bar Solid(gui.MUTED_COLOR)
+
+    hover_left_bar Solid(gui.HOVER_MUTED_COLOR)
+    hover_thumb Solid(gui.HOVER_COLOR)
+    hover_right_bar Solid(gui.HOVER_MUTED_COLOR)
+
+
 
 # ...
 style interface_frame is default
