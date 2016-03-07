@@ -48,7 +48,7 @@ define gui.GAME_MENU_BACKGROUND = "gui/game_menu.jpg"
 # Style common user interface components.
 
 style button_text:
-    size gui.scale(22)
+    size gui.scale(24)
     color gui.IDLE_COLOR
     insensitive_color gui.INSENSITIVE_COLOR
     selected_color gui.SELECTED_COLOR
@@ -57,6 +57,11 @@ style button_text:
 
 style label_text:
     color gui.ACCENT_COLOR
+    size gui.scale(24)
+
+style prompt_text:
+    color gui.ACCENT_COLOR
+    size gui.scale(24)
 
 style bar:
     clear
@@ -124,7 +129,7 @@ style interface_frame is default
 ################################################################################
 # Say
 
-screen say(who, what, side_image=None, two_window=False):
+screen say(who, what, side_image=None):
     style_group "say"
 
     window:
@@ -188,6 +193,8 @@ screen input(prompt):
 
             input id "input"
 
+style input_prompt is text
+
 style input:
     color gui.ACCENT_COLOR
 
@@ -229,7 +236,7 @@ style choice_button is default:
 
     ypadding gui.scale(11) / 2
 
-style choice_button_text:
+style choice_button_text is default:
     color gui.CHOICE_COLOR
     hover_color gui.TEXT_COLOR
 
@@ -281,7 +288,7 @@ init python:
 screen navigation():
 
     vbox:
-        style_group "nav"
+        style_prefix "nav_gui"
 
         xpos gui.scale(50)
         xmaximum gui.scale(227)
@@ -312,11 +319,9 @@ screen navigation():
         textbutton _("Quit") action Quit(confirm=not main_menu)
 
 
-style nav_button:
+style nav_gui_button:
     xfill True
 
-style nav_button_text:
-    size gui.scale(24)
 
 
 ##############################################################################
@@ -359,7 +364,7 @@ screen game_menu(title):
     add "gui/game_menu_darken.png"
 
     vbox:
-        style_group "interface"
+        style_prefix "gui"
 
         label title:
             # position the title.
@@ -372,8 +377,6 @@ screen game_menu(title):
             text_yalign 0.5
 
         frame:
-            style "interface_frame"
-
             bottom_margin gui.scale(30)
 
             hbox:
@@ -388,7 +391,8 @@ screen game_menu(title):
     use navigation
 
     textbutton _("Return"):
-        style "nav_button"
+        style_prefix "nav_gui"
+
         action Return()
         xpos gui.scale(50)
         xmaximum gui.scale(227)
@@ -464,7 +468,7 @@ screen file_picker(title):
 
             # Buttons to access other pages.
             hbox:
-                style_group "file_page"
+                style_prefix "file_page_gui"
 
                 xalign 0.5
                 yalign 1.0
@@ -478,7 +482,7 @@ screen file_picker(title):
                 textbutton _(">") action FilePageNext()
 
 
-style file_page_button:
+style file_page_gui_button:
     xpadding gui.scale(7)
     ypadding gui.scale(3)
 
@@ -506,8 +510,6 @@ screen preferences:
 
     use game_menu(_("Preferences")):
         frame:
-            style "interface_frame"
-
             left_padding gui.scale(50)
             right_padding gui.scale(20)
             top_padding gui.scale(20)
@@ -515,7 +517,7 @@ screen preferences:
             has vbox
 
             grid 4 1:
-                style_group "choice_preference"
+                style_prefix "choice_pref_gui"
                 xfill True
 
                 vbox:
@@ -546,7 +548,7 @@ screen preferences:
             null height gui.scale(25)
 
             grid 2 1:
-                style_group "bar_preference"
+                style_prefix "bar_pref_gui"
                 xfill True
 
                 vbox:
@@ -560,7 +562,6 @@ screen preferences:
                     bar value Preference("auto-forward time")
 
                 vbox:
-                    style_group "bar_preference"
 
                     if config.has_music:
                         label _("Music Volume")
@@ -590,41 +591,41 @@ screen preferences:
 
                     textbutton _("Mute All"):
                         action Preference("all mute", "toggle")
-                        style "mute_preference_button"
+                        style "mute_pref_gui_button"
 
-style choice_preference_label:
+style choice_pref_gui_label:
     ysize gui.scale(30)
 
-style choice_preference_label_text:
+style choice_pref_gui_label_text:
     size gui.scale(24)
     yalign 1.0
 
-style preference_button:
+style pref_gui_button:
     left_padding gui.scale(20)
     selected_background Solid(gui.ACCENT_COLOR, xsize=gui.scale(5))
     selected_hover_background Solid(gui.HOVER_COLOR, xsize=gui.scale(5))
     xoffset gui.scale(2)
 
-style choice_preference_button:
+style choice_pref_gui_button:
     top_margin gui.scale(10)
 
-style choice_preference_button:
+style choice_pref_gui_button:
     size_group "preferences"
 
-style bar_preference_slider:
+style bar_pref_gui_slider:
     xsize .75
 
-style bar_preference_label:
+style bar_pref_gui_label:
     top_margin gui.scale(10)
     bottom_margin gui.scale(3)
     ysize gui.scale(30)
 
-style bar_preference_label_text:
+style bar_pref_gui_label_text:
     size gui.scale(24)
     yalign 1.0
 
-style bar_preference_button:
+style bar_pref_gui_button:
     yalign 1.0
 
-style mute_preference_button:
+style mute_pref_gui_button is gui_button:
     top_margin gui.scale(15)
