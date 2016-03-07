@@ -45,6 +45,31 @@ define gui.GAME_MENU_BACKGROUND = "gui/game_menu.jpg"
 
 
 ################################################################################
+# Style reset.
+
+style say_label:
+    clear
+
+style window:
+    clear
+
+style say_vbox:
+    clear
+
+style say_who_window:
+    clear
+
+style say_two_window_vbox:
+    clear
+
+style menu_choice:
+    clear
+
+style input:
+    clear
+
+
+################################################################################
 # Style common user interface components.
 
 style button_text:
@@ -64,8 +89,6 @@ style prompt_text:
     size gui.scale(24)
 
 style bar:
-    clear
-
     ysize gui.scale(30)
 
     left_bar Solid(gui.ACCENT_COLOR)
@@ -74,12 +97,9 @@ style bar:
     hover_left_bar Solid(gui.HOVER_COLOR)
     hover_right_bar Solid(gui.HOVER_MUTED_COLOR)
 
-style slider is bar:
-    clear
+style slider is bar
 
 style scrollbar:
-    clear
-
     ysize gui.scale(15)
 
     left_bar Solid(gui.MUTED_COLOR)
@@ -91,8 +111,6 @@ style scrollbar:
     hover_right_bar Solid(gui.HOVER_MUTED_COLOR)
 
 style vbar:
-    clear
-
     xsize gui.scale(30)
     bar_vertical True
 
@@ -102,12 +120,9 @@ style vbar:
     hover_bottom_bar Solid(gui.HOVER_COLOR)
     hover_top_bar Solid(gui.HOVER_MUTED_COLOR)
 
-style vslider is vbar:
-    clear
+style vslider is vbar
 
 style vscrollbar:
-    clear
-
     xsize gui.scale(15)
     bar_vertical True
     bar_invert True
@@ -120,16 +135,12 @@ style vscrollbar:
     hover_thumb Solid(gui.HOVER_COLOR)
     hover_right_bar Solid(gui.HOVER_MUTED_COLOR)
 
-
-
-# ...
-style interface_frame is default
-
+style gui_frame is default
 
 ################################################################################
 # Say
 
-screen say(who, what, side_image=None):
+screen say(who, what, side_image=None, two_window=False):
     style_group "say"
 
     window:
@@ -158,15 +169,13 @@ screen say(who, what, side_image=None):
 
 style window:
     background "gui/textbox.png"
+    xfill True
+    xalign 0.5
     ysize gui.scale(185)
+    yalign 1.0
 
 style say_label:
     size gui.scale(30)
-    bold False
-
-# It'll probably be better to fix this up in the legacy style system.
-style say_vbox:
-    spacing 0
 
 
 ################################################################################
