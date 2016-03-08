@@ -672,14 +672,17 @@ screen yesno_prompt(message, yes_action, no_action):
         has vbox:
             xalign .5
             yalign .5
-            spacing 30
+            spacing gui.scale(30)
 
         label _(message):
+            style "yesno_gui_prompt"
             xalign 0.5
+            text_text_align 0.5
+            text_layout "subtitle"
 
         hbox:
             xalign 0.5
-            spacing 100
+            spacing gui.scale(100)
 
             textbutton _("Yes") action yes_action
             textbutton _("No") action no_action
@@ -687,10 +690,12 @@ screen yesno_prompt(message, yes_action, no_action):
     # Right-click and escape answer "no".
     key "game_menu" action no_action
 
-style yesno_button:
+style yesno_gui_button:
     size_group "yesno"
+    xpadding 25
+    ypadding 10
 
-style yesno_label_text:
-    text_align 0.5
-    layout "subtitle"
+style yesno_gui_button_text:
+    xalign 0.5
 
+define config.quit_action = Quit()
