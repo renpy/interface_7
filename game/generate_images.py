@@ -168,6 +168,10 @@ class ImageGenerator(object):
         gm.fill(self.boring_color.opacity(.8))
         self.save(gm, "game_menu_darken")
 
+        gm = self.make_surface(self.width, self.height)
+        gm.fill(self.boring_color.opacity(.6))
+        self.save(gm, "yesno_darken")
+
     def generate_separator(self):
 
         vwidth = self.scale_int(3)
@@ -200,7 +204,16 @@ class ImageGenerator(object):
         self.save(s, "hover_file_slot")
 
 
+    def generate_yesno_background(self):
+        width = self.scale_int(600)
+        height = self.scale_int(250)
 
+        border = self.scale_int(3)
+
+        s = self.make_surface(width, height)
+        s.fill(self.accent_color)
+        s.subsurface((border, border, width - 2 * border, height - 2 * border)).fill(self.boring_color)
+        self.save(s, "yesno_background")
 
 
     def generate_all(self):
@@ -209,6 +222,7 @@ class ImageGenerator(object):
         self.generate_darken()
         self.generate_separator()
         self.generate_file_slot()
+        self.generate_yesno_background()
 
 
 if __name__ == "__main__":

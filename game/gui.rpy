@@ -135,7 +135,10 @@ style vscrollbar:
     hover_thumb Solid(gui.HOVER_COLOR)
     hover_right_bar Solid(gui.HOVER_MUTED_COLOR)
 
-style gui_frame is default
+style frame:
+    background "#000000"
+
+style empty_gui_frame is default
 
 ################################################################################
 # Say
@@ -386,6 +389,7 @@ screen game_menu(title):
             text_yalign 0.5
 
         frame:
+            style "empty_gui_frame"
             bottom_margin gui.scale(30)
 
             hbox:
@@ -519,6 +523,7 @@ screen preferences:
 
     use game_menu(_("Preferences")):
         frame:
+            style "empty_gui_frame"
             left_padding gui.scale(50)
             right_padding gui.scale(20)
             top_padding gui.scale(20)
@@ -638,3 +643,54 @@ style bar_pref_gui_button:
 
 style mute_pref_gui_button is gui_button:
     top_margin gui.scale(15)
+
+
+
+##############################################################################
+# Yes/No Prompt
+#
+# Screen that asks the user a yes or no question.
+# http://www.renpy.org/doc/html/screen_special.html#yesno-prompt
+
+screen yesno_prompt(message, yes_action, no_action):
+
+    modal True
+
+    add "gui/yesno_darken.png"
+
+    frame:
+        style_prefix "yesno_gui"
+
+        background "gui/yesno_background.png"
+        xpadding gui.scale(75)
+        ypadding gui.scale(50)
+        xsize gui.scale(600)
+        ysize gui.scale(250)
+        xalign .5
+        yalign .5
+
+        has vbox:
+            xalign .5
+            yalign .5
+            spacing 30
+
+        label _(message):
+            xalign 0.5
+
+        hbox:
+            xalign 0.5
+            spacing 100
+
+            textbutton _("Yes") action yes_action
+            textbutton _("No") action no_action
+
+    # Right-click and escape answer "no".
+    key "game_menu" action no_action
+
+style yesno_button:
+    size_group "yesno"
+
+style yesno_label_text:
+    text_align 0.5
+    layout "subtitle"
+
