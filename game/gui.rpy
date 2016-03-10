@@ -68,6 +68,8 @@ style menu_choice:
 style input:
     clear
 
+style hyperlink_text:
+    clear
 
 ################################################################################
 # Style common user interface components.
@@ -100,7 +102,7 @@ style bar:
 style slider is bar
 
 style scrollbar:
-    ysize gui.scale(15)
+    ysize gui.scale(10)
 
     left_bar Solid(gui.MUTED_COLOR)
     thumb Solid(gui.ACCENT_COLOR)
@@ -123,7 +125,7 @@ style vbar:
 style vslider is vbar
 
 style vscrollbar:
-    xsize gui.scale(15)
+    xsize gui.scale(10)
     bar_vertical True
     bar_invert True
 
@@ -139,6 +141,11 @@ style frame:
     background "#000000"
 
 style empty_gui_frame is default
+
+style hyperlink_text:
+    color gui.ACCENT_COLOR
+    hover_color gui.HOVER_COLOR
+    hover_underline True
 
 ################################################################################
 # Say
@@ -256,6 +263,7 @@ style choice_button_text is default:
     xalign 0.5
     text_align 0.5
     layout "subtitle"
+
 
 ################################################################################
 # Quick Menu
@@ -699,3 +707,50 @@ style yesno_gui_button_text:
     xalign 0.5
 
 define config.quit_action = Quit()
+
+
+##############################################################################
+# About
+#
+# A screen that gives copyright information about the game and Ren'Py.
+screen about():
+
+    tag menu
+
+    use game_menu(_("About ")):
+
+        frame:
+            style_prefix "about_gui"
+
+            style "empty_gui_frame"
+            xfill True
+            ypadding gui.scale(20)
+
+            viewport:
+                scrollbars "vertical"
+                mousewheel True
+                draggable True
+
+                xsize gui.scale(744)
+
+                side_xalign 0.5
+                side_spacing gui.scale(20)
+
+                text gui.ABOUT
+
+# Text that goes into the about screen. You can replace the first line
+# with a series of lines that credit the creators of this game and the
+# assets it uses.
+define gui.ABOUT = _("""\
+{b}[config.name]{/b}
+
+Made with [renpy.version_string].
+
+[renpy.license!t]""")
+
+
+style about_gui_vscrollbar:
+    unscrollable "hide"
+
+
+
