@@ -407,7 +407,8 @@ screen game_menu(title):
 
                 add "gui/vertical_separator.png"
 
-                transclude
+                fixed:
+                    transclude
 
     use navigation
 
@@ -752,5 +753,144 @@ Made with [renpy.version_string].
 style about_gui_vscrollbar:
     unscrollable "hide"
 
+##############################################################################
+# Help
+#
+# A screen that gives information about key and mouse bindings.
+screen help():
+
+    tag menu
+
+    default device = "keyboard"
+
+    use game_menu(_("Help")):
 
 
+        vbox:
+            style_prefix "help_gui"
+
+            xpos gui.scale(50)
+            spacing gui.scale(15)
+
+            hbox:
+                textbutton _("Keyboard") action SetScreenVariable("device", "keyboard")
+                textbutton _("Mouse") action SetScreenVariable("device", "mouse")
+                textbutton _("Gamepad") action SetScreenVariable("device", "gamepad")
+
+            if device == "keyboard":
+                use keyboard_help
+            elif device == "mouse":
+                use mouse_help
+            elif device == "gamepad":
+                use gamepad_help
+
+
+screen keyboard_help():
+
+    hbox:
+        label _("Enter")
+        text _("Advances dialogue and activates the interface.")
+
+    hbox:
+        label _("Space")
+        text _("Advances dialogue without selecting choices.")
+
+    hbox:
+        label _("Arrow Keys")
+        text _("Navigates the interface.")
+
+    hbox:
+        label _("Escape")
+        text _("Accesses the game menu.")
+
+    hbox:
+        label _("Ctrl")
+        text _("Skips dialogue while held down.")
+
+    hbox:
+        label _("Tab")
+        text _("Toggles dialogue skipping.")
+
+    hbox:
+        label _("Page Up")
+        text _("Rolls back to earlier dialogue.")
+
+    hbox:
+        label _("Page Down")
+        text _("Rolls forward to later dialogue.")
+
+    hbox:
+        label _("H")
+        text _("Hides the user interface.")
+
+    hbox:
+        label _("S")
+        text _("Takes a screenshot.")
+
+    hbox:
+        label _("V")
+        text _("Toggles assistive {a=https://www.renpy.org/l/voicing}self-voicing{/a}.")
+
+
+screen mouse_help():
+
+    hbox:
+        label _("Left Click")
+        text _("Advances dialogue and activates the interface.")
+
+    hbox:
+        label _("Middle Click")
+        text _("Hides the user interface.")
+
+    hbox:
+        label _("Right Click")
+        text _("Accesses the game menu.")
+
+    hbox:
+        label _("Mouse Wheel Up")
+        text _("Rolls back to earlier dialogue.")
+
+    hbox:
+        label _("Mouse Wheel Down")
+        text _("Rolls forward to later dialogue.")
+
+
+screen gamepad_help():
+
+    hbox:
+        label _("Right Trigger\nA/Bottom Button")
+        text _("Advances dialogue and activates the interface.")
+
+    hbox:
+        label ("Left Trigger\nLeft Shoulder")
+        text _("Rolls back to earlier dialogue.")
+
+    hbox:
+        label _("Right Shoulder")
+        text _("Rolls forward to later dialogue.")
+
+    hbox:
+        label _("D-Pad, Sticks")
+        text _("Navigates the interface.")
+
+    hbox:
+        label _("Start, Guide")
+        text _("Accesses the game menu.")
+
+    hbox:
+        label _("Y/Top Button")
+        text _("Hides the user interface.")
+
+
+style help_gui_button:
+    xpadding gui.scale(10)
+    ypadding gui.scale(10)
+
+style help_gui_label:
+    xsize gui.scale(250)
+    right_padding gui.scale(20)
+
+style help_gui_label_text:
+    size gui.scale(22)
+    xalign 1.0
+    text_align 1.0
