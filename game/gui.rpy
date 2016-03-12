@@ -32,6 +32,10 @@ define gui.SELECTED_COLOR = "#ffffff"
 # The color used for a text button when it is neither selected nor hovered.
 define gui.IDLE_COLOR = "#555555"
 
+# The small color is used for small buttons, which need to be brighter/darker
+# to achieve the same effect.
+define gui.IDLE_SMALL_COLOR = "#aaaaaa"
+
 # The color used for a text button when it cannot be selected.
 define gui.INSENSITIVE_COLOR = "#55555580"
 
@@ -87,7 +91,7 @@ style label_text:
     size gui.scale(24)
 
 style prompt_text:
-    color gui.ACCENT_COLOR
+    color gui.TEXT_COLOR
     size gui.scale(24)
 
 style bar:
@@ -146,6 +150,10 @@ style hyperlink_text:
     color gui.ACCENT_COLOR
     hover_color gui.HOVER_COLOR
     hover_underline True
+
+style input:
+    color gui.ACCENT_COLOR
+
 
 ################################################################################
 # Say
@@ -213,9 +221,6 @@ screen input(prompt):
             input id "input"
 
 style input_prompt is text
-
-style input:
-    color gui.ACCENT_COLOR
 
 
 ##############################################################################
@@ -429,12 +434,14 @@ screen file_picker(title):
 
         fixed:
 
-            # This ensures the input will get the enter event before
+            # This, and the fixed, ensures the input will get the enter event before
             # any of the buttons do.
             order_reverse True
 
             # The page name, which can be edited by clicking on a button.
             button:
+                style_prefix "file_page_name_gui"
+
                 key_events True
                 xalign 0.5
                 xpadding gui.scale(50)
@@ -452,6 +459,8 @@ screen file_picker(title):
 
             # The grid of file slots.
             grid 3 2:
+                style_prefix "file_slot_gui"
+
                 xalign 0.5
                 yalign 0.5
 
@@ -475,16 +484,12 @@ screen file_picker(title):
                         add FileScreenshot(i)
 
                         text FileTime(i, format=_("{#file_time}%A, %B %d %Y, %H:%M"), empty="Empty slot"):
+                            style "file_slot_gui_button_text"
                             ypos 146
-                            xalign 0.5
-                            size 14
 
                         text FileSaveName(i):
+                            style "file_slot_gui_button_text"
                             ypos 164
-                            xalign 0.5
-                            layout "subtitle"
-                            size 14
-                            text_align 0.5
 
                         key "save_delete" action FileDelete(i)
 
@@ -503,12 +508,6 @@ screen file_picker(title):
 
                 textbutton _(">") action FilePageNext()
 
-
-style file_page_gui_button:
-    xpadding gui.scale(7)
-    ypadding gui.scale(3)
-
-
 screen load():
 
     tag menu
@@ -521,9 +520,23 @@ screen save():
 
     use file_picker(_("Save"))
 
-
 define config.thumbnail_width = gui.scale(256)
 define config.thumbnail_height = gui.scale(144)
+
+style file_page_gui_button:
+    xpadding gui.scale(7)
+    ypadding gui.scale(3)
+
+style file_slot_gui_button_text:
+    size gui.scale(14)
+
+    color gui.IDLE_SMALL_COLOR
+    hover_color gui.HOVER_COLOR
+    selected_color gui.SELECTED_COLOR
+
+    xalign 0.5
+    text_align 0.5
+    layout "subtitle"
 
 
 screen preferences:
@@ -742,6 +755,9 @@ screen about():
 # Text that goes into the about screen. You can replace the first line
 # with a series of lines that credit the creators of this game and the
 # assets it uses.
+#
+# You need to leave the Ren'Py license info in, and we'd like it if you
+# left the "Made with" credit.
 define gui.ABOUT = _("""\
 {b}[config.name]{/b}
 
@@ -775,7 +791,9 @@ screen help():
             hbox:
                 textbutton _("Keyboard") action SetScreenVariable("device", "keyboard")
                 textbutton _("Mouse") action SetScreenVariable("device", "mouse")
-                textbutton _("Gamepad") action SetScreenVariable("device", "gamepad")
+
+                if GamepadExists():
+                    textbutton _("Gamepad") action SetScreenVariable("device", "gamepad")
 
             if device == "keyboard":
                 use keyboard_help
@@ -880,6 +898,8 @@ screen gamepad_help():
     hbox:
         label _("Y/Top Button")
         text _("Hides the user interface.")
+
+    textbutton _("Calibrate") action GamepadCalibrate()
 
 
 style help_gui_button:
