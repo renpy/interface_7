@@ -544,13 +544,11 @@ screen preferences:
     tag menu
 
     use game_menu(_("Preferences")):
-        frame:
-            style "empty_gui_frame"
-            left_padding gui.scale(50)
-            right_padding gui.scale(20)
-            top_padding gui.scale(20)
 
-            has vbox
+        vbox:
+            xpos gui.scale(50)
+            ypos gui.scale(20)
+            xsize gui.scale(930)
 
             grid 4 1:
                 style_prefix "choice_pref_gui"
@@ -731,26 +729,23 @@ screen about():
 
     tag menu
 
-    use game_menu(_("About ")):
+    use game_menu(_("About")):
 
-        frame:
-            style_prefix "about_gui"
+        style_prefix "about_gui"
 
-            style "empty_gui_frame"
-            xfill True
-            ypadding gui.scale(20)
+        viewport:
 
-            viewport:
-                scrollbars "vertical"
-                mousewheel True
-                draggable True
+            scrollbars "vertical"
+            mousewheel True
+            draggable True
 
-                xsize gui.scale(744)
+            side_xalign 0.5
+            side_spacing gui.scale(20)
 
-                side_xalign 0.5
-                side_spacing gui.scale(20)
+            xsize gui.scale(744)
 
-                text gui.ABOUT
+
+            text gui.ABOUT
 
 # Text that goes into the about screen. You can replace the first line
 # with a series of lines that credit the creators of this game and the
@@ -781,10 +776,9 @@ screen help():
 
     use game_menu(_("Help")):
 
+        style_prefix "help_gui"
 
         vbox:
-            style_prefix "help_gui"
-
             xpos gui.scale(50)
             spacing gui.scale(15)
 
