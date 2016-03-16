@@ -285,7 +285,7 @@ screen nvl(dialogue, items=None):
             xfill True
             ypos gui.scale(10)
             ymaximum gui.scale(690)
-            yoffset 1.0
+            yinitial 1.0
 
             # Display dialogue.
             for who, what, who_id, what_id, window_id in dialogue:
