@@ -128,6 +128,30 @@ class ImageGenerator(object):
 
         self.generate_image("textbox", X, Y, self.boring_color.opacity(.8))
 
+    def generate_nvl(self):
+        XSIZE = WIDTH
+        XINSIDE = (XSIZE - 800) // 2
+
+        YSIZE = HEIGHT
+
+        X = [
+            (0, 0.0),
+            (XINSIDE, 1.0),
+            (XSIZE - XINSIDE, 1.0),
+            (XSIZE, 0.0),
+            ]
+
+        Y = [
+            (0, 1.0),
+            (YSIZE, 1.0),
+            ]
+
+
+        self.generate_image("nvl", X, Y, self.boring_color.opacity(.8))
+        self.generate_image("history", X, Y, self.boring_color.opacity(.8))
+
+
+
     def generate_choice_button(self):
         XSIZE = 790
         XINSIDE = 100
@@ -223,7 +247,7 @@ class ImageGenerator(object):
         self.generate_separator()
         self.generate_file_slot()
         self.generate_yesno_background()
-
+        self.generate_nvl()
 
 if __name__ == "__main__":
     import argparse

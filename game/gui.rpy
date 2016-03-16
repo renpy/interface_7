@@ -173,7 +173,7 @@ screen say(who, what, side_image=None, two_window=False):
             if who:
                 text who id "who" xoffset gui.scale(-10)
             else:
-                text " " id "who"
+                text " " id "who" xoffset gui.scale(-10)
 
             null height gui.scale(5)
 
@@ -268,6 +268,81 @@ style choice_button_text is default:
     xalign 0.5
     text_align 0.5
     layout "subtitle"
+
+##############################################################################
+# Nvl
+#
+# Screen used for nvl-mode dialogue and menus.
+# http://www.renpy.org/doc/html/screen_special.html#nvl
+
+screen nvl(dialogue, items=None):
+
+    window:
+        style "nvl_window"
+
+        vpgrid:
+            cols 1
+            xfill True
+            ypos gui.scale(10)
+            ymaximum gui.scale(690)
+            yoffset 1.0
+
+            # Display dialogue.
+            for who, what, who_id, what_id, window_id in dialogue:
+                window:
+                    id window_id
+                    ysize gui.scale(115)
+                    xsize gui.scale(800)
+                    xalign 0.5
+
+                    hbox:
+                        yfill True
+
+                        spacing gui.scale(20)
+
+                        if who is not None:
+                            text who id who_id
+
+                        text what id what_id ypos gui.scale(7)
+
+
+#             # Display a menu, if given.
+#             if items:
+#
+#                 vbox:
+#                     id "menu"
+#
+#                     for caption, action, chosen in items:
+#
+#                         if action:
+#
+#                             button:
+#                                 style "nvl_menu_choice_button"
+#                                 action action
+#
+#                                 text caption style "nvl_menu_choice"
+#
+#                         else:
+#
+#                             text caption style "nvl_dialogue"
+
+    add SideImage() xalign 0.0 yalign 1.0
+
+style nvl_entry:
+    clear
+
+
+style nvl_label:
+    clear
+    xmaximum gui.scale(150)
+    min_width gui.scale(150)
+    text_align 1.0
+
+style nvl_window is default:
+    clear
+    background "gui/nvl.png"
+    xfill True
+    yfill True
 
 
 ################################################################################
