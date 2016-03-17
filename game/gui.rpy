@@ -641,19 +641,18 @@ screen preferences:
                     textbutton _("Fullscreen") action Preference("display", "fullscreen")
 
                 vbox:
-                    label _("Transitions")
-                    textbutton _("All") action Preference("transitions", "all")
-                    textbutton _("None") action Preference("transitions", "none")
+                    label _("Rollback Side")
+                    textbutton _("Disable") action Preference("rollback side", "disable")
+                    textbutton _("Left") action Preference("rollback side", "left")
+                    textbutton _("Right") action Preference("rollback side", "right")
 
                 vbox:
                     label _("Skip")
-                    textbutton _("Seen Messages") action Preference("skip", "seen")
-                    textbutton _("All Messages") action Preference("skip", "all")
+                    textbutton _("Unseen Dialogue") action Preference("skip", "toggle")
+                    textbutton _("After Choices") action Preference("after choices", "toggle")
+                    textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
 
-                vbox:
-                    label _("After Choices")
-                    textbutton _("Stop Skipping") action Preference("after choices", "stop")
-                    textbutton _("Keep Skipping") action Preference("after choices", "skip")
+                null
 
             null height gui.scale(25)
 
@@ -940,7 +939,7 @@ screen mouse_help():
         text _("Accesses the game menu.")
 
     hbox:
-        label _("Mouse Wheel Up")
+        label _("Mouse Wheel Up\nClick Rollback Side")
         text _("Rolls back to earlier dialogue.")
 
     hbox:
