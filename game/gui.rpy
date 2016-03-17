@@ -280,57 +280,61 @@ screen nvl(dialogue, items=None):
     window:
         style "nvl_window"
 
-        vpgrid:
-            cols 1
-            xfill True
+        has vbox:
+            xsize gui.scale(800)
+            xalign 0.5
+
             ypos gui.scale(10)
             ymaximum gui.scale(690)
+
+            spacing gui.scale(10)
+
+
+        vpgrid:
+            cols 1
             yinitial 1.0
 
             # Display dialogue.
             for who, what, who_id, what_id, window_id in dialogue:
                 window:
                     id window_id
-                    ysize gui.scale(115)
-                    xsize gui.scale(800)
-                    xalign 0.5
 
-                    hbox:
+                    has hbox:
                         yfill True
-
                         spacing gui.scale(20)
 
-                        if who is not None:
-                            text who id who_id
+                    if who is not None:
+                        text who id who_id
 
-                        text what id what_id ypos gui.scale(7)
+                    text what id what_id ypos gui.scale(7)
 
+        # Displays the menu, if given. The menu may be displayed incorrectly
+        # if config.narrator_menu is set to True, as it is above.
+        if items:
 
-#             # Display a menu, if given.
-#             if items:
-#
-#                 vbox:
-#                     id "menu"
-#
-#                     for caption, action, chosen in items:
-#
-#                         if action:
-#
-#                             button:
-#                                 style "nvl_menu_choice_button"
-#                                 action action
-#
-#                                 text caption style "nvl_menu_choice"
-#
-#                         else:
-#
-#                             text caption style "nvl_dialogue"
+            for caption, action, chosen in items:
+
+                if action:
+                    textbutton caption action action style "nvl_menu_button"
+                else:
+                    label caption style "nvl_menu_prompt"
 
     add SideImage() xalign 0.0 yalign 1.0
 
-style nvl_entry:
+style nvl_dialogue:
     clear
 
+style nvl_menu_button:
+    clear
+    left_padding gui.scale(20)
+
+style nvl_menu_choice_button_text:
+    clear
+
+style nvl_entry:
+    clear
+    ysize gui.scale(115)
+    xalign 0.5
 
 style nvl_label:
     clear

@@ -22,8 +22,21 @@ label main_menu:
 
 define narrator = NVLCharacter(None)
 
+init python:
+    menu = nvl_menu
+
 # The game starts here.
 label start:
+
+    menu:
+        "Hello World."
+
+        "This is the first of two choices.":
+            pass
+
+        "And this is the second of two choices.":
+            pass
+
     "It was just an ordinary, everyday village, stuck between two opposing kingdoms."
     "And for the Kodokushi, that was reason enough."
     "After joining the Kodokushi, I quickly realized that our work was neither noble, nor righteous."
