@@ -321,6 +321,8 @@ screen nvl(dialogue, items=None):
 
     add SideImage() xalign 0.0 yalign 1.0
 
+define config.nvl_list_length = 6
+
 style nvl_dialogue:
     clear
 
@@ -333,8 +335,8 @@ style nvl_menu_choice_button_text:
 
 style nvl_entry:
     clear
+    xfill True
     ysize gui.scale(115)
-    xalign 0.5
 
 style nvl_label:
     clear
