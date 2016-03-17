@@ -10,7 +10,7 @@ HEIGHT = 720
 
 class ImageGenerator(object):
 
-    def __init__(self, prefix, width, height):
+    def __init__(self, prefix, width, height, color):
         pygame_sdl2.image.init()
 
         self.prefix = prefix
@@ -20,8 +20,12 @@ class ImageGenerator(object):
 
         self.scale = 1.0 * height / HEIGHT
 
-        self.accent_color = Color("#00b8c3")
+        self.accent_color = Color(color)
         self.boring_color = Color("#000000")
+
+        self.hover_color = self.accent_color.tint(.6)
+        self.muted_color = self.accent_color.shade(.4)
+        self.hover_muted_color = self.accent_color.shade(.6)
 
     def scale_int(self, n):
         rv = int(n * self.scale)
