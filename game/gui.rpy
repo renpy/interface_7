@@ -15,6 +15,7 @@ define config.screen_height = 720
 
 # An accent color used throughout the interface.
 define gui.ACCENT_COLOR = "#00b8c3"
+define gui.ACCENT_COLOR = "#eebb00"
 
 # define gui.HOVER_COLOR = "#00cad6"
 # define gui.MUTED_COLOR = "#00373a"
@@ -97,24 +98,32 @@ style prompt_text:
 style bar:
     ysize gui.scale(30)
 
-    left_bar Solid(gui.ACCENT_COLOR)
-    right_bar Solid(gui.MUTED_COLOR)
+    left_bar Frame("gui/bar_left.png")
+    right_bar Frame("gui/bar_right.png")
 
-    hover_left_bar Solid(gui.HOVER_COLOR)
-    hover_right_bar Solid(gui.HOVER_MUTED_COLOR)
-
-style slider is bar
+# style slider is bar
 
 style scrollbar:
     ysize gui.scale(10)
 
-    left_bar Solid(gui.MUTED_COLOR)
-    thumb Solid(gui.ACCENT_COLOR)
-    right_bar Solid(gui.MUTED_COLOR)
+    left_bar Frame("gui/scrollbar.png")
+    thumb Frame("gui/scrollbar_thumb.png")
+    right_bar Frame("gui/scrollbar.png")
 
-    hover_left_bar Solid(gui.HOVER_MUTED_COLOR)
-    hover_thumb Solid(gui.HOVER_COLOR)
-    hover_right_bar Solid(gui.HOVER_MUTED_COLOR)
+    hover_left_bar Frame("gui/scrollbar_hover.png")
+    hover_thumb Frame("gui/scrollbar_hover_thumb.png")
+    hover_right_bar Frame("gui/scrollbar_hover.png")
+
+style slider:
+    ysize gui.scale(30)
+
+    left_bar Frame("gui/slider.png")
+    thumb "gui/slider_thumb.png"
+    right_bar Frame("gui/slider.png")
+
+    hover_left_bar Frame("gui/slider_hover.png")
+    hover_thumb "gui/slider_hover_thumb.png"
+    hover_right_bar Frame("gui/slider_hover.png")
 
 style vbar:
     xsize gui.scale(30)
@@ -727,7 +736,7 @@ style choice_pref_gui_button:
     size_group "preferences"
 
 style bar_pref_gui_slider:
-    xsize .75
+    xsize gui.scale(350)
 
 style bar_pref_gui_label:
     top_margin gui.scale(10)

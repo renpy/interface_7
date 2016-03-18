@@ -243,6 +243,35 @@ class ImageGenerator(object):
         s.subsurface((border, border, width - 2 * border, height - 2 * border)).fill(self.boring_color)
         self.save(s, "yesno_background")
 
+    def generate_bars(self):
+
+        def fill(name, color, width, height, vname=None):
+            width = self.scale_int(width)
+            height = self.scale_int(height)
+
+            s = self.make_surface(width, height)
+            s.fill(color)
+            self.save(s, name)
+
+            if vname is None:
+                vname = "v" + name
+
+            s = self.make_surface(height, width)
+            s.fill(color)
+            self.save(s, vname)
+
+        fill("bar_left", self.accent_color, 350, 30, "bar_bottom")
+        fill("bar_right", self.muted_color, 350, 30, "bar_top")
+
+        fill("slider", self.muted_color, 350, 30)
+        fill("slider_hover", self.hover_muted_color, 350, 30)
+        fill("slider_thumb", self.accent_color, 10, 30)
+        fill("slider_hover_thumb", self.hover_color, 10, 30)
+
+        fill("scrollbar", self.muted_color, 350, 10)
+        fill("scrollbar_hover", self.hover_muted_color, 350, 10)
+        fill("scrollbar_thumb", self.accent_color, 350, 10)
+        fill("scrollbar_hover_thumb", self.hover_color, 350, 10)
 
     def generate_all(self):
         self.generate_textbox()
@@ -252,6 +281,7 @@ class ImageGenerator(object):
         self.generate_file_slot()
         self.generate_yesno_background()
         self.generate_nvl()
+        self.generate_bars()
 
 if __name__ == "__main__":
     import argparse
