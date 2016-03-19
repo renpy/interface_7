@@ -908,7 +908,7 @@ screen about():
 
     use game_menu(_("About")):
 
-        style_prefix "about_gui"
+        style_prefix "about"
 
         viewport:
 
@@ -936,8 +936,10 @@ Made with [renpy.version_string].
 
 [renpy.license!t]""")
 
+style about_text is gui_text
+style about_vscrollbar is gui_vscrollbar
 
-style about_gui_vscrollbar:
+style about_vscrollbar:
     unscrollable "hide"
 
 ##############################################################################
@@ -952,7 +954,7 @@ screen help():
 
     use game_menu(_("Help")):
 
-        style_prefix "help_gui"
+        style_prefix "help"
 
         vbox:
             xpos gui.scale(50)
@@ -1072,15 +1074,20 @@ screen gamepad_help():
     textbutton _("Calibrate") action GamepadCalibrate()
 
 
-style help_gui_button:
-    xpadding gui.scale(10)
-    ypadding gui.scale(10)
+style help_button is gui_button
+style help_button_text is gui_button_text
+style help_label is gui_label
+style help_label_text is gui_label_text
+style help_text is gui_text
 
-style help_gui_label:
+style help_button:
+    xmargin gui.scale(8)
+
+style help_label:
     xsize gui.scale(250)
     right_padding gui.scale(20)
 
-style help_gui_label_text:
+style help_label_text:
     size gui.scale(22)
     xalign 1.0
     text_align 1.0
