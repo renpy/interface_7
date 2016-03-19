@@ -97,8 +97,8 @@ style button_text:
 # Used for checkbox-like buttons:
 style check_button:
     left_padding gui.scale(22)
-    foreground Frame("gui/button_unchecked.png", 22, 0)
-    selected_foreground Frame("gui/button_checked.png", 22, 0)
+    foreground Frame("gui/button_unchecked.png", gui.scale(22), 0)
+    selected_foreground Frame("gui/button_checked.png", gui.scale(22), 0)
 
 style radio_button is check_button
 
@@ -296,8 +296,8 @@ style choice_vbox:
     spacing gui.scale(22)
 
 style choice_button is default:
-    background Frame("gui/choice_button.png", 0, 5)
-    hover_background Frame("gui/hover_choice_button.png", 0, 5)
+    background Frame("gui/choice_button.png", 0, gui.scale(5))
+    hover_background Frame("gui/hover_choice_button.png", 0, gui.scale(5))
 
     xsize gui.scale(790)
     xpadding gui.scale(100)
