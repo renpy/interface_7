@@ -675,23 +675,25 @@ screen preferences:
             xsize gui.scale(930)
 
             grid 4 1:
-                style_prefix "choice_pref_gui"
                 xfill True
 
                 vbox:
+                    style_prefix "radio_pref"
                     label _("Display")
                     textbutton _("Window") action Preference("display", "window")
                     textbutton _("Fullscreen") action Preference("display", "fullscreen")
 
                 vbox:
+                    style_prefix "radio_pref"
                     label _("Rollback Side")
                     textbutton _("Disable") action Preference("rollback side", "disable")
                     textbutton _("Left") action Preference("rollback side", "left")
                     textbutton _("Right") action Preference("rollback side", "right")
 
                 vbox:
+                    style_prefix "check_pref"
                     label _("Skip")
-                    textbutton _("Unseen Dialogue") action Preference("skip", "toggle")
+                    textbutton _("Unseen Text") action Preference("skip", "toggle")
                     textbutton _("After Choices") action Preference("after choices", "toggle")
                     textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
 
@@ -705,7 +707,7 @@ screen preferences:
             null height gui.scale(25)
 
             grid 2 1:
-                style_prefix "bar_pref_gui"
+                style_prefix "slider_pref"
                 xfill True
 
                 vbox:
@@ -748,44 +750,61 @@ screen preferences:
 
                     textbutton _("Mute All"):
                         action Preference("all mute", "toggle")
-                        style "mute_pref_gui_button"
+                        style "mute_all_pref_button"
 
-style choice_pref_gui_label:
+
+style pref_label is gui_label
+style pref_label_text is gui_label_text
+
+style radio_pref_label is pref_label
+style radio_pref_label_text is pref_label_text
+style radio_pref_button is gui_radio_button
+style radio_pref_button_text is gui_radio_button_text
+
+style check_pref_label is pref_label
+style check_pref_label_text is pref_label_text
+style check_pref_button is gui_check_button
+style check_pref_button_text is gui_check_button_text
+
+style slider_pref_label is pref_label
+style slider_pref_label_text is pref_label_text
+style slider_pref_slider is gui_slider
+style slider_pref_button is gui_medium_button
+style slider_pref_button_text is gui_medium_button_text
+
+style mute_all_pref_button is gui_medium_button
+style mute_all_pref_button_text is gui_medium_button_text
+
+# Used for preferences that describe choices.
+style pref_label:
     ysize gui.scale(30)
 
-style choice_pref_gui_label_text:
-    size gui.scale(24)
+style pref_label_text:
     yalign 1.0
 
-style pref_gui_button:
-    left_padding gui.scale(20)
-    selected_background Solid(gui.ACCENT_COLOR, xsize=gui.scale(5))
-    selected_hover_background Solid(gui.HOVER_COLOR, xsize=gui.scale(5))
-    xoffset gui.scale(2)
-
-style choice_pref_gui_button:
-    top_margin gui.scale(10)
-
-style choice_pref_gui_button:
+style radio_pref_button:
+    top_margin gui.scale(6)
     size_group "preferences"
 
-style bar_pref_gui_slider:
+style check_pref_button:
+    top_margin gui.scale(6)
+    size_group "preferences"
+
+# Used for preferences controlled by sliders.
+style slider_pref_slider:
     xsize gui.scale(350)
 
-style bar_pref_gui_label:
+style slider_pref_label:
     top_margin gui.scale(10)
     bottom_margin gui.scale(3)
-    ysize gui.scale(30)
 
-style bar_pref_gui_label_text:
-    size gui.scale(24)
+# Used for buttons associated with bars - the test buttons.
+style slider_pref_button:
     yalign 1.0
 
-style bar_pref_gui_button:
-    yalign 1.0
-
-style mute_pref_gui_button is gui_button:
-    top_margin gui.scale(15)
+# Used for the "Mute All" button.
+style mute_all_pref_button:
+    top_margin gui.scale(13)
 
 
 
