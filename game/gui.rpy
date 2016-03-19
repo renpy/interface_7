@@ -81,6 +81,8 @@ style hyperlink_text:
 
 # Used for full-sized buttons, like navigation buttons.
 style button:
+    ypadding 2
+    xpadding 2
     background Frame("gui/button.png")
     hover_background Frame("gui/button_hover.png")
 
@@ -441,7 +443,7 @@ screen navigation():
         xmaximum gui.scale(227)
 
         yalign 0.5
-        spacing gui.scale(12)
+        spacing gui.scale(8)
 
         if main_menu:
             textbutton _("Start") action Start()

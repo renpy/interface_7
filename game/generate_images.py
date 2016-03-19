@@ -275,15 +275,17 @@ class ImageGenerator(object):
 
     def generate_buttons(self):
 
-        def fill(name, width, height, color=None, fill_x=0, fill_width=None):
-            width = self.scale_int(width)
-            height = self.scale_int(height)
+        padding = self.scale_int(2)
+
+        def fill(name, width, height, color=None, fill_width=None):
+            width = self.scale_int(width) + padding * 2
+            height = self.scale_int(height) + padding * 2
 
             s = self.make_surface(width, height)
 
             if fill_width:
                 fill_width = self.scale_int(fill_width)
-                ss = s.subsurface((fill_x, 0, fill_width, height))
+                ss = s.subsurface((padding, padding, fill_width, height - padding * 2))
             else:
                 ss = s
 
@@ -295,7 +297,7 @@ class ImageGenerator(object):
         fill("button", 250, 40)
         fill("button_hover", 250, 40)
 
-        fill("button_checked", 250, 40, self.accent_color, fill_x=2, fill_width=5)
+        fill("button_checked", 250, 40, self.accent_color, fill_width=5)
         fill("button_unchecked", 250, 40)
 
         fill("medium_button", 30, 40)
