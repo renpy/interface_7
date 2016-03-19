@@ -273,6 +273,37 @@ class ImageGenerator(object):
         fill("scrollbar_thumb", self.accent_color, 350, 10)
         fill("scrollbar_hover_thumb", self.hover_color, 350, 10)
 
+    def generate_buttons(self):
+
+        def fill(name, width, height, color=None, fill_x=0, fill_width=None):
+            width = self.scale_int(width)
+            height = self.scale_int(height)
+
+            s = self.make_surface(width, height)
+
+            if fill_width:
+                fill_width = self.scale_int(fill_width)
+                ss = s.subsurface((fill_x, 0, fill_width, height))
+            else:
+                ss = s
+
+            if color is not None:
+                ss.fill(color)
+
+            self.save(s, name)
+
+        fill("button", 250, 40)
+        fill("button_hover", 250, 40)
+
+        fill("button_checked", 250, 40, self.accent_color, fill_x=2, fill_width=5)
+        fill("button_unchecked", 250, 40)
+
+        fill("medium_button", 30, 40)
+        fill("medium_button_hover", 30, 40)
+
+        fill("small_button", 30, 40)
+        fill("small_button_hover", 30, 40)
+
     def generate_all(self):
         self.generate_textbox()
         self.generate_choice_button()
@@ -282,6 +313,7 @@ class ImageGenerator(object):
         self.generate_yesno_background()
         self.generate_nvl()
         self.generate_bars()
+        self.generate_buttons()
 
 if __name__ == "__main__":
     import argparse

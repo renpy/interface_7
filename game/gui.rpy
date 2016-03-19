@@ -79,6 +79,11 @@ style hyperlink_text:
 ################################################################################
 # Style common user interface components.
 
+# Used for full-sized buttons, like navigation buttons.
+style button:
+    background Frame("gui/button.png")
+    hover_background Frame("gui/button_hover.png")
+
 style button_text:
     size gui.scale(24)
     color gui.IDLE_COLOR
@@ -86,6 +91,28 @@ style button_text:
     selected_color gui.SELECTED_COLOR
     hover_color gui.HOVER_COLOR
     selected_hover_color gui.HOVER_COLOR
+
+# Used for checkbox-like buttons:
+style check_button:
+    left_padding gui.scale(22)
+    foreground Frame("gui/button_unchecked.png", 22, 0)
+    selected_foreground Frame("gui/button_checked.png", 22, 0)
+
+style radio_button is check_button
+
+# Used for medium-sized buttons, like sound test and mute buttons.
+style medium_button:
+    background Frame("gui/medium_button.png")
+    hover_background Frame("gui/medium_button_hover.png")
+
+style medium_button_text is button_text
+
+# Used for small-sized buttons, like file picker page navigation.
+style small_button:
+    background Frame("gui/small_button.png")
+    hover_background Frame("gui/small_button_hover.png")
+
+style small_button_text is button_text
 
 style label_text:
     color gui.ACCENT_COLOR
