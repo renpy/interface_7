@@ -16,10 +16,6 @@ label replay:
 
     $ renpy.end_replay()
 
-
-label main_menu:
-    return
-
 define narrator = NVLCharacter(None)
 
 init python:

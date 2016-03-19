@@ -543,6 +543,9 @@ screen game_menu(title):
         ypos config.screen_height - gui.scale(30)
         yanchor 1.0
 
+    if main_menu:
+        key "game_menu" action ShowMenu("main_menu")
+
 
 style title_label is gui_label
 style title_label_text is gui_label_text
