@@ -81,8 +81,8 @@ style hyperlink_text:
 
 # Used for full-sized buttons, like navigation buttons.
 style button:
-    ypadding 2
-    xpadding 2
+    ypadding gui.scale(2)
+    xpadding gui.scale(2)
     background Frame("gui/button.png")
     hover_background Frame("gui/button_hover.png")
 
@@ -111,6 +111,7 @@ style medium_button_text is button_text
 
 # Used for small-sized buttons, like file picker page navigation.
 style small_button:
+    xpadding gui.scale(7)
     background Frame("gui/small_button.png")
     hover_background Frame("gui/small_button_hover.png")
 
@@ -437,7 +438,7 @@ init python:
 screen navigation():
 
     vbox:
-        style_prefix "nav_gui"
+        style_prefix "navigation"
 
         xpos gui.scale(50)
         xmaximum gui.scale(227)
@@ -468,9 +469,8 @@ screen navigation():
         textbutton _("Quit") action Quit(confirm=not main_menu)
 
 
-style nav_gui_button:
-    xfill True
-
+style navigation_button is gui_button
+style navigation_button_text is gui_button_text
 
 
 ##############################################################################
@@ -516,17 +516,12 @@ screen game_menu(title):
         style_prefix "gui"
 
         label title:
-            # position the title.
+            style "title_label"
             xpos gui.scale(50)
             ysize gui.scale(120)
 
-            # text_ properties are used to style the text.
-            text_size gui.scale(50)
-            text_color gui.ACCENT_COLOR
-            text_yalign 0.5
-
         frame:
-            style "empty_gui_frame"
+            style "empty"
             bottom_margin gui.scale(30)
 
             hbox:
@@ -550,6 +545,16 @@ screen game_menu(title):
         ypos config.screen_height - gui.scale(30)
         yanchor 1.0
 
+
+style title_label is gui_label
+style title_label_text is gui_label_text
+
+style title_label_text:
+    size gui.scale(50)
+    color gui.ACCENT_COLOR
+    yalign 0.5
+
+
 screen file_picker(title):
 
     default page_name_value = FilePageNameInputValue()
@@ -564,26 +569,20 @@ screen file_picker(title):
 
             # The page name, which can be edited by clicking on a button.
             button:
-                style_prefix "file_page_name_gui"
+                style "page_label"
 
                 key_events True
                 xalign 0.5
-                xpadding gui.scale(50)
-                ypadding gui.scale(3)
                 action page_name_value.Toggle()
 
                 input:
+                    style "page_label_text"
                     value page_name_value
 
-                    size gui.scale(24)
-                    text_align 0.5
-                    layout "subtitle"
-                    color gui.ACCENT_COLOR
-                    hover_color gui.HOVER_COLOR
 
             # The grid of file slots.
             grid 3 2:
-                style_prefix "file_slot_gui"
+                style_prefix "slot"
 
                 xalign 0.5
                 yalign 0.5
@@ -592,34 +591,19 @@ screen file_picker(title):
                     button:
                         action FileAction(i)
 
-                        background "gui/idle_file_slot.png"
-                        hover_background "gui/hover_file_slot.png"
-
-                        # This include margins.
-                        xsize gui.scale(296)
-                        ysize gui.scale(226)
-
-                        xpadding gui.scale(10)
-                        ypadding gui.scale(10)
-
-                        xmargin gui.scale(10)
-                        ymargin gui.scale(5)
-
                         add FileScreenshot(i)
 
-                        text FileTime(i, format=_("{#file_time}%A, %B %d %Y, %H:%M"), empty="Empty slot"):
-                            style "file_slot_gui_button_text"
-                            ypos 146
+                        text FileTime(i, format=_("{#file_time}%A, %B %d %Y, %H:%M"), empty=_("empty slot")):
+                            style "slot_time_text"
 
                         text FileSaveName(i):
-                            style "file_slot_gui_button_text"
-                            ypos 164
+                            style "slot_name_text"
 
                         key "save_delete" action FileDelete(i)
 
             # Buttons to access other pages.
             hbox:
-                style_prefix "file_page_gui"
+                style_prefix "page"
 
                 xalign 0.5
                 yalign 1.0
@@ -647,11 +631,46 @@ screen save():
 define config.thumbnail_width = gui.scale(256)
 define config.thumbnail_height = gui.scale(144)
 
-style file_page_gui_button:
-    xpadding gui.scale(7)
+style page_label is gui_label
+style page_label_text is gui_label_text
+style page_button is gui_small_button
+style page_button_text is gui_small_button_text
+
+style slot_button is empty
+style slot_text is gui_button_text
+style slot_time_text is slot_text
+style slot_name_text is slot_text
+
+style page_label:
+    xpadding gui.scale(50)
     ypadding gui.scale(3)
 
-style file_slot_gui_button_text:
+style filepage_label_text:
+    size gui.scale(24)
+    text_align 0.5
+    layout "subtitle"
+    color gui.ACCENT_COLOR
+    hover_color gui.HOVER_COLOR
+
+style filepage_button:
+    xmargin gui.scale(3)
+
+
+style slot_button:
+    background "gui/idle_file_slot.png"
+    hover_background "gui/hover_file_slot.png"
+
+    # This include margins.
+    xsize gui.scale(296)
+    ysize gui.scale(226)
+
+    xpadding gui.scale(10)
+    ypadding gui.scale(10)
+
+    xmargin gui.scale(10)
+    ymargin gui.scale(5)
+
+style slot_text:
     size gui.scale(14)
 
     color gui.IDLE_SMALL_COLOR
@@ -661,6 +680,13 @@ style file_slot_gui_button_text:
     xalign 0.5
     text_align 0.5
     layout "subtitle"
+
+style slot_time_text:
+    ypos gui.scale(146)
+
+style slot_name_text:
+    ypos gui.scale(164)
+
 
 
 screen preferences:
@@ -809,58 +835,67 @@ style mute_all_pref_button:
 
 
 ##############################################################################
-# Yes/No Prompt
+# Confirm
 #
 # Screen that asks the user a yes or no question.
 # http://www.renpy.org/doc/html/screen_special.html#yesno-prompt
 
-screen yesno_prompt(message, yes_action, no_action):
+screen confirm(message, yes_action, no_action):
 
     modal True
 
-    add "gui/yesno_darken.png"
+    style_prefix "confirm"
+
+    add "gui/confirm_darken.png"
 
     frame:
-        style_prefix "yesno_gui"
 
-        background "gui/yesno_background.png"
-        xpadding gui.scale(75)
-        ypadding gui.scale(50)
-        xsize gui.scale(600)
-        ysize gui.scale(250)
-        xalign .5
-        yalign .5
-
-        has vbox:
+        vbox:
             xalign .5
             yalign .5
             spacing gui.scale(30)
 
-        label _(message):
-            style "yesno_gui_prompt"
-            xalign 0.5
-            text_text_align 0.5
-            text_layout "subtitle"
+            label _(message):
+                style "confirm_prompt"
+                xalign 0.5
 
-        hbox:
-            xalign 0.5
-            spacing gui.scale(100)
+            hbox:
+                xalign 0.5
+                spacing gui.scale(100)
 
-            textbutton _("Yes") action yes_action
-            textbutton _("No") action no_action
+                textbutton _("Yes") action yes_action
+                textbutton _("No") action no_action
 
     # Right-click and escape answer "no".
     key "game_menu" action no_action
 
-style yesno_gui_button:
-    size_group "yesno"
-    xpadding 25
-    ypadding 10
-
-style yesno_gui_button_text:
-    xalign 0.5
 
 define config.quit_action = Quit()
+
+style confirm_frame is empty
+style confirm_prompt is gui_prompt
+style confirm_prompt_text is gui_prompt_text
+style confirm_button is gui_medium_button
+style confirm_button_text is gui_medium_button_text
+
+style confirm_frame:
+    background "gui/confirm_background.png"
+    xpadding gui.scale(75)
+    ypadding gui.scale(50)
+    xsize gui.scale(600)
+    ysize gui.scale(250)
+    xalign .5
+    yalign .5
+
+style confirm_prompt_text:
+    text_align 0.5
+    layout "subtitle"
+
+style confirm_button:
+    size_group "confirm"
+
+style confirm_button_text:
+    xalign 0.5
 
 
 ##############################################################################
@@ -885,7 +920,6 @@ screen about():
             side_spacing gui.scale(20)
 
             xsize gui.scale(744)
-
 
             text gui.ABOUT
 

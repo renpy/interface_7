@@ -198,7 +198,7 @@ class ImageGenerator(object):
 
         gm = self.make_surface(self.width, self.height)
         gm.fill(self.boring_color.opacity(.6))
-        self.save(gm, "yesno_darken")
+        self.save(gm, "confirm_darken")
 
     def generate_separator(self):
 
@@ -232,7 +232,7 @@ class ImageGenerator(object):
         self.save(s, "hover_file_slot")
 
 
-    def generate_yesno_background(self):
+    def generate_confirm_background(self):
         width = self.scale_int(600)
         height = self.scale_int(250)
 
@@ -241,7 +241,7 @@ class ImageGenerator(object):
         s = self.make_surface(width, height)
         s.fill(self.accent_color)
         s.subsurface((border, border, width - 2 * border, height - 2 * border)).fill(self.boring_color)
-        self.save(s, "yesno_background")
+        self.save(s, "confirm_background")
 
     def generate_bars(self):
 
@@ -312,7 +312,7 @@ class ImageGenerator(object):
         self.generate_darken()
         self.generate_separator()
         self.generate_file_slot()
-        self.generate_yesno_background()
+        self.generate_confirm_background()
         self.generate_nvl()
         self.generate_bars()
         self.generate_buttons()
