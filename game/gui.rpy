@@ -101,8 +101,6 @@ style bar:
     left_bar Frame("gui/bar_left.png")
     right_bar Frame("gui/bar_right.png")
 
-# style slider is bar
-
 style scrollbar:
     ysize gui.scale(10)
 
@@ -129,26 +127,33 @@ style vbar:
     xsize gui.scale(30)
     bar_vertical True
 
-    bottom_bar Solid(gui.ACCENT_COLOR)
-    top_bar Solid(gui.MUTED_COLOR)
-
-    hover_bottom_bar Solid(gui.HOVER_COLOR)
-    hover_top_bar Solid(gui.HOVER_MUTED_COLOR)
-
-style vslider is vbar
+    top_bar Frame("gui/bar_top.png")
+    bottom_bar Frame("gui/bar_bottom.png")
 
 style vscrollbar:
     xsize gui.scale(10)
     bar_vertical True
     bar_invert True
 
-    left_bar Solid(gui.MUTED_COLOR)
-    thumb Solid(gui.ACCENT_COLOR)
-    right_bar Solid(gui.MUTED_COLOR)
+    top_bar Frame("gui/vscrollbar.png")
+    thumb Frame("gui/vscrollbar_thumb.png")
+    bottom_bar Frame("gui/vscrollbar.png")
 
-    hover_left_bar Solid(gui.HOVER_MUTED_COLOR)
-    hover_thumb Solid(gui.HOVER_COLOR)
-    hover_right_bar Solid(gui.HOVER_MUTED_COLOR)
+    hover_top_bar Frame("gui/vscrollbar_hover.png")
+    hover_thumb Frame("gui/vscrollbar_hover_thumb.png")
+    hover_bottom_bar Frame("gui/vscrollbar_hover.png")
+
+style vslider:
+    xsize gui.scale(30)
+    bar_vertical True
+
+    top_bar Frame("gui/vslider.png")
+    thumb "gui/vslider_thumb.png"
+    bottom_bar Frame("gui/vslider.png")
+
+    hover_top_bar Frame("gui/vslider_hover.png")
+    hover_thumb "gui/vslider_hover_thumb.png"
+    hover_bottom_bar Frame("gui/vslider_hover.png")
 
 style frame:
     background "#000000"
