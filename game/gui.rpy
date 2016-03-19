@@ -188,8 +188,6 @@ style vslider:
 style frame:
     background "#000000"
 
-style empty_gui_frame is default
-
 style hyperlink_text:
     color gui.ACCENT_COLOR
     hover_color gui.HOVER_COLOR
