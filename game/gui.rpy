@@ -555,7 +555,7 @@ style title_label_text:
     yalign 0.5
 
 
-screen file_picker(title):
+screen file_slots(title):
 
     default page_name_value = FilePageNameInputValue()
 
@@ -578,7 +578,6 @@ screen file_picker(title):
                 input:
                     style "page_label_text"
                     value page_name_value
-
 
             # The grid of file slots.
             grid 3 2:
@@ -620,13 +619,13 @@ screen load():
 
     tag menu
 
-    use file_picker(_("Load"))
+    use file_slots(_("Load"))
 
 screen save():
 
     tag menu
 
-    use file_picker(_("Save"))
+    use file_slots(_("Save"))
 
 define config.thumbnail_width = gui.scale(256)
 define config.thumbnail_height = gui.scale(144)
