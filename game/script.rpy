@@ -24,30 +24,33 @@ init python:
 # The game starts here.
 label start:
 
-
-    "It was just an ordinary, everyday village, stuck between two opposing kingdoms."
-    "And for the Kodokushi, that was reason enough."
-    "After joining the Kodokushi, I quickly realized that our work was neither noble, nor righteous."
-    n "We were not saviors of the people. We were not almighty defenders, protecting innocent civilians from harm."
-    "We were a death squad."
-    "Every day we would venture forth, treading just a little bit further away from home, searching for \"the enemy\"."
-    "It was just an ordinary, everyday village, stuck between two opposing kingdoms."
-    n "And for the Kodokushi, that was reason enough."
-    n "After joining the Kodokushi, I quickly realized that our work was neither noble, nor righteous."
-    "We were not saviors of the people. We were not almighty defenders, protecting innocent civilians from harm."
-    "We were a death squad."
-    "Every day we would venture forth, treading just a little bit further away from home, searching for \"the enemy\"."
-    "An honorable task, to be sure. We would drive away any threats before they could further encroach upon our land, taking the fight away from innocent passersby."
+#     show screen skip_indicator_test
+#
+#     "It was just an ordinary, everyday village, stuck between two opposing kingdoms."
+#     "And for the Kodokushi, that was reason enough."
+#     "After joining the Kodokushi, I quickly realized that our work was neither noble, nor righteous."
+#     n "We were not saviors of the people. We were not almighty defenders, protecting innocent civilians from harm."
+#     "We were a death squad."
+#     "Every day we would venture forth, treading just a little bit further away from home, searching for \"the enemy\"."
+#     "It was just an ordinary, everyday village, stuck between two opposing kingdoms."
+#     n "And for the Kodokushi, that was reason enough."
+#     n "After joining the Kodokushi, I quickly realized that our work was neither noble, nor righteous."
+#     "We were not saviors of the people. We were not almighty defenders, protecting innocent civilians from harm."
+#     "We were a death squad."
+#     "Every day we would venture forth, treading just a little bit further away from home, searching for \"the enemy\"."
+#     "An honorable task, to be sure. We would drive away any threats before they could further encroach upon our land, taking the fight away from innocent passersby."
 
     $ save_name = "Chapter 1: The chaptering, brought to you by the chapter."
 
     scene bg mugen
 
+label loop2:
+
     e "Hello, world. This is the new ADV-mode screen.\n2\n3\n4"
-    n "Hello, world. This is the new ADV-mode screen.\n2\n3\n4"
-    n "It looks like this."
 
     e "Let me ask you a question."
+
+    jump loop2
 
     $ renpy.run(Replay("replay", locked=False))
 

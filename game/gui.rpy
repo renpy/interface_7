@@ -1091,3 +1091,56 @@ style help_label_text:
     size gui.scale(22)
     xalign 1.0
     text_align 1.0
+
+##############################################################################
+# Skip Indicator
+
+screen skip_indicator():
+
+    style_prefix "skip"
+
+    frame:
+
+        hbox:
+            spacing gui.scale(6)
+
+            text _("Skipping")
+
+            text "▸" at skip_blink(0.0) style "skip_triangle"
+            text "▸" at skip_blink(0.2) style "skip_triangle"
+            text "▸" at skip_blink(0.4) style "skip_triangle"
+
+transform skip_blink(delay):
+    alpha .5
+
+    pause delay
+
+    block:
+        linear .2 alpha 1.0
+        pause .2
+        linear .2 alpha 0.5
+        pause 1.0
+        repeat
+
+
+style skip_frame is empty
+style skip_text is gui_text
+style skip_triangle is skip_text
+
+style skip_frame:
+        background Frame("gui/skip_indicator.png", gui.scale(16), gui.scale(5), gui.scale(50), gui.scale(5))
+
+        left_padding gui.scale(16)
+        right_padding gui.scale(50)
+
+        ypos gui.scale(10)
+        ypadding gui.scale(5)
+
+style skip_text:
+    size gui.scale(16)
+
+style skip_triangle:
+    # We have to use a font that has the BLACK RIGHT-POINTING SMALL TRIANGLE
+    # glyph in it.
+    font "DejaVuSans.ttf"
+

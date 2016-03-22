@@ -306,6 +306,26 @@ class ImageGenerator(object):
         fill("small_button", 30, 40)
         fill("small_button_hover", 30, 40)
 
+
+    def generate_skip(self):
+        XSIZE = 240
+        XRIGHT = 50
+
+        YSIZE = 43
+
+        X = [
+            (0, 1.0),
+            (XSIZE - XRIGHT, 1.0),
+            (XSIZE, 0.0),
+            ]
+
+        Y = [
+            (0, 1.0),
+            (YSIZE, 1.0),
+            ]
+
+        self.generate_image("skip_indicator", X, Y, self.boring_color.opacity(.8))
+
     def generate_all(self):
         self.generate_textbox()
         self.generate_choice_button()
@@ -316,6 +336,7 @@ class ImageGenerator(object):
         self.generate_nvl()
         self.generate_bars()
         self.generate_buttons()
+        self.generate_skip()
 
 if __name__ == "__main__":
     import argparse
