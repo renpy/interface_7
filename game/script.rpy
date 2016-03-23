@@ -44,9 +44,11 @@ label start:
 
     scene bg mugen
 
+    $ renpy.notify("How is this?")
+
 label loop2:
 
-    e "Hello, world. This is the new ADV-mode screen.\n2\n3\n4"
+    e "Hello, world. This is the new default ADV-mode screen and the new skip indicator."
 
     e "Let me ask you a question."
 

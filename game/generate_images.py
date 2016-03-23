@@ -326,6 +326,25 @@ class ImageGenerator(object):
 
         self.generate_image("skip_indicator", X, Y, self.boring_color.opacity(.8))
 
+    def generate_notify(self):
+        XSIZE = 922
+        XRIGHT = 50
+
+        YSIZE = 43
+
+        X = [
+            (0, 1.0),
+            (XSIZE - XRIGHT, 1.0),
+            (XSIZE, 0.0),
+            ]
+
+        Y = [
+            (0, 1.0),
+            (YSIZE, 1.0),
+            ]
+
+        self.generate_image("notify", X, Y, self.boring_color.opacity(.8))
+
     def generate_all(self):
         self.generate_textbox()
         self.generate_choice_button()
@@ -337,6 +356,7 @@ class ImageGenerator(object):
         self.generate_bars()
         self.generate_buttons()
         self.generate_skip()
+        self.generate_notify()
 
 if __name__ == "__main__":
     import argparse

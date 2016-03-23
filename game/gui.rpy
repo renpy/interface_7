@@ -1097,6 +1097,7 @@ style help_label_text:
 
 screen skip_indicator():
 
+    zorder 100
     style_prefix "skip"
 
     frame:
@@ -1131,7 +1132,7 @@ style skip_frame:
         background Frame("gui/skip_indicator.png", gui.scale(16), gui.scale(5), gui.scale(50), gui.scale(5))
 
         left_padding gui.scale(16)
-        right_padding gui.scale(50)
+        right_padding gui.scale(40)
 
         ypos gui.scale(10)
         ypadding gui.scale(5)
@@ -1144,3 +1145,39 @@ style skip_triangle:
     # glyph in it.
     font "DejaVuSans.ttf"
 
+
+
+screen notify(message):
+
+    zorder 100
+    style_prefix "notify"
+
+    frame at notify_appear:
+        text message
+
+    # This controls how long it takes between when the screen is
+    # first shown, and when it begins hiding.
+    timer 3.25 action Hide('notify')
+
+transform notify_appear:
+    # These control the actions on show and hide.
+    on show:
+        alpha 0
+        linear .25 alpha 1.0
+    on hide:
+        linear .5 alpha 0.0
+
+style notify_frame is empty
+style notify_text is gui_text
+
+style notify_frame:
+        background Frame("gui/notify.png", gui.scale(16), gui.scale(5), gui.scale(50), gui.scale(5))
+
+        left_padding gui.scale(16)
+        right_padding gui.scale(40)
+
+        ypos gui.scale(45)
+        ypadding gui.scale(5)
+
+style notify_text:
+    size gui.scale(16)
