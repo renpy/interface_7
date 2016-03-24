@@ -23,6 +23,14 @@ init python:
 
 # The game starts here.
 label start:
+    scene bg mugen
+
+    e "This is the new history screen that's being added to Ren'Py."
+
+    "I can't help but think this is long overdue."
+
+    e "It took a while, but better late than never, right?"
+
 
 #     show screen skip_indicator_test
 #
@@ -42,7 +50,6 @@ label start:
 
     $ save_name = "Chapter 1: The chaptering, brought to you by the chapter."
 
-    scene bg mugen
 
     $ renpy.notify("How is this?")
 

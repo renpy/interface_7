@@ -347,6 +347,8 @@ screen nvl(dialogue, items=None):
 
                     if who is not None:
                         text who id who_id
+                    else:
+                        text " " style "nvl_label"
 
                     text what id what_id ypos gui.scale(7)
 
@@ -393,6 +395,9 @@ style nvl_window is default:
     yfill True
 
 
+
+
+
 ################################################################################
 # Quick Menu
 
@@ -409,7 +414,7 @@ screen quick_menu():
         yalign 1.0
 
         textbutton _("Back") action Rollback()
-        textbutton _("Log")
+        textbutton _("History") action ShowMenu('history')
         textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
         textbutton _("Auto") action Preference("auto-forward", "toggle")
         textbutton _("Save") action ShowMenu('save')
@@ -529,7 +534,11 @@ screen game_menu(title):
 
                 add "gui/vertical_separator.png"
 
-                fixed:
+                frame:
+                    style "empty"
+                    xmargin gui.scale(40)
+                    top_margin gui.scale(40)
+
                     transclude
 
     use navigation
@@ -696,9 +705,6 @@ screen preferences:
     use game_menu(_("Preferences")):
 
         vbox:
-            xpos gui.scale(50)
-            ypos gui.scale(20)
-            xsize gui.scale(930)
 
             grid 4 1:
                 xfill True
@@ -833,6 +839,73 @@ style mute_all_pref_button:
     top_margin gui.scale(13)
 
 
+##############################################################################
+# History
+#
+
+screen history():
+    tag menu
+
+    use game_menu(_("History")):
+
+        style_prefix "history"
+
+        vpgrid:
+            cols 1
+            yinitial 1.0
+
+            scrollbars "vertical"
+            draggable True
+            mousewheel True
+
+            for h in _history_list:
+
+                window:
+                    has hbox:
+                        yfill True
+                        spacing gui.scale(20)
+
+                        text (h.who or " "):
+                            style "history_who"
+
+                            # Take the color of the who text from the
+                            # Character, if set.
+                            if "color" in h.who_args:
+                                color h.who_args["color"]
+
+                    text h.what
+
+        if not _history_list:
+            label _("The dialogue history is empty.")
+
+
+define config.history_length = 250
+
+style history_window is empty
+style history_who is say_label
+style history_text is gui_text
+style history_vscrollbar is gui_vscrollbar
+style history_label is gui_label
+style history_label_text is gui_label_text
+
+style history_window:
+    xfill True
+    ysize gui.scale(115)
+    right_margin gui.scale(10)
+
+style history_who:
+    xmaximum gui.scale(150)
+    min_width gui.scale(150)
+    text_align 1.0
+
+style history_text:
+    ypos gui.scale(7)
+
+style history_vscrollbar:
+    unscrollable "hide"
+
+style history_label:
+    xalign 0.5
 
 ##############################################################################
 # Confirm
