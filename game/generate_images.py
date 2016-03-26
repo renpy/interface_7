@@ -277,7 +277,7 @@ class ImageGenerator(object):
 
     def generate_buttons(self):
 
-        padding = self.scale_int(2)
+        padding = self.scale_int(4)
 
         def fill(name, width, height, color=None, fill_width=None):
             width = self.scale_int(width) + padding * 2

@@ -81,10 +81,10 @@ style hyperlink_text:
 
 # Used for full-sized buttons, like navigation buttons.
 style button:
-    ypadding gui.scale(2)
-    xpadding gui.scale(2)
-    background Frame("gui/button.png")
-    hover_background Frame("gui/button_hover.png")
+    ypadding gui.scale(4)
+    xpadding gui.scale(4)
+    background Frame("gui/button.png", gui.scale(4), gui.scale(4))
+    hover_background Frame("gui/button_hover.png", gui.scale(4), gui.scale(4))
 
 style button_text:
     size gui.scale(24)
@@ -96,24 +96,24 @@ style button_text:
 
 # Used for checkbox-like buttons:
 style check_button:
-    left_padding gui.scale(22)
-    foreground Frame("gui/button_unchecked.png", gui.scale(22), 0)
-    selected_foreground Frame("gui/button_checked.png", gui.scale(22), 0)
+    left_padding gui.scale(25)
+    foreground Frame("gui/button_unchecked.png", gui.scale(25), gui.scale(4), gui.scale(4), gui.scale(4))
+    selected_foreground Frame("gui/button_checked.png", gui.scale(25), gui.scale(4), gui.scale(4))
 
 style radio_button is check_button
 
 # Used for medium-sized buttons, like sound test and mute buttons.
 style medium_button:
-    background Frame("gui/medium_button.png")
-    hover_background Frame("gui/medium_button_hover.png")
+    background Frame("gui/medium_button.png", gui.scale(4), gui.scale(4))
+    hover_background Frame("gui/medium_button_hover.png", gui.scale(4), gui.scale(4))
 
 style medium_button_text is button_text
 
 # Used for small-sized buttons, like file picker page navigation.
 style small_button:
-    xpadding gui.scale(7)
-    background Frame("gui/small_button.png")
-    hover_background Frame("gui/small_button_hover.png")
+    xpadding gui.scale(10)
+    background Frame("gui/small_button.png", gui.scale(4), gui.scale(4))
+    hover_background Frame("gui/small_button_hover.png", gui.scale(4), gui.scale(4))
 
 style small_button_text is button_text
 
@@ -275,8 +275,8 @@ screen choice(items):
     style_group "choice"
 
     vbox:
-        for caption, action, chosen in items:
-            textbutton caption action action
+        for i in items:
+            textbutton i.caption action i.action
 
 # Use the narrator to speak menu captions.
 define config.narrator_menu = True
@@ -337,31 +337,36 @@ screen nvl(dialogue, items=None):
             yinitial 1.0
 
             # Display dialogue.
-            for who, what, who_id, what_id, window_id in dialogue:
+            for d in dialogue:
+
                 window:
-                    id window_id
+                    id d.window_id
 
                     has hbox:
                         yfill True
                         spacing gui.scale(20)
 
-                    if who is not None:
-                        text who id who_id
-                    else:
-                        text " " style "nvl_label"
+                    if d.who is not None:
 
-                    text what id what_id ypos gui.scale(7)
+                        text d.who:
+                            id d.who_id
+
+                    else:
+
+                        text " ":
+                            style "nvl_label"
+
+                    text d.what:
+                        id d.what_id
+                        ypos gui.scale(7)
 
         # Displays the menu, if given. The menu may be displayed incorrectly
         # if config.narrator_menu is set to True, as it is above.
-        if items:
+        for i in items:
 
-            for caption, action, chosen in items:
-
-                if action:
-                    textbutton caption action action style "nvl_menu_button"
-                else:
-                    label caption style "nvl_menu_prompt"
+            textbutton i.caption:
+                action i.action
+                style "nvl_menu_button"
 
     add SideImage() xalign 0.0 yalign 1.0
 
@@ -372,10 +377,11 @@ style nvl_dialogue:
 
 style nvl_menu_button:
     clear
-    left_padding gui.scale(20)
+    left_padding gui.scale(170)
 
-style nvl_menu_choice_button_text:
+style nvl_menu_button_text:
     clear
+    insensitive_color gui.TEXT_COLOR
 
 style nvl_entry:
     clear
@@ -443,11 +449,11 @@ screen navigation():
     vbox:
         style_prefix "navigation"
 
-        xpos gui.scale(50)
+        xpos gui.scale(40)
         xmaximum gui.scale(227)
-
         yalign 0.5
-        spacing gui.scale(8)
+
+        spacing gui.scale(4)
 
         if main_menu:
 
@@ -577,7 +583,7 @@ screen game_menu(title):
                 frame:
                     style "empty"
                     xmargin gui.scale(40)
-                    top_margin gui.scale(40)
+                    top_margin gui.scale(20)
 
                     transclude
 
@@ -587,7 +593,7 @@ screen game_menu(title):
         style_prefix "nav_gui"
 
         action Return()
-        xpos gui.scale(50)
+        xpos gui.scale(40)
         xmaximum gui.scale(227)
         ypos config.screen_height - gui.scale(30)
         yanchor 1.0
@@ -700,10 +706,6 @@ style filepage_label_text:
     layout "subtitle"
     color gui.ACCENT_COLOR
     hover_color gui.HOVER_COLOR
-
-style filepage_button:
-    xmargin gui.scale(3)
-
 
 style slot_button:
     background "gui/idle_file_slot.png"
@@ -855,11 +857,9 @@ style pref_label_text:
     yalign 1.0
 
 style radio_pref_button:
-    top_margin gui.scale(6)
     size_group "preferences"
 
 style check_pref_button:
-    top_margin gui.scale(6)
     size_group "preferences"
 
 # Used for preferences controlled by sliders.
@@ -873,10 +873,11 @@ style slider_pref_label:
 # Used for buttons associated with bars - the test buttons.
 style slider_pref_button:
     yalign 1.0
+    left_margin gui.scale(10)
 
 # Used for the "Mute All" button.
 style mute_all_pref_button:
-    top_margin gui.scale(13)
+    top_margin gui.scale(10)
 
 
 ##############################################################################
