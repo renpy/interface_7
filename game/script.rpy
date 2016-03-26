@@ -16,7 +16,7 @@ label replay:
 
     $ renpy.end_replay()
 
-define narrator = NVLCharacter(None)
+# define narrator = NVLCharacter(None)
 
 init python:
     menu = nvl_menu
@@ -25,7 +25,12 @@ init python:
 label start:
     scene bg mugen
 
-    e "This is the new history screen that's being added to Ren'Py."
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+
+
+    e "Hi, everybody!"
+
+    e "This is the new history screen that's being added to Ren'Py during NaNoRenO 2016. Some people would call this a readback or log screen."
 
     "I can't help but think this is long overdue."
 

@@ -27,6 +27,8 @@ class ImageGenerator(object):
         self.muted_color = self.accent_color.shade(.4)
         self.hover_muted_color = self.accent_color.shade(.6)
 
+        self.menu_color = self.accent_color.replace_hsv_saturation(.1).replace_value(.5)
+
     def scale_int(self, n):
         rv = int(n * self.scale)
 
@@ -306,7 +308,6 @@ class ImageGenerator(object):
         fill("small_button", 30, 40)
         fill("small_button_hover", 30, 40)
 
-
     def generate_skip(self):
         XSIZE = 240
         XRIGHT = 50
@@ -345,6 +346,18 @@ class ImageGenerator(object):
 
         self.generate_image("notify", X, Y, self.boring_color.opacity(.8))
 
+
+    def generate_menus(self):
+        width = self.scale_int(1280)
+        height = self.scale_int(720)
+
+        s = self.make_surface(width, height)
+        s.fill(self.menu_color)
+
+        self.save(s, "main_menu")
+        self.save(s, "game_menu")
+
+
     def generate_all(self):
         self.generate_textbox()
         self.generate_choice_button()
@@ -357,6 +370,7 @@ class ImageGenerator(object):
         self.generate_buttons()
         self.generate_skip()
         self.generate_notify()
+        self.generate_menus()
 
 if __name__ == "__main__":
     import argparse

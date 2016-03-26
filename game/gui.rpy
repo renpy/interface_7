@@ -45,8 +45,8 @@ define gui.TEXT_COLOR = "#ffffff"
 define gui.CHOICE_COLOR = "#cccccc"
 
 # The images used for the main and game menus.
-define gui.MAIN_MENU_BACKGROUND = "gui/main_menu.jpg"
-define gui.GAME_MENU_BACKGROUND = "gui/game_menu.jpg"
+define gui.MAIN_MENU_BACKGROUND = "gui/main_menu.png"
+define gui.GAME_MENU_BACKGROUND = "gui/game_menu.png"
 
 
 ################################################################################
@@ -450,26 +450,33 @@ screen navigation():
         spacing gui.scale(8)
 
         if main_menu:
+
             textbutton _("Start") action Start()
+
         else:
+
+            textbutton _("History") action ShowMenu("history")
+
             textbutton _("Save") action ShowMenu("save")
 
         textbutton _("Load") action ShowMenu("load")
 
         textbutton _("Preferences") action ShowMenu("preferences")
 
-        if main_menu:
-            textbutton _("Extras") action ShowMenu("extras")
-        elif _in_replay:
+        if _in_replay:
+
             textbutton _("End Replay") action EndReplay(confirm=True)
-        else:
+
+        elif not main_menu:
             textbutton _("Main Menu") action MainMenu()
 
         textbutton _("About") action ShowMenu("about")
 
         textbutton _("Help") action ShowMenu("help")
 
-        textbutton _("Quit") action Quit(confirm=not main_menu)
+        if not renpy.ios:
+
+            textbutton _("Quit") action Quit(confirm=not main_menu)
 
 
 style navigation_button is gui_button
@@ -890,7 +897,7 @@ style history_label_text is gui_label_text
 
 style history_window:
     xfill True
-    ysize gui.scale(115)
+    ysize gui.scale(130)
     right_margin gui.scale(10)
 
 style history_who:
