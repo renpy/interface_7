@@ -512,7 +512,7 @@ screen main_menu():
 
         spacing gui.scale(-10)
 
-        text "[config.name]":
+        text "[config.name!t]":
             style "main_menu_title"
 
         text "[config.version]":
