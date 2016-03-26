@@ -504,6 +504,38 @@ screen main_menu():
     # The actual contents of the main menu are in the navigation screen, above.
     use navigation
 
+    vbox:
+        xpos gui.scale(1260)
+        xanchor 1.0
+        ypos gui.scale(700)
+        yanchor 1.0
+
+        spacing gui.scale(-10)
+
+        text "[config.name]":
+            style "main_menu_title"
+
+        text "[config.version]":
+            style "main_menu_version"
+
+style main_menu_text is gui_text
+
+style main_menu_title is main_menu_text
+style main_menu_version is main_menu_text
+
+style main_menu_text:
+    xalign 1.0
+    xmaximum 980
+
+    layout "subtitle"
+    text_align 1.0
+    color gui.ACCENT_COLOR
+
+style main_menu_title:
+    size gui.scale(90)
+
+
+
 
 ##############################################################################
 # Game Menu

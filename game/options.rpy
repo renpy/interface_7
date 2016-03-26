@@ -27,8 +27,8 @@ init -1 python hide:
 
     # These control the name and version of the game, that are reported
     # with tracebacks and other debugging logs.
-    config.name = "Interface 7"
-    config.version = "0.0"
+    config.name = "New Ren'Py GUI"
+    config.version = "6.99.11"
 
     layout.defaults()
 
