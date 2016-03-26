@@ -4,7 +4,7 @@ import pygame_sdl2
 
 from renpy.store import Color
 
-# The target widths used in templates.
+# The target width used in templates.
 WIDTH = 1280
 HEIGHT = 720
 
@@ -18,7 +18,10 @@ class ImageGenerator(object):
         self.width = width
         self.height = height
 
-        self.scale = 1.0 * height / HEIGHT
+        self.scale = min(1.0 * width / WIDTH, 1.0 * height / HEIGHT)
+
+        self.full_width = self.width / self.scale
+        self.full_height = self.height / self.scale
 
         self.accent_color = Color(color)
         self.boring_color = Color("#000000")
@@ -113,7 +116,7 @@ class ImageGenerator(object):
 
     def generate_textbox(self):
 
-        XSIZE = WIDTH
+        XSIZE = self.full_width
         XINSIDE = (XSIZE - 744) // 2
 
         YSIZE = 185
@@ -135,10 +138,10 @@ class ImageGenerator(object):
         self.generate_image("textbox", X, Y, self.boring_color.opacity(.8))
 
     def generate_nvl(self):
-        XSIZE = WIDTH
+        XSIZE = self.full_width
         XINSIDE = (XSIZE - 800) // 2
 
-        YSIZE = HEIGHT
+        YSIZE = self.full_height
 
         X = [
             (0, 0.0),
@@ -205,7 +208,7 @@ class ImageGenerator(object):
     def generate_separator(self):
 
         vwidth = self.scale_int(3)
-        vheight = self.scale_int(570)
+        vheight = self.scale_int(self.full_height - 150)
 
         v = self.make_surface(vwidth, vheight)
         v.fill(self.accent_color)
@@ -348,10 +351,7 @@ class ImageGenerator(object):
 
 
     def generate_menus(self):
-        width = self.scale_int(1280)
-        height = self.scale_int(720)
-
-        s = self.make_surface(width, height)
+        s = self.make_surface(self.width, self.height)
         s.fill(self.menu_color)
 
         self.save(s, "main_menu")
