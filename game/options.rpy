@@ -230,3 +230,5 @@ init -1 python hide:
 
     #########################################
     ## More customizations can go here.
+
+    build.classify("0_old/", None)

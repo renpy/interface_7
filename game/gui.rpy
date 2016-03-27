@@ -6,7 +6,7 @@
 
 # The width and height of the screen.
 define config.screen_width = 1280
-define config.screen_height = 800 # 720
+define config.screen_height = 720
 
 ################################################################################
 # Colors
