@@ -743,7 +743,7 @@ style slot_name_text:
 
 
 
-screen preferences:
+screen preferences():
 
     tag menu
 
@@ -751,30 +751,7 @@ screen preferences:
 
         vbox:
 
-            grid 4 1:
-                xfill True
-
-                vbox:
-                    style_prefix "radio_pref"
-                    label _("Display")
-                    textbutton _("Window") action Preference("display", "window")
-                    textbutton _("Fullscreen") action Preference("display", "fullscreen")
-
-                vbox:
-                    style_prefix "radio_pref"
-                    label _("Rollback Side")
-                    textbutton _("Disable") action Preference("rollback side", "disable")
-                    textbutton _("Left") action Preference("rollback side", "left")
-                    textbutton _("Right") action Preference("rollback side", "right")
-
-                vbox:
-                    style_prefix "check_pref"
-                    label _("Skip")
-                    textbutton _("Unseen Text") action Preference("skip", "toggle")
-                    textbutton _("After Choices") action Preference("after choices", "toggle")
-                    textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
-
-                null
+            use choice_preferences
 
             null height gui.scale(25)
 
@@ -783,51 +760,82 @@ screen preferences:
 
             null height gui.scale(25)
 
-            grid 2 1:
-                style_prefix "slider_pref"
-                xfill True
+            use bar_preferences
 
-                vbox:
+screen choice_preferences():
 
-                    label _("Text Speed")
+    grid 4 1:
+        xfill True
 
-                    bar value Preference("text speed")
+        vbox:
+            style_prefix "radio_pref"
+            label _("Display")
+            textbutton _("Window") action Preference("display", "window")
+            textbutton _("Fullscreen") action Preference("display", "fullscreen")
 
-                    label _("Auto-Forward Time")
+        vbox:
+            style_prefix "radio_pref"
+            label _("Rollback Side")
+            textbutton _("Disable") action Preference("rollback side", "disable")
+            textbutton _("Left") action Preference("rollback side", "left")
+            textbutton _("Right") action Preference("rollback side", "right")
 
-                    bar value Preference("auto-forward time")
+        vbox:
+            style_prefix "check_pref"
+            label _("Skip")
+            textbutton _("Unseen Text") action Preference("skip", "toggle")
+            textbutton _("After Choices") action Preference("after choices", "toggle")
+            textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
 
-                vbox:
+        null
 
-                    if config.has_music:
-                        label _("Music Volume")
+screen bar_preferences():
 
-                        hbox:
-                            bar value Preference("music volume")
+    grid 2 1:
+        style_prefix "slider_pref"
+        xfill True
 
-                    if config.has_sound:
+        vbox:
 
-                        label _("Sound Volume")
+            label _("Text Speed")
 
-                        hbox:
-                            bar value Preference("sound volume")
+            bar value Preference("text speed")
 
-                            if config.sample_sound:
-                                textbutton _("Test") action Play("sound", config.sample_sound)
+            label _("Auto-Forward Time")
+
+            bar value Preference("auto-forward time")
+
+        vbox:
+
+            if config.has_music:
+                label _("Music Volume")
+
+                hbox:
+                    bar value Preference("music volume")
+
+            if config.has_sound:
+
+                label _("Sound Volume")
+
+                hbox:
+                    bar value Preference("sound volume")
+
+                    if config.sample_sound:
+                        textbutton _("Test") action Play("sound", config.sample_sound)
 
 
-                    if config.has_voice:
-                        label _("Voice Volume")
+            if config.has_voice:
+                label _("Voice Volume")
 
-                        hbox:
-                            bar value Preference("voice volume")
+                hbox:
+                    bar value Preference("voice volume")
 
-                            if config.sample_voice:
-                                textbutton _("Test") action Play("voice", config.sample_voice)
+                    if config.sample_voice:
+                        textbutton _("Test") action Play("voice", config.sample_voice)
 
-                    textbutton _("Mute All"):
-                        action Preference("all mute", "toggle")
-                        style "mute_all_pref_button"
+            textbutton _("Mute All"):
+                action Preference("all mute", "toggle")
+                style "mute_all_pref_button"
 
 
 style pref_label is gui_label
