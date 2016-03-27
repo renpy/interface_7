@@ -896,7 +896,12 @@ style mute_all_pref_button:
 #
 
 screen history():
+
     tag menu
+
+    # Avoid predicting this screen. It's big, and all the images should be
+    # predicted by one of the other screens.
+    predict False
 
     use game_menu(_("History")):
 
