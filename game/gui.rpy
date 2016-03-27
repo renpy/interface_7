@@ -428,9 +428,12 @@ screen quick_menu():
         textbutton _("Q.Load") action QuickLoad()
         textbutton _("Prefs") action ShowMenu('preferences')
 
+style quick_button is gui_button
+style quick_button_text is gui_button_text
+
 style quick_button:
     background None
-    xpadding 10
+    xpadding gui.scale(10)
 
 style quick_button_text:
     size gui.scale(14)
@@ -1071,10 +1074,10 @@ screen help():
         style_prefix "help"
 
         vbox:
-            xpos gui.scale(50)
             spacing gui.scale(15)
 
             hbox:
+
                 textbutton _("Keyboard") action SetScreenVariable("device", "keyboard")
                 textbutton _("Mouse") action SetScreenVariable("device", "mouse")
 
