@@ -747,115 +747,111 @@ screen preferences():
 
     tag menu
 
+    if renpy.mobile:
+        $ cols = 2
+    else:
+        $ cols = 4
+
     use game_menu(_("Preferences")):
 
         vbox:
 
-            use choice_preferences
+            hbox:
+                box_wrap True
 
-            null height gui.scale(25)
+                if renpy.variant("pc"):
 
-            # If a second row of preferences is desired, the preferences can
-            # be added here.
+                    vbox:
+                        style_prefix "radio_pref"
+                        label _("Display")
+                        textbutton _("Window") action Preference("display", "window")
+                        textbutton _("Fullscreen") action Preference("display", "fullscreen")
 
-            null height gui.scale(25)
+                vbox:
+                    style_prefix "radio_pref"
+                    label _("Rollback Side")
+                    textbutton _("Disable") action Preference("rollback side", "disable")
+                    textbutton _("Left") action Preference("rollback side", "left")
+                    textbutton _("Right") action Preference("rollback side", "right")
 
-            use bar_preferences
+                vbox:
+                    style_prefix "check_pref"
+                    label _("Skip")
+                    textbutton _("Unseen Text") action Preference("skip", "toggle")
+                    textbutton _("After Choices") action Preference("after choices", "toggle")
+                    textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
 
-screen choice_preferences():
+            null height gui.scale(50)
 
-    grid 4 1:
-        xfill True
+            grid 2 1:
+                style_prefix "slider_pref"
+                xfill True
 
-        vbox:
-            style_prefix "radio_pref"
-            label _("Display")
-            textbutton _("Window") action Preference("display", "window")
-            textbutton _("Fullscreen") action Preference("display", "fullscreen")
+                vbox:
 
-        vbox:
-            style_prefix "radio_pref"
-            label _("Rollback Side")
-            textbutton _("Disable") action Preference("rollback side", "disable")
-            textbutton _("Left") action Preference("rollback side", "left")
-            textbutton _("Right") action Preference("rollback side", "right")
+                    label _("Text Speed")
 
-        vbox:
-            style_prefix "check_pref"
-            label _("Skip")
-            textbutton _("Unseen Text") action Preference("skip", "toggle")
-            textbutton _("After Choices") action Preference("after choices", "toggle")
-            textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
+                    bar value Preference("text speed")
 
-        null
+                    label _("Auto-Forward Time")
 
-screen bar_preferences():
+                    bar value Preference("auto-forward time")
 
-    grid 2 1:
-        style_prefix "slider_pref"
-        xfill True
+                vbox:
 
-        vbox:
+                    if config.has_music:
+                        label _("Music Volume")
 
-            label _("Text Speed")
+                        hbox:
+                            bar value Preference("music volume")
 
-            bar value Preference("text speed")
+                    if config.has_sound:
 
-            label _("Auto-Forward Time")
+                        label _("Sound Volume")
 
-            bar value Preference("auto-forward time")
+                        hbox:
+                            bar value Preference("sound volume")
 
-        vbox:
-
-            if config.has_music:
-                label _("Music Volume")
-
-                hbox:
-                    bar value Preference("music volume")
-
-            if config.has_sound:
-
-                label _("Sound Volume")
-
-                hbox:
-                    bar value Preference("sound volume")
-
-                    if config.sample_sound:
-                        textbutton _("Test") action Play("sound", config.sample_sound)
+                            if config.sample_sound:
+                                textbutton _("Test") action Play("sound", config.sample_sound)
 
 
-            if config.has_voice:
-                label _("Voice Volume")
+                    if config.has_voice:
+                        label _("Voice Volume")
 
-                hbox:
-                    bar value Preference("voice volume")
+                        hbox:
+                            bar value Preference("voice volume")
 
-                    if config.sample_voice:
-                        textbutton _("Test") action Play("voice", config.sample_voice)
+                            if config.sample_voice:
+                                textbutton _("Test") action Play("voice", config.sample_voice)
 
-            textbutton _("Mute All"):
-                action Preference("all mute", "toggle")
-                style "mute_all_pref_button"
+                    textbutton _("Mute All"):
+                        action Preference("all mute", "toggle")
+                        style "mute_all_pref_button"
 
 
 style pref_label is gui_label
 style pref_label_text is gui_label_text
+style pref_vbox is vbox
 
 style radio_pref_label is pref_label
 style radio_pref_label_text is pref_label_text
 style radio_pref_button is gui_radio_button
 style radio_pref_button_text is gui_radio_button_text
+style radio_pref_vbox is pref_vbox
 
 style check_pref_label is pref_label
 style check_pref_label_text is pref_label_text
 style check_pref_button is gui_check_button
 style check_pref_button_text is gui_check_button_text
+style radio_pref_vbox is pref_vbox
 
 style slider_pref_label is pref_label
 style slider_pref_label_text is pref_label_text
 style slider_pref_slider is gui_slider
 style slider_pref_button is gui_medium_button
 style slider_pref_button_text is gui_medium_button_text
+style slider_pref_vbox is pref_vbox
 
 style mute_all_pref_button is gui_medium_button
 style mute_all_pref_button_text is gui_medium_button_text
@@ -866,6 +862,9 @@ style pref_label:
 
 style pref_label_text:
     yalign 1.0
+
+style pref_vbox:
+    xsize gui.scale(230)
 
 style radio_pref_button:
     size_group "preferences"
@@ -890,6 +889,8 @@ style slider_pref_button:
 style mute_all_pref_button:
     top_margin gui.scale(10)
 
+style slider_pref_vbox:
+    xsize gui.scale(460)
 
 ##############################################################################
 # History
@@ -1311,3 +1312,10 @@ style notify_frame:
 
 style notify_text:
     size gui.scale(16)
+
+
+
+style pref_vbox:
+    variant [ "android", "ios" ]
+    xsize gui.scale(460)
+

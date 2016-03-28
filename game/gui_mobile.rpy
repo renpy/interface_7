@@ -25,27 +25,6 @@ style quick_button:
     xpadding gui.scale(60)
     top_padding gui.scale(14)
 
-screen choice_preferences():
-
-    variant [ "android", "ios" ]
-
-    grid 2 1:
-        xfill True
-
-        vbox:
-            style_prefix "radio_pref"
-            label _("Rollback Side")
-            textbutton _("Disable") action Preference("rollback side", "disable")
-            textbutton _("Left") action Preference("rollback side", "left")
-            textbutton _("Right") action Preference("rollback side", "right")
-
-        vbox:
-            style_prefix "check_pref"
-            label _("Skip")
-            textbutton _("Unseen Text") action Preference("skip", "toggle")
-            textbutton _("After Choices") action Preference("after choices", "toggle")
-            textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
-
 
 screen help():
 
