@@ -564,29 +564,37 @@ screen game_menu(title):
 
     add "gui/game_menu_darken.png"
 
-    vbox:
-        style_prefix "gui"
+    style_prefix "gui"
 
-        label title:
-            style "title_label"
-            xpos gui.scale(50)
-            ysize gui.scale(120)
+    label title:
+        style "title_label"
+        xpos gui.scale(50)
+        ysize gui.scale(120)
 
-        frame:
-            style "empty"
-            bottom_margin gui.scale(30)
+    frame:
+        style "empty"
+        bottom_margin gui.scale(30)
+        top_margin gui.scale(120)
 
-            hbox:
+        hbox:
 
-                # Reserve space for the navigation section.
-                null width gui.scale(277)
+            # Reserve space for the navigation section.
+            null width gui.scale(277)
 
-                add "gui/vertical_separator.png"
+            add "gui/vertical_separator.png"
 
-                frame:
-                    style "empty"
-                    xmargin gui.scale(40)
-                    top_margin gui.scale(20)
+            frame:
+                style "empty"
+
+                left_margin gui.scale(40)
+                top_margin gui.scale(20)
+                right_margin gui.scale(20)
+
+                viewport:
+
+                    scrollbars "vertical"
+                    mousewheel True
+                    draggable True
 
                     transclude
 
@@ -613,6 +621,14 @@ style title_label_text:
     color gui.ACCENT_COLOR
     yalign 0.5
 
+style gui_vscrollbar:
+    unscrollable "hide"
+
+style gui_viewport:
+    xsize gui.scale(920)
+
+style gui_viewport_side:
+    spacing gui.scale(10)
 
 screen file_slots(title):
 
@@ -942,7 +958,6 @@ define config.history_length = 250
 style history_window is empty
 style history_who is say_label
 style history_text is gui_text
-style history_vscrollbar is gui_vscrollbar
 style history_label is gui_label
 style history_label_text is gui_label_text
 
@@ -958,9 +973,6 @@ style history_who:
 
 style history_text:
     ypos gui.scale(7)
-
-style history_vscrollbar:
-    unscrollable "hide"
 
 style history_label:
     xalign 0.5
@@ -1041,18 +1053,7 @@ screen about():
 
         style_prefix "about"
 
-        viewport:
-
-            scrollbars "vertical"
-            mousewheel True
-            draggable True
-
-            side_xalign 0.5
-            side_spacing gui.scale(20)
-
-            xsize gui.scale(744)
-
-            text gui.ABOUT
+        text gui.ABOUT
 
 # Text that goes into the about screen. You can replace the first line
 # with a series of lines that credit the creators of this game and the
@@ -1313,9 +1314,6 @@ style notify_frame:
 style notify_text:
     size gui.scale(16)
 
-
-
 style pref_vbox:
     variant [ "android", "ios" ]
     xsize gui.scale(460)
-
