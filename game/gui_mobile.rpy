@@ -24,38 +24,3 @@ style quick_button:
     background None
     xpadding gui.scale(60)
     top_padding gui.scale(14)
-
-
-screen help():
-
-    variant "touch"
-
-    tag menu
-
-    default device = "touch"
-
-    use game_menu(_("Help")):
-
-        style_prefix "help"
-
-        vbox:
-            spacing gui.scale(15)
-
-            hbox:
-
-                textbutton _("Touch") action SetScreenVariable("device", "touch")
-
-            if device == "touch":
-                use touch_help
-
-
-screen touch_help():
-
-    hbox:
-        label _("Touch")
-        text _("Advances dialogue and activates the interface.")
-
-    hbox:
-        label _("Touch Rollback Side")
-        text _("Rolls back to earlier dialogue.")
-

@@ -1082,7 +1082,10 @@ screen help():
 
     tag menu
 
-    default device = "keyboard"
+    if renpy.variant("touch"):
+        default device = "touch"
+    else:
+        default device = "keyboard"
 
     use game_menu(_("Help")):
 
@@ -1093,11 +1096,16 @@ screen help():
 
             hbox:
 
-                textbutton _("Keyboard") action SetScreenVariable("device", "keyboard")
-                textbutton _("Mouse") action SetScreenVariable("device", "mouse")
+                if renpy.variant("pc"):
+                    textbutton _("Keyboard") action SetScreenVariable("device", "keyboard")
+                    textbutton _("Mouse") action SetScreenVariable("device", "mouse")
 
                 if GamepadExists():
                     textbutton _("Gamepad") action SetScreenVariable("device", "gamepad")
+
+                if renpy.variant("touch"):
+                    textbutton _("Touch") action SetScreenVariable("device", "touch")
+
 
             if device == "keyboard":
                 use keyboard_help
@@ -1105,6 +1113,8 @@ screen help():
                 use mouse_help
             elif device == "gamepad":
                 use gamepad_help
+            elif device == "touch":
+                use touch_help
 
 
 screen keyboard_help():
@@ -1204,6 +1214,17 @@ screen gamepad_help():
         text _("Hides the user interface.")
 
     textbutton _("Calibrate") action GamepadCalibrate()
+
+screen touch_help():
+
+    hbox:
+        label _("Touch")
+        text _("Advances dialogue and activates the interface.")
+
+    hbox:
+        label _("Touch Rollback Side")
+        text _("Rolls back to earlier dialogue.")
+
 
 
 style help_button is gui_button
@@ -1313,6 +1334,9 @@ style notify_frame:
 
 style notify_text:
     size gui.scale(16)
+
+
+# Tablet variants.
 
 style pref_vbox:
     variant [ "android", "ios" ]
