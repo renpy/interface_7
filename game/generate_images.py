@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import pygame_sdl2
+import os
 
 from renpy.store import Color
 
@@ -14,6 +15,11 @@ class ImageGenerator(object):
         pygame_sdl2.image.init()
 
         self.prefix = prefix
+
+        try:
+            os.mkdir(prefix, 0o777)
+        except:
+            pass
 
         self.width = width
         self.height = height
@@ -196,11 +202,12 @@ class ImageGenerator(object):
         mm.subsurface((width - line_width, 0, line_width, self.height)).fill(self.accent_color)
         self.save(mm, "main_menu_darken")
 
-
+        # Game menu.
         gm = self.make_surface(self.width, self.height)
         gm.fill(self.boring_color.opacity(.8))
         self.save(gm, "game_menu_darken")
 
+        # Confirm.
         gm = self.make_surface(self.width, self.height)
         gm.fill(self.boring_color.opacity(.6))
         self.save(gm, "confirm_darken")

@@ -48,7 +48,6 @@ define gui.CHOICE_COLOR = "#cccccc"
 define gui.MAIN_MENU_BACKGROUND = "gui/main_menu.png"
 define gui.GAME_MENU_BACKGROUND = "gui/game_menu.png"
 
-
 ################################################################################
 # Style reset.
 
@@ -74,6 +73,12 @@ style input:
     clear
 
 style hyperlink_text:
+    clear
+
+style button:
+    clear
+
+style button_text:
     clear
 
 ################################################################################
@@ -146,11 +151,11 @@ style slider:
     ysize gui.scale(30)
 
     left_bar Frame("gui/slider.png")
-    thumb "gui/slider_thumb.png"
+    thumb Frame("gui/slider_thumb.png", xsize=gui.scale(10))
     right_bar Frame("gui/slider.png")
 
     hover_left_bar Frame("gui/slider_hover.png")
-    hover_thumb "gui/slider_hover_thumb.png"
+    hover_thumb Frame("gui/slider_hover_thumb.png", xsize=gui.scale(10))
     hover_right_bar Frame("gui/slider_hover.png")
 
 style vbar:
@@ -331,7 +336,6 @@ screen nvl(dialogue, items=None):
 
             spacing gui.scale(10)
 
-
         vpgrid:
             cols 1
             yinitial 1.0
@@ -507,34 +511,48 @@ screen main_menu():
     # This ensures that any other menu screen is replaced.
     tag menu
 
+    style_prefix "main_menu"
+
     add gui.MAIN_MENU_BACKGROUND
-    add "gui/main_menu_darken.png"
+
+    # This empty frame darkens the main menu.
+    frame:
+        pass
 
     # The actual contents of the main menu are in the navigation screen, above.
     use navigation
 
     vbox:
-        xpos gui.scale(1260)
-        xanchor 1.0
-        ypos gui.scale(700)
-        yanchor 1.0
-
-        spacing gui.scale(-10)
-
         text "[config.name!t]":
             style "main_menu_title"
 
         text "[config.version]":
             style "main_menu_version"
 
+style main_menu_frame is empty
+style main_menu_vbox is vbox
 style main_menu_text is gui_text
-
 style main_menu_title is main_menu_text
 style main_menu_version is main_menu_text
 
+style main_menu_frame:
+    xsize gui.scale(280)
+    yfill True
+
+    background Frame("gui/main_menu_darken.png", gui.scale(5), gui.scale(5))
+
+style main_menu_vbox:
+    xalign 1.0
+    xoffset gui.scale(-20)
+    yalign 1.0
+    yoffset gui.scale(-20)
+
+    spacing gui.scale(-10)
+
+    xmaximum gui.scale(800)
+
 style main_menu_text:
     xalign 1.0
-    xmaximum 980
 
     layout "subtitle"
     text_align 1.0
@@ -542,8 +560,6 @@ style main_menu_text:
 
 style main_menu_title:
     size gui.scale(90)
-
-
 
 
 ##############################################################################
@@ -564,34 +580,23 @@ screen game_menu(title):
 
     add "gui/game_menu_darken.png"
 
-    style_prefix "gui"
-
-    label title:
-        style "title_label"
-        xpos gui.scale(50)
-        ysize gui.scale(120)
+    style_prefix "game_menu"
 
     frame:
-        style "empty"
-        bottom_margin gui.scale(30)
-        top_margin gui.scale(120)
+        style "game_menu_outer_frame"
 
         hbox:
 
             # Reserve space for the navigation section.
-            null width gui.scale(277)
+            frame:
+                style "game_menu_navigation_frame"
 
             add "gui/vertical_separator.png"
 
             frame:
-                style "empty"
-
-                left_margin gui.scale(40)
-                top_margin gui.scale(20)
-                right_margin gui.scale(20)
+                style "game_menu_content_frame"
 
                 viewport:
-
                     scrollbars "vertical"
                     mousewheel True
                     draggable True
@@ -601,34 +606,65 @@ screen game_menu(title):
     use navigation
 
     textbutton _("Return"):
-        style_prefix "nav_gui"
+        style "return_button"
 
         action Return()
-        xpos gui.scale(40)
-        xmaximum gui.scale(227)
-        ypos config.screen_height - gui.scale(30)
-        yanchor 1.0
+
+    label title:
+        style "title_label"
 
     if main_menu:
         key "game_menu" action ShowMenu("main_menu")
 
+style game_menu_outer_frame is empty
+style game_menu_navigation_frame is empty
+style game_menu_content_frame is empty
+style game_menu_viewport is gui_viewport
+style game_menu_side is gui_side
+style game_menu_scrollbar is gui_vscrollbar
 
 style title_label is gui_label
 style title_label_text is gui_label_text
+
+style return_button is navigation_button
+style return_button_text is navigation_button_text
+
+style game_menu_outer_frame:
+    bottom_margin gui.scale(30)
+    top_margin gui.scale(120)
+
+style game_menu_navigation_frame:
+    xsize gui.scale(277)
+    yfill True
+
+style game_menu_content_frame:
+    left_margin gui.scale(40)
+    top_margin gui.scale(20)
+    right_margin gui.scale(20)
+
+style game_menu_viewport:
+    xsize gui.scale(920)
+
+style game_menu_vscrollbar:
+    unscrollable "hide"
+
+style game_menu_side:
+    spacing gui.scale(10)
+
+style title_label:
+    xpos gui.scale(50)
+    ysize gui.scale(120)
 
 style title_label_text:
     size gui.scale(50)
     color gui.ACCENT_COLOR
     yalign 0.5
 
-style gui_vscrollbar:
-    unscrollable "hide"
-
-style gui_viewport:
-    xsize gui.scale(920)
-
-style gui_viewport_side:
-    spacing gui.scale(10)
+style return_button:
+    xpos gui.scale(40)
+    xmaximum gui.scale(227)
+    yalign 1.0
+    yoffset gui.scale(-30)
 
 screen file_slots(title):
 
@@ -655,7 +691,7 @@ screen file_slots(title):
                     value page_name_value
 
             # The grid of file slots.
-            grid 3 2:
+            grid 2 3:
                 style_prefix "slot"
 
                 xalign 0.5
@@ -799,9 +835,9 @@ screen preferences():
 
             null height gui.scale(50)
 
-            grid 2 1:
+            hbox:
                 style_prefix "slider_pref"
-                xfill True
+                box_wrap True
 
                 vbox:
 
@@ -1339,7 +1375,7 @@ style notify_text:
 # Tablet variants.
 
 style pref_vbox:
-    variant [ "android", "ios" ]
+    variant "medium"
     xsize gui.scale(460)
 
 screen quick_menu():
@@ -1366,3 +1402,47 @@ style quick_button:
     background None
     xpadding gui.scale(60)
     top_padding gui.scale(14)
+
+
+
+# Phone Variant
+
+style slider:
+    variant "small"
+    ysize gui.scale(44)
+
+    thumb Frame("gui/slider_thumb.png", xsize=gui.scale(15))
+    hover_thumb Frame("gui/slider_hover_thumb.png", xsize=gui.scale(15))
+
+style label_text:
+    variant "small"
+    size gui.scale(40)
+
+style button_text:
+    variant "small"
+    size gui.scale(40)
+
+style main_menu_frame:
+    variant "small"
+    xsize gui.scale(387)
+
+style game_menu_navigation_frame:
+    variant "small"
+    xsize gui.scale(384)
+
+style navigation_vbox:
+    variant "small"
+    xsize gui.scale(334)
+
+style pref_vbox:
+    variant "small"
+    xsize gui.scale(400)
+
+style slider_pref_vbox:
+    variant "small"
+    xsize None
+
+style slider_pref_slider:
+    variant "small"
+    xsize gui.scale(600)
+
