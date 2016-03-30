@@ -183,11 +183,11 @@ style vslider:
     bar_vertical True
 
     top_bar Frame("gui/vslider.png")
-    thumb "gui/vslider_thumb.png"
+    thumb Frame("gui/vslider_thumb.png", ysize=gui.scale(10))
     bottom_bar Frame("gui/vslider.png")
 
     hover_top_bar Frame("gui/vslider_hover.png")
-    hover_thumb "gui/vslider_hover_thumb.png"
+    hover_thumb Frame("gui/vslider_hover_thumb.png", ysize=gui.scale(10))
     hover_bottom_bar Frame("gui/vslider_hover.png")
 
 style frame:
@@ -486,9 +486,12 @@ screen navigation():
 
         textbutton _("About") action ShowMenu("about")
 
-        textbutton _("Help") action ShowMenu("help")
 
-        if not renpy.ios:
+        # Help seems to be unimportant on Android and iOS. The Quit button
+        # is banned on iOS, and unnecessary in Android.
+        if renpy.variant("pc"):
+
+            textbutton _("Help") action ShowMenu("help")
 
             textbutton _("Quit") action Quit(confirm=not main_menu)
 
@@ -691,25 +694,28 @@ screen file_slots(title):
                     value page_name_value
 
             # The grid of file slots.
-            grid 2 3:
+            grid gui.file_slot_cols gui.file_slot_rows:
                 style_prefix "slot"
 
                 xalign 0.5
                 yalign 0.5
 
-                for i in range(6):
+                for i in range(gui.file_slot_cols * gui.file_slot_cols):
+
+                    $ slot = i + 1
+
                     button:
-                        action FileAction(i)
+                        action FileAction(slot)
 
-                        add FileScreenshot(i)
+                        add FileScreenshot(slot)
 
-                        text FileTime(i, format=_("{#file_time}%A, %B %d %Y, %H:%M"), empty=_("empty slot")):
+                        text FileTime(slot, format=_("{#file_time}%A, %B %d %Y, %H:%M"), empty=_("empty slot")):
                             style "slot_time_text"
 
-                        text FileSaveName(i):
+                        text FileSaveName(slot):
                             style "slot_name_text"
 
-                        key "save_delete" action FileDelete(i)
+                        key "save_delete" action FileDelete(slot)
 
             # Buttons to access other pages.
             hbox:
@@ -719,6 +725,10 @@ screen file_slots(title):
                 yalign 1.0
 
                 textbutton _("<") action FilePagePrevious()
+
+                textbutton _("{#auto_page}A") action FilePage("auto")
+
+                textbutton _("{#quick_page}Q") action FilePage("quick")
 
                 # range(1, 10) gives the numbers from 1 to 9.
                 for page in range(1, 10):
@@ -740,6 +750,8 @@ screen save():
 
 define config.thumbnail_width = gui.scale(256)
 define config.thumbnail_height = gui.scale(144)
+define gui.file_slot_cols = 3
+define gui.file_slot_row = 2
 
 style page_label is gui_label
 style page_label_text is gui_label_text
@@ -1058,7 +1070,7 @@ style confirm_button is gui_medium_button
 style confirm_button_text is gui_medium_button_text
 
 style confirm_frame:
-    background "gui/confirm_background.png"
+    background Frame("gui/confirm_background.png", gui.scale(5), gui.scale(5))
     xpadding gui.scale(75)
     ypadding gui.scale(50)
     xsize gui.scale(600)
@@ -1379,7 +1391,6 @@ style pref_vbox:
     xsize gui.scale(460)
 
 screen quick_menu():
-
     variant "touch"
 
     # Ensure this appears on top of other screens.
@@ -1403,9 +1414,10 @@ style quick_button:
     xpadding gui.scale(60)
     top_padding gui.scale(14)
 
-
-
 # Phone Variant
+
+style default:
+    size gui.scale(36)
 
 style slider:
     variant "small"
@@ -1414,7 +1426,18 @@ style slider:
     thumb Frame("gui/slider_thumb.png", xsize=gui.scale(15))
     hover_thumb Frame("gui/slider_hover_thumb.png", xsize=gui.scale(15))
 
+style vslider:
+    variant "small"
+    xsize gui.scale(44)
+
+    thumb Frame("gui/vslider_thumb.png", ysize=gui.scale(15))
+    hover_thumb Frame("gui/vslider_hover_thumb.png", ysize=gui.scale(15))
+
 style label_text:
+    variant "small"
+    size gui.scale(40)
+
+style prompt_text:
     variant "small"
     size gui.scale(40)
 
@@ -1429,6 +1452,10 @@ style main_menu_frame:
 style game_menu_navigation_frame:
     variant "small"
     xsize gui.scale(384)
+
+style game_menu_content_frame:
+    variant "small"
+    top_margin 0
 
 style navigation_vbox:
     variant "small"
@@ -1446,3 +1473,12 @@ style slider_pref_slider:
     variant "small"
     xsize gui.scale(600)
 
+style confirm_frame:
+    variant "small"
+    xsize gui.scale(844)
+    ysize gui.scale(475)
+
+init python:
+    if renpy.variant("small"):
+        gui.file_slot_cols = 2
+        gui.file_slot_rows = 2
