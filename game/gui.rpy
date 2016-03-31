@@ -1514,20 +1514,35 @@ style history_who:
     size gui.scale(30)
 
 style history_text:
+    variant "small"
     ypos gui.scale(4)
     size gui.scale(25)
 
 style history_label:
+    variant "small"
     xfill True
 
 style history_label_text:
+    variant "small"
     xalign 0.5
-
 
 style confirm_frame:
     variant "small"
     xsize gui.scale(844)
     ysize gui.scale(475)
+
+style skip_text:
+    variant "small"
+    size gui.scale(25)
+
+style notify_frame:
+    variant "small"
+    ypos gui.scale(55)
+
+style notify_text:
+    variant "small"
+    size gui.scale(25)
+
 
 init python:
     if renpy.variant("small"):
