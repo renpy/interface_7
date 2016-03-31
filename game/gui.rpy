@@ -398,7 +398,7 @@ style nvl_window is default:
     xfill True
     yfill True
 
-    xpadding gui.scale(240 / 2)
+    xpadding gui.scale(240)
     top_padding gui.scale(10)
     bottom_padding gui.scale(20)
 
@@ -570,7 +570,7 @@ style main_menu_title:
 # When used with children (the expected case), it transcludes those children
 # in an hbox after the space reserved for navigation.
 
-screen game_menu(title):
+screen game_menu(title, scroll=None):
 
     # Add the backgrounds.
     if main_menu:
@@ -596,10 +596,28 @@ screen game_menu(title):
             frame:
                 style "game_menu_content_frame"
 
-                viewport:
-                    scrollbars "vertical"
-                    mousewheel True
-                    draggable True
+                if scroll == "viewport":
+
+                    viewport:
+                        scrollbars "vertical"
+                        mousewheel True
+                        draggable True
+
+                        transclude
+
+                elif scroll == "vpgrid":
+
+                    vpgrid:
+                        cols 1
+                        yinitial 1.0
+
+                        scrollbars "vertical"
+                        mousewheel True
+                        draggable True
+
+                        transclude
+
+                else:
 
                     transclude
 
@@ -639,7 +657,7 @@ style game_menu_navigation_frame:
 
 style game_menu_content_frame:
     left_margin gui.scale(40)
-    top_margin gui.scale(20)
+    top_margin gui.scale(10)
     right_margin gui.scale(20)
 
 style game_menu_viewport:
@@ -813,7 +831,7 @@ screen preferences():
     else:
         $ cols = 4
 
-    use game_menu(_("Preferences")):
+    use game_menu(_("Preferences"), scroll="viewport"):
 
         vbox:
 
@@ -965,34 +983,26 @@ screen history():
     # predicted by one of the other screens.
     predict False
 
-    use game_menu(_("History")):
+    use game_menu(_("History"), scroll="vpgrid"):
 
         style_prefix "history"
 
-        vpgrid:
-            cols 1
-            yinitial 1.0
+        for h in _history_list:
 
-            scrollbars "vertical"
-            draggable True
-            mousewheel True
+            window:
+                has hbox:
+                    yfill True
+                    spacing gui.scale(20)
 
-            for h in _history_list:
+                    text (h.who or " "):
+                        style "history_who"
 
-                window:
-                    has hbox:
-                        yfill True
-                        spacing gui.scale(20)
+                        # Take the color of the who text from the
+                        # Character, if set.
+                        if "color" in h.who_args:
+                            color h.who_args["color"]
 
-                        text (h.who or " "):
-                            style "history_who"
-
-                            # Take the color of the who text from the
-                            # Character, if set.
-                            if "color" in h.who_args:
-                                color h.who_args["color"]
-
-                    text h.what
+                text h.what
 
         if not _history_list:
             label _("The dialogue history is empty.")
@@ -1008,7 +1018,7 @@ style history_label_text is gui_label_text
 
 style history_window:
     xfill True
-    ysize gui.scale(130)
+    ysize gui.scale(140)
     right_margin gui.scale(10)
 
 style history_who:
@@ -1020,6 +1030,9 @@ style history_text:
     ypos gui.scale(7)
 
 style history_label:
+    xfill True
+
+style history_label_text:
     xalign 0.5
 
 ##############################################################################
@@ -1094,7 +1107,7 @@ screen about():
 
     tag menu
 
-    use game_menu(_("About")):
+    use game_menu(_("About"), scroll="viewport"):
 
         style_prefix "about"
 
@@ -1132,7 +1145,7 @@ screen help():
     else:
         default device = "keyboard"
 
-    use game_menu(_("Help")):
+    use game_menu(_("Help"), scroll="viewport"):
 
         style_prefix "help"
 
@@ -1464,9 +1477,10 @@ style choice_button:
     ypadding gui.scale(8)
 
 style choice_button_text:
+    variant "small"
     size gui.scale(36)
 
-style nvl_window is default:
+style nvl_window:
     variant "small"
     background "gui/phone_nvl.png"
     xpadding gui.scale(120)
