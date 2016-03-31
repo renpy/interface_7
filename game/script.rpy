@@ -19,8 +19,9 @@ label replay:
 define nn = NVLCharacter(None)
 define narrator = nn
 
-init python:
-    menu = nvl_menu
+# init python:
+#     menu = nvl_menu
+#     config.narrator_menu = False
 
 define config.sample_sound = "foo.opus"
 
@@ -31,6 +32,14 @@ label start:
     e "This is a relatively long block of text. Long enough that, if it naturally wraps, it's going to fill the whole text box. That is, if we make it long enough. Which takes a lot of typing, but might be worth it for testing purposes, or just because it is perfectly fine."
 
     n "This is a relatively long block of text. Long enough that, if it naturally wraps, it's going to fill the whole text box. That is, if we make it long enough. Which takes a lot of typing, but might be worth it for testing purposes."
+
+    menu:
+        "This is an nvl menu"
+        "A relatively long menu choice name thing is sort of bi":
+            pass
+        "Choice 2":
+            pass
+
     n "This is a relatively long block of text. Long enough that, if it naturally wraps, it's going to fill the whole text box. That is, if we make it long enough. Which takes a lot of typing, but might be worth it for testing purposes."
     n "This is a relatively long block of text. Long enough that, if it naturally wraps, it's going to fill the whole text box. That is, if we make it long enough. Which takes a lot of typing, but might be worth it for testing purposes."
     n "This is a relatively long block of text. Long enough that, if it naturally wraps, it's going to fill the whole text box. That is, if we make it long enough. Which takes a lot of typing, but might be worth it for testing purposes."
@@ -45,12 +54,6 @@ label start:
     n "And this is the third text block, for what it is worth. And I think it's worth a lot, especially if we wrap the lines."
 
 
-    menu:
-        "This is an nvl menu"
-        "Choice 1":
-            pass
-        "Choice 2":
-            pass
 
     e "Hi, everybody!"
 

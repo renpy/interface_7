@@ -292,10 +292,7 @@ define config.narrator_menu = True
 
 style choice_vbox:
 
-    # Center the choices horizontally, then offset them a bit.
     xalign 0.5
-
-    # Center the choices vertically in the area above the text window.
     ypos gui.scale(270)
     yanchor 0.5
 
@@ -308,8 +305,7 @@ style choice_button is default:
 
     xsize gui.scale(790)
     xpadding gui.scale(100)
-
-    ypadding gui.scale(11) / 2
+    ypadding gui.scale(5)
 
 style choice_button_text is default:
     color gui.CHOICE_COLOR
@@ -1461,10 +1457,19 @@ style say_label:
     variant "small"
     size gui.scale(36)
 
+style choice_button:
+    variant "small"
+    xsize gui.scale(1190)
+    xpadding gui.scale(100)
+    ypadding gui.scale(8)
+
+style choice_button_text:
+    size gui.scale(36)
+
 style nvl_window is default:
     variant "small"
     background "gui/phone_nvl.png"
-    xpadding gui.scale(240 / 2)
+    xpadding gui.scale(120)
 
 style nvl_entry:
     variant "small"
