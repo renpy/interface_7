@@ -212,8 +212,6 @@ screen say(who, what, side_image=None, two_window=False):
         id "window"
 
         vbox:
-            xsize gui.scale(744)
-            xalign 0.5
 
             null height gui.scale(5)
 
@@ -226,21 +224,27 @@ screen say(who, what, side_image=None, two_window=False):
 
             text what id "what"
 
-    # If there's a side image, display it above the text.
-    if side_image:
-        add side_image
-    else:
-        add SideImage() xalign 0.0 yalign 1.0
+    # If there's a side image, display it above the text. Do not display
+    # on the phone variant - there's no room.
+    if not renpy.variant("small"):
+
+        if side_image:
+            add side_image
+        else:
+            add SideImage() xalign 0.0 yalign 1.0
 
 style window:
-    background "gui/textbox.png"
     xfill True
     xalign 0.5
     ysize gui.scale(185)
     yalign 1.0
 
+    background "gui/textbox.png"
+    xpadding gui.scale(268)
+
 style say_label:
     size gui.scale(30)
+
 
 
 ################################################################################
@@ -328,12 +332,6 @@ screen nvl(dialogue, items=None):
         style "nvl_window"
 
         has vbox:
-            xsize gui.scale(800)
-            xalign 0.5
-
-            ypos gui.scale(10)
-            ymaximum gui.scale(690)
-
             spacing gui.scale(10)
 
         vpgrid:
@@ -362,7 +360,6 @@ screen nvl(dialogue, items=None):
 
                     text d.what:
                         id d.what_id
-                        ypos gui.scale(7)
 
         # Displays the menu, if given. The menu may be displayed incorrectly
         # if config.narrator_menu is set to True, as it is above.
@@ -378,6 +375,7 @@ define config.nvl_list_length = 6
 
 style nvl_dialogue:
     clear
+    ypos gui.scale(7)
 
 style nvl_menu_button:
     clear
@@ -404,6 +402,9 @@ style nvl_window is default:
     xfill True
     yfill True
 
+    xpadding gui.scale(240 / 2)
+    top_padding gui.scale(10)
+    bottom_padding gui.scale(20)
 
 
 
@@ -700,7 +701,7 @@ screen file_slots(title):
                 xalign 0.5
                 yalign 0.5
 
-                for i in range(gui.file_slot_cols * gui.file_slot_cols):
+                for i in range(gui.file_slot_cols * gui.file_slot_rows):
 
                     $ slot = i + 1
 
@@ -751,7 +752,7 @@ screen save():
 define config.thumbnail_width = gui.scale(256)
 define config.thumbnail_height = gui.scale(144)
 define gui.file_slot_cols = 3
-define gui.file_slot_row = 2
+define gui.file_slot_rows = 2
 
 style page_label is gui_label
 style page_label_text is gui_label_text
@@ -1417,7 +1418,8 @@ style quick_button:
 # Phone Variant
 
 style default:
-    size gui.scale(36)
+    variant "small"
+    size gui.scale(30)
 
 style slider:
     variant "small"
@@ -1435,15 +1437,46 @@ style vslider:
 
 style label_text:
     variant "small"
-    size gui.scale(40)
+    size gui.scale(36)
 
 style prompt_text:
     variant "small"
-    size gui.scale(40)
+    size gui.scale(36)
 
 style button_text:
     variant "small"
-    size gui.scale(40)
+    size gui.scale(36)
+
+style window:
+    variant "small"
+    xfill True
+    xalign 0.5
+    ysize gui.scale(240)
+    yalign 1.0
+
+    background "gui/phone_textbox.png"
+    xpadding gui.scale(90)
+
+style say_label:
+    variant "small"
+    size gui.scale(36)
+
+style nvl_window is default:
+    variant "small"
+    background "gui/phone_nvl.png"
+    xpadding gui.scale(240 / 2)
+
+style nvl_entry:
+    variant "small"
+    ysize gui.scale(170)
+
+style nvl_dialogue:
+    variant "small"
+    ypos gui.scale(6)
+
+style quick_button_text:
+    variant "small"
+    size gui.scale(20)
 
 style main_menu_frame:
     variant "small"

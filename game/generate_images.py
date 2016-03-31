@@ -143,6 +143,20 @@ class ImageGenerator(object):
 
         self.generate_image("textbox", X, Y, self.boring_color.opacity(.8))
 
+
+        YSIZE = 240
+        YBORDER = 5
+
+        X = [ (0, 1.0), (self.full_width, 1.0) ]
+
+        Y = [
+            (0, 0.0),
+            (YBORDER, 1.0),
+            (YSIZE, 1.0),
+            ]
+
+        self.generate_image("phone_textbox", X, Y, self.boring_color.opacity(.8))
+
     def generate_nvl(self):
         XSIZE = self.full_width
         XINSIDE = (XSIZE - 800) // 2
@@ -163,7 +177,18 @@ class ImageGenerator(object):
 
 
         self.generate_image("nvl", X, Y, self.boring_color.opacity(.8))
-        self.generate_image("history", X, Y, self.boring_color.opacity(.8))
+
+        X = [
+            (0, 1.0),
+            (XSIZE, 1.0),
+            ]
+
+        Y = [
+            (0, 1.0),
+            (YSIZE, 1.0),
+            ]
+
+        self.generate_image("phone_nvl", X, Y, self.boring_color.opacity(.8))
 
 
 

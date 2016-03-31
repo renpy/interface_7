@@ -28,6 +28,16 @@ define config.sample_sound = "foo.opus"
 label start:
     scene bg mugen
 
+    e "This is a relatively long block of text. Long enough that, if it naturally wraps, it's going to fill the whole text box. That is, if we make it long enough. Which takes a lot of typing, but might be worth it for testing purposes, or just because it is perfectly fine."
+
+    n "This is a relatively long block of text. Long enough that, if it naturally wraps, it's going to fill the whole text box. That is, if we make it long enough. Which takes a lot of typing, but might be worth it for testing purposes."
+    n "This is a relatively long block of text. Long enough that, if it naturally wraps, it's going to fill the whole text box. That is, if we make it long enough. Which takes a lot of typing, but might be worth it for testing purposes."
+    n "This is a relatively long block of text. Long enough that, if it naturally wraps, it's going to fill the whole text box. That is, if we make it long enough. Which takes a lot of typing, but might be worth it for testing purposes."
+    n "This is a relatively long block of text. Long enough that, if it naturally wraps, it's going to fill the whole text box. That is, if we make it long enough. Which takes a lot of typing, but might be worth it for testing purposes."
+    n "This is a relatively long block of text. Long enough that, if it naturally wraps, it's going to fill the whole text box. That is, if we make it long enough. Which takes a lot of typing, but might be worth it for testing purposes."
+    n "This is a relatively long block of text. Long enough that, if it naturally wraps, it's going to fill the whole text box. That is, if we make it long enough. Which takes a lot of typing, but might be worth it for testing purposes."
+
+
     n "This is the first text block."
 
     nn "This is the second text block."
