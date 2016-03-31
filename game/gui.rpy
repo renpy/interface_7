@@ -1019,7 +1019,6 @@ style history_label_text is gui_label_text
 style history_window:
     xfill True
     ysize gui.scale(140)
-    right_margin gui.scale(10)
 
 style history_who:
     xmaximum gui.scale(150)
@@ -1502,6 +1501,28 @@ style slider_pref_vbox:
 style slider_pref_slider:
     variant "small"
     xsize gui.scale(600)
+
+style history_window:
+    variant "small"
+    ysize gui.scale(190)
+
+style history_who:
+    variant "small"
+    xmaximum gui.scale(150)
+    min_width gui.scale(150)
+    text_align 1.0
+    size gui.scale(30)
+
+style history_text:
+    ypos gui.scale(4)
+    size gui.scale(25)
+
+style history_label:
+    xfill True
+
+style history_label_text:
+    xalign 0.5
+
 
 style confirm_frame:
     variant "small"
