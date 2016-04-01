@@ -247,6 +247,47 @@ style window:
 style say_label:
     size gui.scale(30)
 
+###############################################################################
+# CTC
+
+# This is also used by the skip screen, below.
+
+transform delayed_blink(delay, cycle):
+    alpha .5
+
+    pause delay
+
+    block:
+        linear .2 alpha 1.0
+        pause .2
+        linear .2 alpha 0.5
+        pause (cycle - .4)
+        repeat
+
+screen ctc():
+    style_prefix "ctc"
+
+    # Place on top of normal screens.
+    zorder 1
+
+    hbox:
+        spacing gui.scale(6)
+
+        xalign 1.0
+        xoffset gui.scale(-20)
+        yalign 1.0
+        yoffset gui.scale(-20)
+
+        text "▶" at delayed_blink(2.0, 3.0) style "ctc_triangle"
+        text "▶" at delayed_blink(2.2, 3.0) style "ctc_triangle"
+        text "▶" at delayed_blink(2.4, 3.0) style "ctc_triangle"
+
+style ctc_triangle:
+    # We have to use a font that has the BLACK RIGHT-POINTING TRIANGLE glyph
+    # in it.
+    font "DejaVuSans.ttf"
+    color gui.ACCENT_COLOR
+
 
 
 ################################################################################
@@ -1297,6 +1338,7 @@ style help_label_text:
 ##############################################################################
 # Skip Indicator
 
+
 screen skip_indicator():
 
     zorder 100
@@ -1309,21 +1351,9 @@ screen skip_indicator():
 
             text _("Skipping")
 
-            text "▸" at skip_blink(0.0) style "skip_triangle"
-            text "▸" at skip_blink(0.2) style "skip_triangle"
-            text "▸" at skip_blink(0.4) style "skip_triangle"
-
-transform skip_blink(delay):
-    alpha .5
-
-    pause delay
-
-    block:
-        linear .2 alpha 1.0
-        pause .2
-        linear .2 alpha 0.5
-        pause 1.0
-        repeat
+            text "▸" at delayed_blink(0.0) style "skip_triangle"
+            text "▸" at delayed_blink(0.2) style "skip_triangle"
+            text "▸" at delayed_blink(0.4) style "skip_triangle"
 
 
 style skip_frame is empty
@@ -1348,6 +1378,10 @@ style skip_triangle:
     font "DejaVuSans.ttf"
 
 
+
+
+################################################################################
+# Message notification.
 
 screen notify(message):
 
