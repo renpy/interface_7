@@ -233,6 +233,8 @@ screen say(who, what, side_image=None, two_window=False):
         else:
             add SideImage() xalign 0.0 yalign 1.0
 
+style say_label is default
+
 style window:
     xfill True
     xalign 0.5
@@ -289,6 +291,10 @@ screen choice(items):
 
 # Use the narrator to speak menu captions.
 define config.narrator_menu = True
+
+style choice_vbox is vbox
+style choice_button is default
+style choice_button_text is default
 
 style choice_vbox:
 
@@ -369,17 +375,24 @@ screen nvl(dialogue, items=None):
 
 define config.nvl_list_length = 6
 
-style nvl_dialogue:
-    clear
-    ypos gui.scale(7)
+style nvl_window is default
+style nvl_entry is default
 
-style nvl_menu_button:
-    clear
-    left_padding gui.scale(170)
+style nvl_label is say_label
+style nvl_dialogue is say_dialogue
 
-style nvl_menu_button_text:
+style nvl_menu_button is button
+style nvl_menu_button_text is button_text
+
+style nvl_window:
     clear
-    insensitive_color gui.TEXT_COLOR
+    background "gui/nvl.png"
+    xfill True
+    yfill True
+
+    xpadding gui.scale(240)
+    top_padding gui.scale(10)
+    bottom_padding gui.scale(20)
 
 style nvl_entry:
     clear
@@ -392,16 +405,17 @@ style nvl_label:
     min_width gui.scale(150)
     text_align 1.0
 
-style nvl_window is default:
+style nvl_dialogue:
     clear
-    background "gui/nvl.png"
-    xfill True
-    yfill True
+    ypos gui.scale(7)
 
-    xpadding gui.scale(240)
-    top_padding gui.scale(10)
-    bottom_padding gui.scale(20)
+style nvl_menu_button:
+    clear
+    left_padding gui.scale(170)
 
+style nvl_menu_button_text:
+    clear
+    insensitive_color gui.TEXT_COLOR
 
 
 
@@ -1542,7 +1556,6 @@ style notify_frame:
 style notify_text:
     variant "small"
     size gui.scale(25)
-
 
 init python:
     if renpy.variant("small"):
