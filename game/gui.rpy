@@ -15,7 +15,7 @@ define config.screen_height = 720
 
 # An accent color used throughout the interface.
 define gui.ACCENT_COLOR = "#00b8c3"
-define gui.ACCENT_COLOR = "#eebb00"
+# define gui.ACCENT_COLOR = "#eebb00"
 
 # define gui.HOVER_COLOR = "#00cad6"
 # define gui.MUTED_COLOR = "#00373a"
@@ -1351,9 +1351,9 @@ screen skip_indicator():
 
             text _("Skipping")
 
-            text "▸" at delayed_blink(0.0) style "skip_triangle"
-            text "▸" at delayed_blink(0.2) style "skip_triangle"
-            text "▸" at delayed_blink(0.4) style "skip_triangle"
+            text "▸" at delayed_blink(0.0, 1.0) style "skip_triangle"
+            text "▸" at delayed_blink(0.2, 1.0) style "skip_triangle"
+            text "▸" at delayed_blink(0.4, 1.0) style "skip_triangle"
 
 
 style skip_frame is empty
