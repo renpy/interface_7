@@ -11,7 +11,7 @@ HEIGHT = 720
 
 class ImageGenerator(object):
 
-    def __init__(self, prefix, width, height, color):
+    def __init__(self, prefix, width, height, color, overwrite=False):
         pygame_sdl2.image.init()
 
         self.prefix = prefix
@@ -37,6 +37,8 @@ class ImageGenerator(object):
         self.hover_muted_color = self.accent_color.shade(.6)
 
         self.menu_color = self.accent_color.replace_hsv_saturation(.1).replace_value(.5)
+
+        self.overwrite = overwrite
 
     def scale_int(self, n):
         rv = int(n * self.scale)
@@ -93,7 +95,26 @@ class ImageGenerator(object):
         return line[start:start + size ]
 
     def save(self, s, filename):
-        pygame_sdl2.image.save(s, self.prefix + filename + ".png")
+
+        fn = self.prefix + filename + ".png"
+
+        if os.path.exists(fn):
+            if not self.overwrite:
+                return
+
+            index = 1
+
+            while True:
+                bfn = "{}.{}.bak".format(fn, index)
+
+                if not os.path.exists(bfn):
+                    break
+
+                index += 1
+
+            os.rename(fn, bfn)
+
+        pygame_sdl2.image.save(s, fn)
 
     def make_surface(self, width, height):
         return pygame_sdl2.Surface((width, height), pygame_sdl2.SRCALPHA)

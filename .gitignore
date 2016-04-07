@@ -1,5 +1,6 @@
 *.txt
 *.rpyc
+*.bak
 black
 game/cache
 game/saves

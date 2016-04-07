@@ -14,7 +14,7 @@ init python:
 
 # An accent color used throughout the interface.
 define gui.ACCENT_COLOR = "#00b8c3"
-# define gui.ACCENT_COLOR = "#eebb00"
+define gui.ACCENT_COLOR = "#eebb00"
 
 # define gui.HOVER_COLOR = "#00cad6"
 # define gui.MUTED_COLOR = "#00373a"
