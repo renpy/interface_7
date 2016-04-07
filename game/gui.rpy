@@ -4,9 +4,8 @@
 # These will need to be changed if you change the size of the game. Remember
 # to click "Window" in preferences to ensure the window itself is resized.
 
-# The width and height of the screen.
-define config.screen_width = 1280
-define config.screen_height = 720
+init python:
+    gui.init(1280, 720)
 
 ################################################################################
 # Colors
@@ -47,39 +46,6 @@ define gui.CHOICE_COLOR = "#cccccc"
 # The images used for the main and game menus.
 define gui.MAIN_MENU_BACKGROUND = "gui/main_menu.png"
 define gui.GAME_MENU_BACKGROUND = "gui/game_menu.png"
-
-################################################################################
-# Style reset.
-
-style say_label:
-    clear
-
-style window:
-    clear
-
-style say_vbox:
-    clear
-
-style say_who_window:
-    clear
-
-style say_two_window_vbox:
-    clear
-
-style menu_choice:
-    clear
-
-style input:
-    clear
-
-style hyperlink_text:
-    clear
-
-style button:
-    clear
-
-style button_text:
-    clear
 
 ################################################################################
 # Style common user interface components.

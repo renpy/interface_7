@@ -30,8 +30,6 @@ init -1 python hide:
     config.name = "New Ren'Py GUI"
     config.version = "6.99.11"
 
-    layout.defaults()
-
     #########################################
     ## These settings let you customize the window containing the
     ## dialogue and narration, by replacing it with an image.
