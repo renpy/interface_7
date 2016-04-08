@@ -48,17 +48,44 @@ define gui.MAIN_MENU_BACKGROUND = "gui/main_menu.png"
 define gui.GAME_MENU_BACKGROUND = "gui/game_menu.png"
 
 ################################################################################
+# Fonts and Font Sizes
+define gui.DEFAULT_FONT = "DejaVuSans.ttf"
+define gui.GUI_FONT = "DejaVuSans.tff"
+define gui.GLYPH_FONT = "DejaVuSans.tff"
+
+define gui.TINY_SIZE = gui.scale(14)
+define gui.NOTIFY_SIZE = gui.scale(16)
+define gui.TEXT_SIZE = gui.scale(22)
+define gui.INTERFACE_SIZE = gui.scale(24)
+define gui.LABEL_SIZE = gui.scale(30)
+define gui.TITLE_SIZE = gui.scale(50)
+
+
+################################################################################
 # Style common user interface components.
 
+style button_text is gui_text
+style check_button is button
+style check_button_text is button_text
+style radio_button is button
+style radio_button_text is button_text
+style medium_button is button
+style medium_button_text is button_text
+style small_button is button
+style small_button_text is button_text
+style label_text is gui_text
+style prompt_text is gui_text
+
+
 # Used for full-sized buttons, like navigation buttons.
-style button:
+style button is empty:
     ypadding gui.scale(4)
     xpadding gui.scale(4)
     background Frame("gui/button.png", gui.scale(4), gui.scale(4))
     hover_background Frame("gui/button_hover.png", gui.scale(4), gui.scale(4))
 
-style button_text:
-    size gui.scale(24)
+style button_text is empty:
+    size gui.INTERFACE_SIZE
     color gui.IDLE_COLOR
     insensitive_color gui.INSENSITIVE_COLOR
     selected_color gui.SELECTED_COLOR
@@ -90,11 +117,11 @@ style small_button_text is button_text
 
 style label_text:
     color gui.ACCENT_COLOR
-    size gui.scale(24)
+    size gui.INTERFACE_SIZE
 
 style prompt_text:
     color gui.TEXT_COLOR
-    size gui.scale(24)
+    size gui.INTERFACE_SIZE
 
 style bar:
     ysize gui.scale(30)
@@ -211,7 +238,7 @@ style window:
     xpadding gui.scale(268)
 
 style say_label:
-    size gui.scale(30)
+    size gui.LABEL_SIZE
 
 ###############################################################################
 # CTC
@@ -458,7 +485,7 @@ style quick_button:
     xpadding gui.scale(10)
 
 style quick_button_text:
-    size gui.scale(14)
+    size gui.TINY_SIZE
 
 init python:
     config.overlay_screens.append("quick_menu")
@@ -567,9 +594,6 @@ style main_menu_vbox:
     xoffset gui.scale(-20)
     yalign 1.0
     yoffset gui.scale(-20)
-
-    spacing gui.scale(-10)
-
     xmaximum gui.scale(800)
 
 style main_menu_text:
@@ -580,7 +604,7 @@ style main_menu_text:
     color gui.ACCENT_COLOR
 
 style main_menu_title:
-    size gui.scale(90)
+    size gui.TITLE_SIZE
 
 
 ##############################################################################
@@ -662,8 +686,8 @@ style game_menu_viewport is gui_viewport
 style game_menu_side is gui_side
 style game_menu_scrollbar is gui_vscrollbar
 
-style title_label is gui_label
-style title_label_text is gui_label_text
+style game_menu_label is gui_label
+style game_menu_label_text is gui_label_text
 
 style return_button is navigation_button
 style return_button_text is navigation_button_text
@@ -690,12 +714,12 @@ style game_menu_vscrollbar:
 style game_menu_side:
     spacing gui.scale(10)
 
-style title_label:
+style game_menu_label:
     xpos gui.scale(50)
     ysize gui.scale(120)
 
-style title_label_text:
-    size gui.scale(50)
+style game_menu_label_text:
+    size gui.TITLE_SIZE
     color gui.ACCENT_COLOR
     yalign 0.5
 
@@ -803,12 +827,9 @@ style page_label:
     xpadding gui.scale(50)
     ypadding gui.scale(3)
 
-style filepage_label_text:
-    size gui.scale(24)
+style page_label_text:
     text_align 0.5
     layout "subtitle"
-    color gui.ACCENT_COLOR
-    hover_color gui.HOVER_COLOR
 
 style slot_button:
     background "gui/idle_file_slot.png"
@@ -825,12 +846,8 @@ style slot_button:
     ymargin gui.scale(5)
 
 style slot_text:
-    size gui.scale(14)
-
+    size gui.TINY_SIZE
     color gui.IDLE_SMALL_COLOR
-    hover_color gui.HOVER_COLOR
-    selected_color gui.SELECTED_COLOR
-
     xalign 0.5
     text_align 0.5
     layout "subtitle"
@@ -840,7 +857,6 @@ style slot_time_text:
 
 style slot_name_text:
     ypos gui.scale(164)
-
 
 
 screen preferences():
@@ -1297,7 +1313,7 @@ style help_label:
     right_padding gui.scale(20)
 
 style help_label_text:
-    size gui.scale(22)
+    size gui.TEXT_SIZE
     xalign 1.0
     text_align 1.0
 
@@ -1382,7 +1398,7 @@ style notify_frame:
         ypadding gui.scale(5)
 
 style notify_text:
-    size gui.scale(16)
+    size gui.NOTIFY_SIZE
 
 
 # Tablet variants.
