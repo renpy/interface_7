@@ -50,8 +50,8 @@ define gui.GAME_MENU_BACKGROUND = "gui/game_menu.png"
 ################################################################################
 # Fonts and Font Sizes
 define gui.DEFAULT_FONT = "DejaVuSans.ttf"
-define gui.GUI_FONT = "DejaVuSans.tff"
-define gui.GLYPH_FONT = "DejaVuSans.tff"
+define gui.INTERFACE_FONT = "DejaVuSans.ttf"
+define gui.GLYPH_FONT = "DejaVuSans.ttf"
 
 define gui.TINY_SIZE = gui.scale(14)
 define gui.NOTIFY_SIZE = gui.scale(16)
@@ -60,6 +60,21 @@ define gui.INTERFACE_SIZE = gui.scale(24)
 define gui.LABEL_SIZE = gui.scale(30)
 define gui.TITLE_SIZE = gui.scale(50)
 
+
+################################################################################
+# Basic in-game styles.
+
+style default:
+    font gui.DEFAULT_FONT
+    size gui.TEXT_SIZE
+
+style input:
+    color gui.ACCENT_COLOR
+
+style hyperlink_text:
+    color gui.ACCENT_COLOR
+    hover_color gui.HOVER_COLOR
+    hover_underline True
 
 ################################################################################
 # Style common user interface components.
@@ -76,15 +91,18 @@ style small_button_text is button_text
 style label_text is gui_text
 style prompt_text is gui_text
 
+style gui_text:
+    font gui.INTERFACE_FONT
+    size gui.TEXT_SIZE
 
 # Used for full-sized buttons, like navigation buttons.
-style button is empty:
+style button:
     ypadding gui.scale(4)
     xpadding gui.scale(4)
     background Frame("gui/button.png", gui.scale(4), gui.scale(4))
     hover_background Frame("gui/button_hover.png", gui.scale(4), gui.scale(4))
 
-style button_text is empty:
+style button_text:
     size gui.INTERFACE_SIZE
     color gui.IDLE_COLOR
     insensitive_color gui.INSENSITIVE_COLOR
@@ -153,8 +171,8 @@ style slider:
 
 style vbar:
     xsize gui.scale(30)
-    bar_vertical True
 
+    bar_vertical True
     top_bar Frame("gui/bar_top.png")
     bottom_bar Frame("gui/bar_bottom.png")
 
@@ -185,14 +203,6 @@ style vslider:
 
 style frame:
     background "#000000"
-
-style hyperlink_text:
-    color gui.ACCENT_COLOR
-    hover_color gui.HOVER_COLOR
-    hover_underline True
-
-style input:
-    color gui.ACCENT_COLOR
 
 
 ################################################################################
@@ -226,16 +236,18 @@ screen say(who, what, side_image=None, two_window=False):
         else:
             add SideImage() xalign 0.0 yalign 1.0
 
+style window is default
 style say_label is default
+style say_dialogue is default
 
 style window:
-    xfill True
     xalign 0.5
-    ysize gui.scale(185)
+    xfill True
+    xpadding gui.scale(268)
     yalign 1.0
+    ysize gui.scale(185)
 
     background "gui/textbox.png"
-    xpadding gui.scale(268)
 
 style say_label:
     size gui.LABEL_SIZE
@@ -278,8 +290,8 @@ screen ctc():
 style ctc_triangle:
     # We have to use a font that has the BLACK RIGHT-POINTING TRIANGLE glyph
     # in it.
-    font "DejaVuSans.ttf"
     color gui.ACCENT_COLOR
+    font gui.GLYPH_FONT
 
 
 
@@ -307,7 +319,7 @@ screen input(prompt):
 
             input id "input"
 
-style input_prompt is text
+style input_prompt is default
 
 
 ##############################################################################
@@ -419,8 +431,6 @@ style nvl_menu_button is button
 style nvl_menu_button_text is button_text
 
 style nvl_window:
-    clear
-    background "gui/nvl.png"
     xfill True
     yfill True
 
@@ -428,27 +438,24 @@ style nvl_window:
     top_padding gui.scale(10)
     bottom_padding gui.scale(20)
 
+    background "gui/nvl.png"
+
 style nvl_entry:
-    clear
     xfill True
     ysize gui.scale(115)
 
 style nvl_label:
-    clear
     xmaximum gui.scale(150)
     min_width gui.scale(150)
     text_align 1.0
 
 style nvl_dialogue:
-    clear
     ypos gui.scale(7)
 
 style nvl_menu_button:
-    clear
     left_padding gui.scale(170)
 
 style nvl_menu_button_text:
-    clear
     insensitive_color gui.TEXT_COLOR
 
 
@@ -477,11 +484,10 @@ screen quick_menu():
         textbutton _("Q.Load") action QuickLoad()
         textbutton _("Prefs") action ShowMenu('preferences')
 
-style quick_button is gui_button
-style quick_button_text is gui_button_text
+style quick_button is default
+style quick_button_text is default
 
 style quick_button:
-    background None
     xpadding gui.scale(10)
 
 style quick_button_text:
@@ -592,9 +598,9 @@ style main_menu_frame:
 style main_menu_vbox:
     xalign 1.0
     xoffset gui.scale(-20)
+    xmaximum gui.scale(800)
     yalign 1.0
     yoffset gui.scale(-20)
-    xmaximum gui.scale(800)
 
 style main_menu_text:
     xalign 1.0
@@ -673,8 +679,7 @@ screen game_menu(title, scroll=None):
 
         action Return()
 
-    label title:
-        style "title_label"
+    label title
 
     if main_menu:
         key "game_menu" action ShowMenu("main_menu")
@@ -702,8 +707,8 @@ style game_menu_navigation_frame:
 
 style game_menu_content_frame:
     left_margin gui.scale(40)
-    top_margin gui.scale(10)
     right_margin gui.scale(20)
+    top_margin gui.scale(10)
 
 style game_menu_viewport:
     xsize gui.scale(920)
@@ -835,22 +840,23 @@ style slot_button:
     background "gui/idle_file_slot.png"
     hover_background "gui/hover_file_slot.png"
 
-    # This include margins.
+    # Note that xsize and ysize include the margins.
+
     xsize gui.scale(296)
-    ysize gui.scale(226)
-
     xpadding gui.scale(10)
-    ypadding gui.scale(10)
-
     xmargin gui.scale(10)
+
+    ysize gui.scale(226)
+    ypadding gui.scale(10)
     ymargin gui.scale(5)
 
 style slot_text:
-    size gui.TINY_SIZE
-    color gui.IDLE_SMALL_COLOR
     xalign 0.5
-    text_align 0.5
+
+    color gui.IDLE_SMALL_COLOR
     layout "subtitle"
+    size gui.TINY_SIZE
+    text_align 0.5
 
 style slot_time_text:
     ypos gui.scale(146)
@@ -1116,13 +1122,15 @@ style confirm_button is gui_medium_button
 style confirm_button_text is gui_medium_button_text
 
 style confirm_frame:
-    background Frame("gui/confirm_background.png", gui.scale(5), gui.scale(5))
-    xpadding gui.scale(75)
-    ypadding gui.scale(50)
-    xsize gui.scale(600)
-    ysize gui.scale(250)
     xalign .5
+    xsize gui.scale(600)
+    xpadding gui.scale(75)
+
     yalign .5
+    ysize gui.scale(250)
+    ypadding gui.scale(50)
+
+    background Frame("gui/confirm_background.png", gui.scale(5), gui.scale(5))
 
 style confirm_prompt_text:
     text_align 0.5
@@ -1147,26 +1155,23 @@ screen about():
 
         style_prefix "about"
 
-        text gui.ABOUT
+        vbox:
 
-# Text that goes into the about screen. You can replace the first line
-# with a series of lines that credit the creators of this game and the
-# assets it uses.
-#
-# You need to leave the Ren'Py license info in, and we'd like it if you
-# left the "Made with" credit.
-define gui.ABOUT = _("""\
-{b}[config.name]{/b}
+            label "[config.name!t]"
+            text _("Version [config.version!t]\n")
 
-Made with [renpy.version_string].
+            # gui.about is usually set in options.rpy.
+            if gui.about:
+                text "[gui.about!t]\n"
 
-[renpy.license!t]""")
+            text _("Made with {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only].\n\n[renpy.license!t]")
 
+style about_label is gui_label
+style about_label_text is gui_label_text
 style about_text is gui_text
-style about_vscrollbar is gui_vscrollbar
 
-style about_vscrollbar:
-    unscrollable "hide"
+style about_label_text:
+    size gui.LABEL_SIZE
 
 ##############################################################################
 # Help
@@ -1246,7 +1251,6 @@ screen keyboard_help():
         label _("V")
         text _("Toggles assistive {a=https://www.renpy.org/l/voicing}self-voicing{/a}.")
 
-
 screen mouse_help():
 
     hbox:
@@ -1268,7 +1272,6 @@ screen mouse_help():
     hbox:
         label _("Mouse Wheel Down")
         text _("Rolls forward to later dialogue.")
-
 
 screen gamepad_help():
 
@@ -1320,7 +1323,6 @@ style help_label_text:
 ##############################################################################
 # Skip Indicator
 
-
 screen skip_indicator():
 
     zorder 100
@@ -1343,23 +1345,20 @@ style skip_text is gui_text
 style skip_triangle is skip_text
 
 style skip_frame:
-        background Frame("gui/skip_indicator.png", gui.scale(16), gui.scale(5), gui.scale(50), gui.scale(5))
+    ypos gui.scale(10)
+    ypadding gui.scale(5)
+    left_padding gui.scale(16)
+    right_padding gui.scale(40)
 
-        left_padding gui.scale(16)
-        right_padding gui.scale(40)
-
-        ypos gui.scale(10)
-        ypadding gui.scale(5)
+    background Frame("gui/skip_indicator.png", gui.scale(16), gui.scale(5), gui.scale(50), gui.scale(5))
 
 style skip_text:
-    size gui.scale(16)
+    size gui.NOTIFY_SIZE
 
 style skip_triangle:
     # We have to use a font that has the BLACK RIGHT-POINTING SMALL TRIANGLE
     # glyph in it.
-    font "DejaVuSans.ttf"
-
-
+    font gui.GLYPH_FONT
 
 
 ################################################################################
@@ -1400,7 +1399,7 @@ style notify_frame:
 style notify_text:
     size gui.NOTIFY_SIZE
 
-
+################################################################################
 # Tablet variants.
 
 style pref_vbox:
@@ -1427,15 +1426,22 @@ screen quick_menu():
 style quick_button:
     variant "touch"
 
-    background None
     xpadding gui.scale(60)
     top_padding gui.scale(14)
 
+################################################################################
 # Phone Variant
 
-style default:
-    variant "small"
-    size gui.scale(30)
+init python:
+
+    if renpy.variant("small"):
+        gui.TEXT_SIZE = gui.scale(30)
+        gui.NOTIFY_SIZE = gui.scale(25)
+        gui.INTERFACE_SIZE = gui.scale(36)
+        gui.LABEL_SIZE = gui.scale(36)
+
+        gui.file_slot_cols = 2
+        gui.file_slot_rows = 2
 
 style slider:
     variant "small"
@@ -1451,41 +1457,17 @@ style vslider:
     thumb Frame("gui/vslider_thumb.png", ysize=gui.scale(15))
     hover_thumb Frame("gui/vslider_hover_thumb.png", ysize=gui.scale(15))
 
-style label_text:
-    variant "small"
-    size gui.scale(36)
-
-style prompt_text:
-    variant "small"
-    size gui.scale(36)
-
-style button_text:
-    variant "small"
-    size gui.scale(36)
-
 style window:
     variant "small"
-    xfill True
-    xalign 0.5
-    ysize gui.scale(240)
-    yalign 1.0
-
-    background "gui/phone_textbox.png"
     xpadding gui.scale(90)
-
-style say_label:
-    variant "small"
-    size gui.scale(36)
+    ysize gui.scale(240)
+    background "gui/phone_textbox.png"
 
 style choice_button:
     variant "small"
     xsize gui.scale(1190)
     xpadding gui.scale(100)
     ypadding gui.scale(8)
-
-style choice_button_text:
-    variant "small"
-    size gui.scale(36)
 
 style nvl_window:
     variant "small"
@@ -1541,7 +1523,7 @@ style history_who:
     xmaximum gui.scale(150)
     min_width gui.scale(150)
     text_align 1.0
-    size gui.scale(30)
+    size gui.TEXT_SIZE
 
 style history_text:
     variant "small"
@@ -1561,19 +1543,7 @@ style confirm_frame:
     xsize gui.scale(844)
     ysize gui.scale(475)
 
-style skip_text:
-    variant "small"
-    size gui.scale(25)
-
 style notify_frame:
     variant "small"
     ypos gui.scale(55)
 
-style notify_text:
-    variant "small"
-    size gui.scale(25)
-
-init python:
-    if renpy.variant("small"):
-        gui.file_slot_cols = 2
-        gui.file_slot_rows = 2
