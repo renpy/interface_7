@@ -4,6 +4,8 @@
 # These will need to be changed if you change the size of the game. Remember
 # to click "Window" in preferences to ensure the window itself is resized.
 
+init offset = -1
+
 init python:
     gui.init(1280, 720)
 
@@ -576,12 +578,17 @@ screen main_menu():
     # The actual contents of the main menu are in the navigation screen, above.
     use navigation
 
-    vbox:
-        text "[config.name!t]":
-            style "main_menu_title"
+    if gui.show_name:
 
-        text "[config.version]":
-            style "main_menu_version"
+        vbox:
+            text "[config.name!t]":
+                style "main_menu_title"
+
+            text "[config.version]":
+                style "main_menu_version"
+
+# Should we show the name and version of the game?
+define gui.show_name = True
 
 style main_menu_frame is empty
 style main_menu_vbox is vbox
@@ -1166,12 +1173,15 @@ screen about():
 
             text _("Made with {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only].\n\n[renpy.license!t]")
 
+define gui.about = ""
+
 style about_label is gui_label
 style about_label_text is gui_label_text
 style about_text is gui_text
 
 style about_label_text:
     size gui.LABEL_SIZE
+
 
 ##############################################################################
 # Help
