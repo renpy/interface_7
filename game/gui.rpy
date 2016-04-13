@@ -16,16 +16,9 @@ init python:
 
 # An accent color used throughout the interface.
 define gui.ACCENT_COLOR = "#00b8c3"
-define gui.ACCENT_COLOR = "#eebb00"
 
-# define gui.HOVER_COLOR = "#00cad6"
-# define gui.MUTED_COLOR = "#00373a"
-# define gui.HOVER_MUTED_COLOR = "#00494e"
-
-# TODO: Replace with the generated colors.
+# A version of the accent color that's used when buttons are hovered.
 define gui.HOVER_COLOR = Color(gui.ACCENT_COLOR).tint(.6)
-define gui.MUTED_COLOR = Color(gui.ACCENT_COLOR).shade(.4)
-define gui.HOVER_MUTED_COLOR = Color(gui.ACCENT_COLOR).shade(.6)
 
 # The color used for a text button when it is selected but not focused.
 # A button is selected if it is the current screen or preference value
