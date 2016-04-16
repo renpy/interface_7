@@ -1,8 +1,8 @@
 ################################################################################
-# Sizes
-#
-# These will need to be changed if you change the size of the game. Remember
-# to click "Window" in preferences to ensure the window itself is resized.
+## Sizes
+##
+## These will need to be changed if you change the size of the game. Remember
+## to click "Window" in preferences to ensure the window itself is resized.
 
 init offset = -1
 
@@ -203,7 +203,7 @@ style frame:
 ################################################################################
 # Say
 
-screen say(who, what, side_image=None, two_window=False):
+screen say(who, what):
     style_group "say"
 
     window:
@@ -225,11 +225,7 @@ screen say(who, what, side_image=None, two_window=False):
     # If there's a side image, display it above the text. Do not display
     # on the phone variant - there's no room.
     if not renpy.variant("small"):
-
-        if side_image:
-            add side_image
-        else:
-            add SideImage() xalign 0.0 yalign 1.0
+        add SideImage() xalign 0.0 yalign 1.0
 
 style window is default
 style say_label is default
