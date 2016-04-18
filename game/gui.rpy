@@ -10,40 +10,41 @@ init python:
     gui.init(1280, 720)
 
 ################################################################################
-# Colors
-#
-# The colors of various aspects of the interface.
+## Colors
+##
+## The colors of various aspects of the interface.
 
-# An accent color used throughout the interface.
+## An accent color used throughout the interface.
 define gui.ACCENT_COLOR = "#00b8c3"
 
-# A version of the accent color that's used when buttons are hovered.
+## A version of the accent color that's used when buttons are hovered.
 define gui.HOVER_COLOR = Color(gui.ACCENT_COLOR).tint(.6)
 
-# The color used for a text button when it is selected but not focused.
-# A button is selected if it is the current screen or preference value
+## The color used for a text button when it is selected but not focused.
+## A button is selected if it is the current screen or preference value
 define gui.SELECTED_COLOR = "#ffffff"
 
-# The color used for a text button when it is neither selected nor hovered.
+## The color used for a text button when it is neither selected nor hovered.
 define gui.IDLE_COLOR = "#555555"
 
-# The small color is used for small buttons, which need to be brighter/darker
-# to achieve the same effect.
+## The small color is used for small buttons, which need to be brighter/darker
+## to achieve the same effect.
 define gui.IDLE_SMALL_COLOR = "#aaaaaa"
 
-# The color used for a text button when it cannot be selected.
+## The color used for a text button when it cannot be selected.
 define gui.INSENSITIVE_COLOR = "#55555580"
 
-# The color used for dialogue and menu choice text.
+## The color used for dialogue and menu choice text.
 define gui.TEXT_COLOR = "#ffffff"
 define gui.CHOICE_COLOR = "#cccccc"
 
-# The images used for the main and game menus.
+## The images used for the main and game menus.
 define gui.MAIN_MENU_BACKGROUND = "gui/main_menu.png"
 define gui.GAME_MENU_BACKGROUND = "gui/game_menu.png"
 
 ################################################################################
-# Fonts and Font Sizes
+## Fonts and Font Sizes
+
 define gui.DEFAULT_FONT = "DejaVuSans.ttf"
 define gui.INTERFACE_FONT = "DejaVuSans.ttf"
 define gui.GLYPH_FONT = "DejaVuSans.ttf"
@@ -57,7 +58,7 @@ define gui.TITLE_SIZE = gui.scale(50)
 
 
 ################################################################################
-# Basic in-game styles.
+## Basic in-game styles.
 
 style default:
     font gui.DEFAULT_FONT
@@ -72,7 +73,7 @@ style hyperlink_text:
     hover_underline True
 
 ################################################################################
-# Style common user interface components.
+## Style common user interface components.
 
 style button_text is gui_text
 style check_button is button
@@ -86,11 +87,12 @@ style small_button_text is button_text
 style label_text is gui_text
 style prompt_text is gui_text
 
+## Used for text inside the gui.
 style gui_text:
     font gui.INTERFACE_FONT
     size gui.TEXT_SIZE
 
-# Used for full-sized buttons, like navigation buttons.
+## Used for full-sized buttons, like navigation buttons.
 style button:
     ypadding gui.scale(4)
     xpadding gui.scale(4)
@@ -105,7 +107,7 @@ style button_text:
     hover_color gui.HOVER_COLOR
     selected_hover_color gui.HOVER_COLOR
 
-# Used for checkbox-like buttons:
+## Used for checkbox-like buttons
 style check_button:
     left_padding gui.scale(25)
     foreground Frame("gui/button_unchecked.png", gui.scale(25), gui.scale(4), gui.scale(4), gui.scale(4))
@@ -113,14 +115,14 @@ style check_button:
 
 style radio_button is check_button
 
-# Used for medium-sized buttons, like sound test and mute buttons.
+## Used for medium-sized buttons, like sound test and mute buttons.
 style medium_button:
     background Frame("gui/medium_button.png", gui.scale(4), gui.scale(4))
     hover_background Frame("gui/medium_button_hover.png", gui.scale(4), gui.scale(4))
 
 style medium_button_text is button_text
 
-# Used for small-sized buttons, like file picker page navigation.
+## Used for small-sized buttons, like file picker page navigation.
 style small_button:
     xpadding gui.scale(10)
     background Frame("gui/small_button.png", gui.scale(4), gui.scale(4))
@@ -201,7 +203,7 @@ style frame:
 
 
 ################################################################################
-# Say
+## Say
 
 screen say(who, what):
     style_group "say"
@@ -244,10 +246,10 @@ style say_label:
     size gui.LABEL_SIZE
 
 ###############################################################################
-# CTC
+## CTC
 
-# This is also used by the skip screen, below.
 
+## This transform is also used by the skip screen, below.
 transform delayed_blink(delay, cycle):
     alpha .5
 
@@ -287,10 +289,10 @@ style ctc_triangle:
 
 
 ################################################################################
-# Input
-#
-# Screen that's used to display renpy.input()
-# http://www.renpy.org/doc/html/screen_special.html#input
+## Input
+##
+## Screen that's used to display renpy.input()
+## http://www.renpy.org/doc/html/screen_special.html#input
 screen input(prompt):
     style_group "input"
 
@@ -314,10 +316,10 @@ style input_prompt is default
 
 
 ##############################################################################
-# Choice
-#
-# Screen that's used to display in-game menus.
-# http://www.renpy.org/doc/html/screen_special.html#choice
+## Choice
+##
+## Screen that's used to display in-game menus.
+## http://www.renpy.org/doc/html/screen_special.html#choice
 
 screen choice(items):
     style_group "choice"
@@ -360,10 +362,10 @@ style choice_button_text is default:
     layout "subtitle"
 
 ##############################################################################
-# Nvl
-#
-# Screen used for nvl-mode dialogue and menus.
-# http://www.renpy.org/doc/html/screen_special.html#nvl
+## Nvl
+##
+## Screen used for nvl-mode dialogue and menus.
+## http://www.renpy.org/doc/html/screen_special.html#nvl
 
 screen nvl(dialogue, items=None):
 
@@ -452,7 +454,7 @@ style nvl_menu_button_text:
 
 
 ################################################################################
-# Quick Menu
+## Quick Menu
 
 screen quick_menu():
 
@@ -489,9 +491,9 @@ init python:
 
 
 ################################################################################
-# Navigation
-#
-# This screen serves to navigate within the main and game menus.
+## Navigation
+##
+## This screen serves to navigate within the main and game menus.
 
 screen navigation():
 
@@ -543,13 +545,13 @@ style navigation_button_text is gui_button_text
 
 
 ##############################################################################
-# Main Menu
-#
-# Used to display the main menu when Ren'Py starts.
-# http://www.renpy.org/doc/html/screen_special.html#main-menu
-#
-# This lays out the main menu and its backgrounds, but uses the navigation
-# screen to actually supply the main menu buttons.
+## Main Menu
+##
+## Used to display the main menu when Ren'Py starts.
+## http://www.renpy.org/doc/html/screen_special.html#main-menu
+##
+## This lays out the main menu and its backgrounds, but uses the navigation
+## screen to actually supply the main menu buttons.
 
 screen main_menu():
 
@@ -576,7 +578,7 @@ screen main_menu():
             text "[config.version]":
                 style "main_menu_version"
 
-# Should we show the name and version of the game?
+## Should we show the name and version of the game?
 define gui.show_name = True
 
 style main_menu_frame is empty
@@ -610,12 +612,12 @@ style main_menu_title:
 
 
 ##############################################################################
-# Game Menu
-#
-# This lays out the basic common structure of a game menu screen. It's called
-# with the screen title, and displays the background, title, and navigation.
-# When used with children (the expected case), it transcludes those children
-# in an hbox after the space reserved for navigation.
+## Game Menu
+##
+## This lays out the basic common structure of a game menu screen. It's called
+## with the screen title, and displays the background, title, and navigation.
+## When used with children (the expected case), it transcludes those children
+## in an hbox after the space reserved for navigation.
 
 screen game_menu(title, scroll=None):
 
@@ -738,8 +740,8 @@ screen file_slots(title):
 
         fixed:
 
-            # This, and the fixed, ensures the input will get the enter event before
-            # any of the buttons do.
+            ## This ensures the input will get the enter
+            ## event before any of the buttons do.
             order_reverse True
 
             # The page name, which can be edited by clicking on a button.
@@ -754,7 +756,7 @@ screen file_slots(title):
                     style "page_label_text"
                     value page_name_value
 
-            # The grid of file slots.
+            ## The grid of file slots.
             grid gui.file_slot_cols gui.file_slot_rows:
                 style_prefix "slot"
 
@@ -778,7 +780,7 @@ screen file_slots(title):
 
                         key "save_delete" action FileDelete(slot)
 
-            # Buttons to access other pages.
+            ## Buttons to access other pages.
             hbox:
                 style_prefix "page"
 
@@ -1011,8 +1013,7 @@ style slider_pref_vbox:
     xsize gui.scale(460)
 
 ##############################################################################
-# History
-#
+## History
 
 screen history():
 
@@ -1074,10 +1075,10 @@ style history_label_text:
     xalign 0.5
 
 ##############################################################################
-# Confirm
-#
-# Screen that asks the user a yes or no question.
-# http://www.renpy.org/doc/html/screen_special.html#yesno-prompt
+## Confirm
+##
+## Screen that asks the user a yes or no question.
+## http://www.renpy.org/doc/html/screen_special.html#confirm
 
 screen confirm(message, yes_action, no_action):
 
@@ -1140,9 +1141,9 @@ style confirm_button_text:
 
 
 ##############################################################################
-# About
-#
-# A screen that gives copyright information about the game and Ren'Py.
+## About
+##
+## A screen that gives copyright information about the game and Ren'Py.
 screen about():
 
     tag menu
@@ -1156,7 +1157,7 @@ screen about():
             label "[config.name!t]"
             text _("Version [config.version!t]\n")
 
-            # gui.about is usually set in options.rpy.
+            ## gui.about is usually set in options.rpy.
             if gui.about:
                 text "[gui.about!t]\n"
 
@@ -1173,9 +1174,9 @@ style about_label_text:
 
 
 ##############################################################################
-# Help
-#
-# A screen that gives information about key and mouse bindings.
+## Help
+##
+## A screen that gives information about key and mouse bindings.
 screen help():
 
     tag menu
@@ -1239,15 +1240,15 @@ screen keyboard_help():
         text _("Rolls forward to later dialogue.")
 
     hbox:
-        label _("H")
+        label _("{#key}H")
         text _("Hides the user interface.")
 
     hbox:
-        label _("S")
+        label _("{#key}S")
         text _("Takes a screenshot.")
 
     hbox:
-        label _("V")
+        label _("{#key}V")
         text _("Toggles assistive {a=https://www.renpy.org/l/voicing}self-voicing{/a}.")
 
 screen mouse_help():
@@ -1361,7 +1362,7 @@ style skip_triangle:
 
 
 ################################################################################
-# Message notification.
+## Message notification.
 
 screen notify(message):
 
@@ -1399,7 +1400,7 @@ style notify_text:
     size gui.NOTIFY_SIZE
 
 ################################################################################
-# Tablet variants.
+## Tablet variants.
 
 style pref_vbox:
     variant "medium"
@@ -1429,7 +1430,7 @@ style quick_button:
     top_padding gui.scale(14)
 
 ################################################################################
-# Phone Variant
+## Phone Variant
 
 init python:
 
