@@ -1240,15 +1240,15 @@ screen keyboard_help():
         text _("Rolls forward to later dialogue.")
 
     hbox:
-        label _("{#key}H")
+        label "H"
         text _("Hides the user interface.")
 
     hbox:
-        label _("{#key}S")
+        label "S"
         text _("Takes a screenshot.")
 
     hbox:
-        label _("{#key}V")
+        label "V"
         text _("Toggles assistive {a=https://www.renpy.org/l/voicing}self-voicing{/a}.")
 
 screen mouse_help():
