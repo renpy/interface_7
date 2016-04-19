@@ -15,5 +15,5 @@ init 100 python in gui:
         from gui7.parameters import GuiParameters
         from gui7.images import ImageGenerator
 
-        parameters = GuiParameters(config.gamedir, config.screen_width, config.screen_height, ACCENT_COLOR, "#000000", False)
+        parameters = GuiParameters(config.gamedir, config.gamedir, config.screen_width, config.screen_height, ACCENT_COLOR, "#000000", False, None)
         ImageGenerator(parameters, True).generate_all()
