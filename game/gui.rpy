@@ -292,6 +292,7 @@ style ctc_triangle:
 ## Input
 ##
 ## Screen that's used to display renpy.input()
+##
 ## http://www.renpy.org/doc/html/screen_special.html#input
 screen input(prompt):
     style_group "input"
@@ -319,6 +320,7 @@ style input_prompt is default
 ## Choice
 ##
 ## Screen that's used to display in-game menus.
+##
 ## http://www.renpy.org/doc/html/screen_special.html#choice
 
 screen choice(items):
@@ -365,6 +367,7 @@ style choice_button_text is default:
 ## Nvl
 ##
 ## Screen used for nvl-mode dialogue and menus.
+##
 ## http://www.renpy.org/doc/html/screen_special.html#nvl
 
 screen nvl(dialogue, items=None):
@@ -548,6 +551,7 @@ style navigation_button_text is gui_button_text
 ## Main Menu
 ##
 ## Used to display the main menu when Ren'Py starts.
+##
 ## http://www.renpy.org/doc/html/screen_special.html#main-menu
 ##
 ## This lays out the main menu and its backgrounds, but uses the navigation
@@ -1078,6 +1082,7 @@ style history_label_text:
 ## Confirm
 ##
 ## Screen that asks the user a yes or no question.
+##
 ## http://www.renpy.org/doc/html/screen_special.html#confirm
 
 screen confirm(message, yes_action, no_action):
